@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.innky.graduationproject.web.mapper.StudentExerciseRelationMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.StudentExerciseRelation">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+            <result property="exerciseId" column="exercise_id" jdbcType="INTEGER"/>
+            <result property="submitTime" column="submit_time" jdbcType="INTEGER"/>
+            <result property="image" column="image" jdbcType="INTEGER"/>
+            <result property="score" column="score" jdbcType="INTEGER"/>
+            <result property="resultsAnalysis" column="results_analysis" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,student_id,exercise_id,
+        submit_time,image,score,
+        results_analysis
+    </sql>
+</mapper>

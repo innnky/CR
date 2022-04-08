@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.innky.graduationproject.web.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.Student">
+            <id property="studentId" column="student_id" jdbcType="INTEGER"/>
+            <result property="studentName" column="student_name" jdbcType="VARCHAR"/>
+            <result property="classId" column="class_id" jdbcType="INTEGER"/>
+            <result property="admissiondate" column="admissionDate" jdbcType="DATE"/>
+            <result property="gender" column="gender" jdbcType="CHAR"/>
+            <result property="contact" column="contact" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        student_id,student_name,class_id,
+        admissionDate,gender,contact
+    </sql>
+    <select id="selectByClassId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where
+        class_id = #{classId,jdbcType=NUMERIC}
+    </select>
+    <select id="selectCountByClassId" resultType="java.lang.Long">
+        select count(*) from student where class_id = #{classId,jdbcType=NUMERIC}
+    </select>
+    <select id="selectPageVo" resultType="xyz.innky.graduationproject.web.vo.StudentVo">
+        select <include refid="Base_Column_List"></include>
+        from student
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+    <select id="selectByStudentName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where
+        student_name = #{studentName,jdbcType=VARCHAR}
+    </select>
+</mapper>

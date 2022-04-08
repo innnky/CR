@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.innky.graduationproject.web.mapper.ExerciseMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.Exercise">
+            <id property="exerciseId" column="exercise_id" jdbcType="INTEGER"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+            <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+            <result property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
+            <result property="attachmentPath" column="attachment_path" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        exercise_id,content,start_time,
+        end_time,s_course_id,attachment_path
+    </sql>
+</mapper>

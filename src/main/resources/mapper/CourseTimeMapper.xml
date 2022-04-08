@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.innky.graduationproject.web.mapper.CourseTimeMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.CourseTime">
+            <id property="timeId" column="time_id" jdbcType="INTEGER"/>
+            <result property="term" column="term" jdbcType="VARCHAR"/>
+            <result property="weekday" column="weekday" jdbcType="INTEGER"/>
+            <result property="week" column="week" jdbcType="INTEGER"/>
+            <result property="classSequence" column="class_sequence" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        time_id,term,weekday,
+        week,class_sequence
+    </sql>
+</mapper>

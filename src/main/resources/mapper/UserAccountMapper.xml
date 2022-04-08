@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.innky.graduationproject.web.mapper.UserAccountMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.UserAccount">
+            <id property="uid" column="uid" jdbcType="INTEGER"/>
+            <result property="account" column="account" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
+            <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+            <result property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+            <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        uid,account,password,
+        avatar_url,student_id,teacher_id,
+        role_id
+    </sql>
+    <select id="selectAllByAccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_account
+        where
+        account = #{account,jdbcType=VARCHAR}
+    </select>
+    <select id="selectStuPageVo" resultType="xyz.innky.graduationproject.web.vo.UserAccountStuVo">
+        select
+        <include refid="Base_Column_List"/>
+        from user_account
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+    <select id="selectTeacherPageVo" resultType="xyz.innky.graduationproject.web.vo.UserAccountTeacherVo">
+        select
+        <include refid="Base_Column_List"/>
+        from user_account
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+</mapper>

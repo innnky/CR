@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/xingyijin/IdeaProjects/graduationProject/src/main/java/xyz/innky/graduationproject</OriginalElement>
+  <nodes>
+    <node x="276.0" y="1488.0">xyz.innky.graduationproject.web.vo.Test2</node>
+    <node x="934.0" y="2312.0">xyz.innky.graduationproject.web.mapper.StudentMapper</node>
+    <node x="1510.5" y="1488.0">xyz.innky.graduationproject.web.service.StudentExerciseRelationService</node>
+    <node x="798.5" y="1937.0">xyz.innky.graduationproject.web.service.TeacherService</node>
+    <node x="0.0" y="1124.0">xyz.innky.graduationproject.web.model.SCourseTimeRelation</node>
+    <node x="382.0" y="1786.0">xyz.innky.graduationproject.web.service.DeviceSceneRelationService</node>
+    <node x="299.0" y="0.0">xyz.innky.graduationproject.web.model.UserAccount</node>
+    <node x="1955.0" y="1124.0">xyz.innky.graduationproject.web.model.SpecificCourse</node>
+    <node x="548.5" y="1937.0">xyz.innky.graduationproject.web.service.MaterialService</node>
+    <node x="279.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.ExerciseServiceImpl</node>
+    <node x="0.0" y="2312.0">xyz.innky.graduationproject.web.mapper.DepartmentMapper</node>
+    <node x="231.0" y="2166.0">xyz.innky.graduationproject.web.service.impl.DutyServiceImpl</node>
+    <node x="1495.0" y="0.0">xyz.innky.graduationproject.web.model.Teacher</node>
+    <node x="1031.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.StudentServiceImpl</node>
+    <node x="821.0" y="1591.0">xyz.innky.graduationproject.web.service.impl.ClassInfoServiceImpl</node>
+    <node x="248.0" y="2312.0">xyz.innky.graduationproject.web.mapper.CourseTimeMapper</node>
+    <node x="0.0" y="2239.0">xyz.innky.graduationproject.web.mapper.ExerciseSceneRelationMapper</node>
+    <node x="1296.5" y="1937.0">xyz.innky.graduationproject.web.service.CourseService</node>
+    <node x="532.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.MaterialServiceImpl</node>
+    <node x="1540.0" y="1937.0">xyz.innky.graduationproject.web.service.DeviceService</node>
+    <node x="734.5" y="1786.0">xyz.innky.graduationproject.web.service.SCourseTimeRelationService</node>
+    <node x="1723.5" y="1786.0">xyz.innky.graduationproject.web.service.UserAccountService</node>
+    <node x="1307.0" y="2239.0">xyz.innky.graduationproject.web.mapper.RoleMenuRelationMapper</node>
+    <node x="1099.0" y="1488.0">xyz.innky.graduationproject.web.service.TeacherCourseClassRelationService</node>
+    <node x="286.0" y="628.0">xyz.innky.graduationproject.web.model.Menu</node>
+    <node x="574.0" y="1124.0">xyz.innky.graduationproject.web.model.ExerciseSceneRelation</node>
+    <node x="1494.0" y="1566.0">xyz.innky.graduationproject.web.service.impl.StudentExerciseRelationServiceImpl</node>
+    <node x="0.0" y="1488.0">xyz.innky.graduationproject.web.model.Scene</node>
+    <node x="0.0" y="1864.0">xyz.innky.graduationproject.web.service.impl.ExerciseSceneRelationServiceImpl</node>
+    <node x="198.0" y="2385.0">xyz.innky.graduationproject.web.mapper.DutyMapper</node>
+    <node x="1071.0" y="1864.0">xyz.innky.graduationproject.web.service.impl.RoleMenuRelationServiceImpl</node>
+    <node x="568.0" y="0.0">xyz.innky.graduationproject.web.model.Exercise</node>
+    <node x="980.0" y="2088.0">xyz.innky.graduationproject.GraduationProjectApplication</node>
+    <node x="16.5" y="1937.0">xyz.innky.graduationproject.web.service.CourseTimeService</node>
+    <node x="0.0" y="2385.0">xyz.innky.graduationproject.web.mapper.MenuMapper</node>
+    <node x="677.0" y="2088.0">xyz.innky.graduationproject.web.controller.admin.TestController</node>
+    <node x="1877.0" y="2239.0">xyz.innky.graduationproject.web.mapper.UserAccountMapper</node>
+    <node x="1707.0" y="1864.0">xyz.innky.graduationproject.web.service.impl.UserAccountServiceImpl</node>
+    <node x="1400.0" y="1864.0">xyz.innky.graduationproject.web.service.impl.SpecificCourseServiceImpl</node>
+    <node x="1888.5" y="1488.0">xyz.innky.graduationproject.web.service.StudentDeviceRelationService</node>
+    <node x="1787.0" y="2312.0">xyz.innky.graduationproject.web.mapper.ImageMapper</node>
+    <node x="828.0" y="628.0">xyz.innky.graduationproject.web.model.Course</node>
+    <node x="293.0" y="1124.0">xyz.innky.graduationproject.web.model.Role</node>
+    <node x="1082.0" y="1566.0">xyz.innky.graduationproject.web.service.impl.TeacherCourseClassRelationServiceImpl</node>
+    <node x="0.0" y="2166.0">xyz.innky.graduationproject.web.service.impl.MenuServiceImpl</node>
+    <node x="0.0" y="628.0">xyz.innky.graduationproject.web.model.Student</node>
+    <node x="1124.0" y="1124.0">xyz.innky.graduationproject.web.vo.RetVO</node>
+    <node x="1417.0" y="1786.0">xyz.innky.graduationproject.web.service.SpecificCourseService</node>
+    <node x="295.5" y="1937.0">xyz.innky.graduationproject.web.service.ExerciseService</node>
+    <node x="247.5" y="2088.0">xyz.innky.graduationproject.web.service.DutyService</node>
+    <node x="1644.0" y="1124.0">xyz.innky.graduationproject.web.model.Department</node>
+    <node x="2000.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.ImageServiceImpl</node>
+    <node x="1390.0" y="1124.0">xyz.innky.graduationproject.web.model.RoleMenuRelation</node>
+    <node x="2016.5" y="1937.0">xyz.innky.graduationproject.web.service.ImageService</node>
+    <node x="455.0" y="2166.0">xyz.innky.graduationproject.web.service.impl.RoleServiceImpl</node>
+    <node x="869.0" y="0.0">xyz.innky.graduationproject.web.model.TeacherCourseClassRelation</node>
+    <node x="390.0" y="2385.0">xyz.innky.graduationproject.web.mapper.RoleMapper</node>
+    <node x="1368.0" y="2312.0">xyz.innky.graduationproject.web.mapper.CourseMapper</node>
+    <node x="557.0" y="628.0">xyz.innky.graduationproject.web.model.ClassInfo</node>
+    <node x="17.0" y="2088.0">xyz.innky.graduationproject.web.service.MenuService</node>
+    <node x="666.0" y="2239.0">xyz.innky.graduationproject.web.mapper.SCourseTimeRelationMapper</node>
+    <node x="1764.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.SceneServiceImpl</node>
+    <node x="1047.5" y="1937.0">xyz.innky.graduationproject.web.service.StudentService</node>
+    <node x="0.0" y="0.0">xyz.innky.graduationproject.web.model.StudentExerciseRelation</node>
+    <node x="495.0" y="2312.0">xyz.innky.graduationproject.web.mapper.ExerciseMapper</node>
+    <node x="849.0" y="1124.0">xyz.innky.graduationproject.web.model.Image</node>
+    <node x="1537.0" y="2088.0">xyz.innky.graduationproject.web.mapper.TeacherCourseClassRelationMapper</node>
+    <node x="1973.0" y="628.0">xyz.innky.graduationproject.web.model.DeviceSceneRelation</node>
+    <node x="1916.0" y="2088.0">xyz.innky.graduationproject.web.mapper.StudentExerciseRelationMapper</node>
+    <node x="837.5" y="1488.0">xyz.innky.graduationproject.web.service.ClassInfoService</node>
+    <node x="1990.0" y="2312.0">xyz.innky.graduationproject.web.mapper.SceneMapper</node>
+    <node x="542.0" y="1488.0">xyz.innky.graduationproject.common.utils.DateFormatUtil</node>
+    <node x="987.0" y="2239.0">xyz.innky.graduationproject.web.mapper.DeviceSceneRelationMapper</node>
+    <node x="1789.0" y="0.0">xyz.innky.graduationproject.web.model.Material</node>
+    <node x="1523.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.DeviceServiceImpl</node>
+    <node x="0.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.CourseTimeServiceImpl</node>
+    <node x="333.0" y="2239.0">xyz.innky.graduationproject.web.mapper.StudentDeviceRelationMapper</node>
+    <node x="1088.0" y="1786.0">xyz.innky.graduationproject.web.service.RoleMenuRelationService</node>
+    <node x="1603.0" y="2239.0">xyz.innky.graduationproject.web.mapper.SpecificCourseMapper</node>
+    <node x="1700.0" y="628.0">xyz.innky.graduationproject.web.model.Duty</node>
+    <node x="2013.0" y="1786.0">xyz.innky.graduationproject.web.service.DepartmentService</node>
+    <node x="1145.0" y="628.0">xyz.innky.graduationproject.web.model.Device</node>
+    <node x="1280.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.CourseServiceImpl</node>
+    <node x="365.0" y="1864.0">xyz.innky.graduationproject.web.service.impl.DeviceSceneRelationServiceImpl</node>
+    <node x="1191.0" y="0.0">xyz.innky.graduationproject.web.model.CourseTime</node>
+    <node x="716.0" y="2312.0">xyz.innky.graduationproject.web.mapper.MaterialMapper</node>
+    <node x="1424.0" y="628.0">xyz.innky.graduationproject.web.model.StudentDeviceRelation</node>
+    <node x="1151.0" y="2312.0">xyz.innky.graduationproject.web.mapper.TeacherMapper</node>
+    <node x="471.5" y="2088.0">xyz.innky.graduationproject.web.service.RoleService</node>
+    <node x="1579.0" y="2312.0">xyz.innky.graduationproject.web.mapper.DeviceMapper</node>
+    <node x="1780.5" y="1937.0">xyz.innky.graduationproject.web.service.SceneService</node>
+    <node x="782.0" y="2015.0">xyz.innky.graduationproject.web.service.impl.TeacherServiceImpl</node>
+    <node x="718.0" y="1864.0">xyz.innky.graduationproject.web.service.impl.SCourseTimeRelationServiceImpl</node>
+    <node x="1308.0" y="2088.0">xyz.innky.graduationproject.web.mapper.ClassInfoMapper</node>
+    <node x="1872.0" y="1566.0">xyz.innky.graduationproject.web.service.impl.StudentDeviceRelationServiceImpl</node>
+    <node x="1996.0" y="1864.0">xyz.innky.graduationproject.web.service.impl.DepartmentServiceImpl</node>
+    <node x="16.5" y="1786.0">xyz.innky.graduationproject.web.service.ExerciseSceneRelationService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="xyz.innky.graduationproject.web.service.impl.StudentExerciseRelationServiceImpl" target="xyz.innky.graduationproject.web.service.StudentExerciseRelationService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.TeacherServiceImpl" target="xyz.innky.graduationproject.web.service.TeacherService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.DepartmentServiceImpl" target="xyz.innky.graduationproject.web.service.DepartmentService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.SceneServiceImpl" target="xyz.innky.graduationproject.web.service.SceneService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.DeviceServiceImpl" target="xyz.innky.graduationproject.web.service.DeviceService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.CourseTimeServiceImpl" target="xyz.innky.graduationproject.web.service.CourseTimeService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.DeviceSceneRelationServiceImpl" target="xyz.innky.graduationproject.web.service.DeviceSceneRelationService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.ImageServiceImpl" target="xyz.innky.graduationproject.web.service.ImageService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.SCourseTimeRelationServiceImpl" target="xyz.innky.graduationproject.web.service.SCourseTimeRelationService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.ClassInfoServiceImpl" target="xyz.innky.graduationproject.web.service.ClassInfoService" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.StudentDeviceRelationServiceImpl" target="xyz.innky.graduationproject.web.service.StudentDeviceRelationService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.StudentServiceImpl" target="xyz.innky.graduationproject.web.service.StudentService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.ExerciseSceneRelationServiceImpl" target="xyz.innky.graduationproject.web.service.ExerciseSceneRelationService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.CourseServiceImpl" target="xyz.innky.graduationproject.web.service.CourseService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.RoleMenuRelationServiceImpl" target="xyz.innky.graduationproject.web.service.RoleMenuRelationService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.DutyServiceImpl" target="xyz.innky.graduationproject.web.service.DutyService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.MaterialServiceImpl" target="xyz.innky.graduationproject.web.service.MaterialService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.ExerciseServiceImpl" target="xyz.innky.graduationproject.web.service.ExerciseService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.TeacherCourseClassRelationServiceImpl" target="xyz.innky.graduationproject.web.service.TeacherCourseClassRelationService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.SpecificCourseServiceImpl" target="xyz.innky.graduationproject.web.service.SpecificCourseService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.RoleServiceImpl" target="xyz.innky.graduationproject.web.service.RoleService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.UserAccountServiceImpl" target="xyz.innky.graduationproject.web.service.UserAccountService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="xyz.innky.graduationproject.web.service.impl.MenuServiceImpl" target="xyz.innky.graduationproject.web.service.MenuService" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.779620905702515" showDependencies="false" x="547.5258020148531" y="737.0364406157432" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
