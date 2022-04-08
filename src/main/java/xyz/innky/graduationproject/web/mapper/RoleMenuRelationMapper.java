@@ -1,4 +1,6 @@
 package xyz.innky.graduationproject.web.mapper;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import xyz.innky.graduationproject.web.pojo.RoleMenuRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -10,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity xyz.innky.graduationproject.web.pojo.RoleMenuRelation
 */
 public interface RoleMenuRelationMapper extends BaseMapper<RoleMenuRelation> {
+    List<RoleMenuRelation> getAllByRoleId(@Param("roleId") Integer roleId);
 
 }
 

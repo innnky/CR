@@ -12,8 +12,36 @@
             <result property="icon" column="icon" jdbcType="INTEGER"/>
     </resultMap>
 
+    <resultMap id="MenuVoMap" type="xyz.innky.graduationproject.web.vo.MenuVo" extends="BaseResultMap">
+        <collection property="children" ofType="xyz.innky.graduationproject.web.vo.MenuVo" javaType="java.util.List">
+            <id property="menuId" column="c_menu_id" jdbcType="INTEGER"/>
+            <result property="vuePath" column="c_vue_path" jdbcType="VARCHAR"/>
+            <result property="menuName" column="c_menu_name" jdbcType="VARCHAR"/>
+            <result property="parentId" column="c_parent_id" jdbcType="INTEGER"/>
+            <result property="icon" column="c_icon" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         menu_id,vue_path,menu_name,
         parent_id,icon
     </sql>
+    <select id="getOneByMenuId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from menu
+        where
+        menu_id = #{menuId,jdbcType=NUMERIC}
+    </select>
+    <select id="getListByMenuIds" resultMap="MenuVoMap">
+        select m1.menu_id c_menu_id,m1.vue_path c_vue_path,m1.menu_name c_menu_name,m1.parent_id c_parent_id,m1.icon c_icon,
+               m2.menu_id, m2.vue_path, m2.menu_name, m2.parent_id, m2.icon
+        from menu m1 right join menu m2 on m1.parent_id = m2.menu_id
+        where m2.menu_id in
+        <foreach collection="menuIds" item="menuId" open="(" separator="," close=")">
+            #{menuId,jdbcType=NUMERIC}
+        </foreach>
+        and m2.parent_id is null
+
+    </select>
 </mapper>

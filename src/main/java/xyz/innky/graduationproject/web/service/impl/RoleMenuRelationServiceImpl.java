@@ -6,6 +6,8 @@ import xyz.innky.graduationproject.web.service.RoleMenuRelationService;
 import xyz.innky.graduationproject.web.mapper.RoleMenuRelationMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author xingyijin
 * @description 针对表【role_menu_relation】的数据库操作Service实现
@@ -15,6 +17,10 @@ import org.springframework.stereotype.Service;
 public class RoleMenuRelationServiceImpl extends ServiceImpl<RoleMenuRelationMapper, RoleMenuRelation>
     implements RoleMenuRelationService{
 
+    @Override
+    public List<RoleMenuRelation> getListByRoleId(Integer roleId) {
+        return getBaseMapper().getAllByRoleId(roleId);
+    }
 }
 
 

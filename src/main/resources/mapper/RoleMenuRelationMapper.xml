@@ -13,4 +13,11 @@
     <sql id="Base_Column_List">
         id,role_id,menu_id
     </sql>
+    <select id="getAllByRoleId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from role_menu_relation
+        where
+        role_id = #{roleId,jdbcType=NUMERIC}
+    </select>
 </mapper>

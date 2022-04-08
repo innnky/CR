@@ -38,7 +38,7 @@ public class Menu implements Serializable {
     /**
      * 
      */
-    private Integer icon;
+    private String icon;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -5,6 +5,10 @@ import xyz.innky.graduationproject.web.pojo.Menu;
 import xyz.innky.graduationproject.web.service.MenuService;
 import xyz.innky.graduationproject.web.mapper.MenuMapper;
 import org.springframework.stereotype.Service;
+import xyz.innky.graduationproject.web.vo.MenuVo;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author xingyijin
@@ -15,6 +19,11 @@ import org.springframework.stereotype.Service;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
     implements MenuService{
 
+    @Override
+    public List<MenuVo> getMenusByMenuIds(List<Integer> menuIds) {
+//        return menuIds.stream().map(menuId -> getBaseMapper().getOneByMenuId(menuId)).collect(Collectors.toList());
+        return getBaseMapper().getListByMenuIds(menuIds);
+    }
 }
 
 

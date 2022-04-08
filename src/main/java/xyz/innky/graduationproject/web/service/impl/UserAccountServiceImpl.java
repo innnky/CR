@@ -7,19 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.ObjectUtils;
-import xyz.innky.graduationproject.web.pojo.Student;
-import xyz.innky.graduationproject.web.pojo.Teacher;
-import xyz.innky.graduationproject.web.pojo.UserAccount;
-import xyz.innky.graduationproject.web.service.StudentService;
-import xyz.innky.graduationproject.web.service.TeacherService;
-import xyz.innky.graduationproject.web.service.UserAccountService;
+import xyz.innky.graduationproject.common.utils.AccountUtil;
+import xyz.innky.graduationproject.web.pojo.*;
+import xyz.innky.graduationproject.web.service.*;
 import xyz.innky.graduationproject.web.mapper.UserAccountMapper;
 import org.springframework.stereotype.Service;
+import xyz.innky.graduationproject.web.vo.MenuVo;
 import xyz.innky.graduationproject.web.vo.UserAccountDetail;
 import xyz.innky.graduationproject.web.vo.UserAccountStuVo;
 import xyz.innky.graduationproject.web.vo.UserAccountTeacherVo;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author xingyijin
@@ -34,6 +33,10 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     StudentService studentService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    RoleMenuRelationService roleMenuRelationService;
+    @Autowired
+    MenuService menuService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -95,6 +98,14 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         }
         return userAccountTeacherVoPage;
 
+    }
+
+    @Override
+    public List<MenuVo> getMenu() {
+        UserAccount userAccount = getBaseMapper().selectById(AccountUtil.getUserId());
+        List<RoleMenuRelation> listByRoleId = roleMenuRelationService.getListByRoleId(userAccount.getRoleId());
+        List<Integer> menuIds = listByRoleId.stream().map(RoleMenuRelation::getMenuId).collect(Collectors.toList());
+        return menuService.getMenusByMenuIds(menuIds);
     }
 }
 

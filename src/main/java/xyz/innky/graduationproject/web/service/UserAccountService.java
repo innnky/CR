@@ -2,11 +2,15 @@ package xyz.innky.graduationproject.web.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import xyz.innky.graduationproject.web.pojo.Menu;
 import xyz.innky.graduationproject.web.pojo.Student;
 import xyz.innky.graduationproject.web.pojo.UserAccount;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.innky.graduationproject.web.vo.MenuVo;
 import xyz.innky.graduationproject.web.vo.UserAccountStuVo;
 import xyz.innky.graduationproject.web.vo.UserAccountTeacherVo;
+
+import java.util.List;
 
 /**
 * @author xingyijin
@@ -20,4 +24,6 @@ public interface UserAccountService extends IService<UserAccount>, UserDetailsSe
     Page<UserAccountStuVo> getStudentAccounts(Integer page, Integer pageSize, String studentName, Integer studentId, String account);
 
     Page<UserAccountTeacherVo> getTeacherAccounts(Integer page, Integer pageSize, String teacherName, Integer teacherId, String account);
+
+    List<MenuVo> getMenu();
 }

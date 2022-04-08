@@ -1,7 +1,11 @@
 package xyz.innky.graduationproject.web.mapper;
+import org.apache.ibatis.annotations.Param;
 
 import xyz.innky.graduationproject.web.pojo.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import xyz.innky.graduationproject.web.vo.MenuVo;
+
+import java.util.List;
 
 /**
 * @author xingyijin
@@ -10,7 +14,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity xyz.innky.graduationproject.web.pojo.Menu
 */
 public interface MenuMapper extends BaseMapper<Menu> {
-
+    Menu getOneByMenuId(@Param("menuId") Integer menuId);
+    List<MenuVo> getListByMenuIds(@Param("menuIds") List<Integer> menuIds);
 }
 
 
