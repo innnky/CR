@@ -16,11 +16,11 @@ import java.util.List;
 */
 public interface ClassInfoService extends IService<ClassInfo> {
 
-    Page<ClassInfoVo> getAllClass(Integer page, Integer pageSize, String college, String major, String grade, String className);
+    IPage<ClassInfoVo> getAllClass(Integer page, Integer pageSize, String college, String major, String grade, String className);
 
     ClassInfo selectByClassId(Integer classId);
 
-    Page<ClassInfoVo> getAllClassWithoutTotal(int i, int i1, String college, String major, String grade, String className);
+    IPage<ClassInfoVo> getAllClassWithoutTotal(int i, int i1, String college, String major, String grade, String className);
 
     List<Student> getStudentsByClass(Integer id);
 }

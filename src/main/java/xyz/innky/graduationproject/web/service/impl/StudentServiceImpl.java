@@ -50,6 +50,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         studentVoLambdaQueryWrapper.like(!ObjectUtils.isEmpty(studentName), StudentVo::getStudentName, studentName);
         studentVoLambdaQueryWrapper.eq(!ObjectUtils.isEmpty(studentId), StudentVo::getStudentId, studentId);
         studentVoLambdaQueryWrapper.in(StudentVo::getClassId, classes);
+        studentVoLambdaQueryWrapper.eq(!ObjectUtils.isEmpty(gender), StudentVo::getGender, gender);
         getBaseMapper().selectPageVo(studentVoPage, studentVoLambdaQueryWrapper);
         for (StudentVo record : studentVoPage.getRecords()) {
             ClassInfo classInfos1 = classInfoService.selectByClassId(record.getClassId());

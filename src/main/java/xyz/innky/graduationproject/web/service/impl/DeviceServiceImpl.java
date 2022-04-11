@@ -38,7 +38,7 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
         }
         List<Integer> imageIds = records.stream().map(Image::getImageId).collect(java.util.stream.Collectors.toList());
         LambdaQueryWrapper<Device> deviceLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        deviceLambdaQueryWrapper.in(Device::getDeviceId, imageIds);
+        deviceLambdaQueryWrapper.in(Device::getImageId, imageIds);
         deviceLambdaQueryWrapper.eq(!ObjectUtils.isEmpty(deviceId), Device::getDeviceId, deviceId);
         deviceLambdaQueryWrapper.like(!ObjectUtils.isEmpty(deviceName), Device::getDeviceName, deviceName);
         deviceLambdaQueryWrapper.eq(!ObjectUtils.isEmpty(status), Device::getStatus, status);

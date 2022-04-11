@@ -34,10 +34,8 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
         if (!ObjectUtils.isEmpty(gender)){
             wrapper.eq(Teacher::getGender, gender);
         }
-        if (departmentId!=null){
-            wrapper.eq(TeacherVo::getDepartmentId, departmentId);
-        }
-        getBaseMapper().selectPageVo(teacherVoPage,wrapper);
+
+        getBaseMapper().selectPageVo(teacherVoPage,wrapper, departmentId);
         return teacherVoPage;
     }
 

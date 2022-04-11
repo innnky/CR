@@ -38,7 +38,9 @@
         select
         <include refid="Base_Column_List"/>
         from student
+        <if test="studentName!=null and studentName!=''">
         where
         student_name = #{studentName,jdbcType=VARCHAR}
+        </if>
     </select>
 </mapper>

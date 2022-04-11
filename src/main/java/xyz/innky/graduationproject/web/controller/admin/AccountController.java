@@ -14,11 +14,11 @@ public class AccountController {
     private UserAccountService userAccountService;
 
     @PostMapping("/")
-    public Result addAccount(UserAccount userAccount) {
+    public Result addAccount(@RequestBody UserAccount userAccount) {
         return ResultUtil.returnResultByCondition(userAccountService.save(userAccount), "添加账户");
     }
     @PutMapping("/")
-    public Result updateAccount(UserAccount userAccount) {
+    public Result updateAccount(@RequestBody UserAccount userAccount) {
         return ResultUtil.returnResultByCondition(userAccountService.updateById(userAccount), "更新账户");
     }
     @DeleteMapping("/{id}")

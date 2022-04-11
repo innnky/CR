@@ -54,6 +54,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         Page<UserAccount> userAccountPage = new Page<>(page, pageSize);
         LambdaQueryWrapper<UserAccount> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(!ObjectUtils.isEmpty(account), UserAccount::getAccount, account);
+        queryWrapper.eq(UserAccount::getRoleId, 3);
         return getBaseMapper().selectPage(userAccountPage, queryWrapper);
     }
 

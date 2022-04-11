@@ -20,7 +20,7 @@ public interface TeacherMapper extends BaseMapper<Teacher> {
     List<Teacher> searchAllByDepartmentId(@Param("departmentId") Integer departmentId);
     Integer searchAllCountByDepartmentId(@Param("departmentId") Integer departmentId);
 
-    Page<TeacherVo> selectPageVo(@Param("teacherVoPage") Page<TeacherVo> teacherVoPage, @Param("ew") Wrapper<TeacherVo> ew);
+    Page<TeacherVo> selectPageVo(@Param("teacherVoPage") Page<TeacherVo> teacherVoPage, @Param("ew") Wrapper<TeacherVo> ew, @Param("departmentId") Integer departmentId);
 
     List<Teacher> getAllByTeacherName(@Param("teacherName") String teacherName);
 }

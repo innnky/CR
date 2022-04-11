@@ -1,6 +1,7 @@
 package xyz.innky.graduationproject.web.vo;
 
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 import xyz.innky.graduationproject.web.pojo.UserAccount;
 
 @Data
