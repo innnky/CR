@@ -1,6 +1,0 @@
-@startuml
-class xyz.innky.graduationproject.web.testUML.Test1 {
-}
-class xyz.innky.graduationproject.web.testUML.Test2 {
-}
-@enduml
