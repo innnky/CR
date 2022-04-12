@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import xyz.innky.graduationproject.web.mapper.StudentMapper;
-import xyz.innky.graduationproject.web.mapper.TeacherCourseClassRelationMapper;
 import xyz.innky.graduationproject.web.pojo.Course;
+import xyz.innky.graduationproject.web.pojo.CourseTime;
 import xyz.innky.graduationproject.web.pojo.Student;
-import xyz.innky.graduationproject.web.pojo.TeacherCourseClassRelation;
+//import xyz.innky.graduationproject.web.pojo.TeacherCourseClassRelation;
 import xyz.innky.graduationproject.web.service.CourseService;
 import xyz.innky.graduationproject.web.mapper.CourseMapper;
 import org.springframework.stereotype.Service;
+import xyz.innky.graduationproject.web.service.CourseTimeService;
 
 import java.sql.Wrapper;
 import java.util.ArrayList;
@@ -30,11 +31,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     implements CourseService{
 
     @Autowired
-    TeacherCourseClassRelationMapper teacherCourseClassRelationMapper;
-    @Autowired
     StudentMapper studentMapper;
     @Autowired
     CourseMapper courseMapper;
+    @Autowired
+    CourseTimeService courseTimeService;
+
     @Override
     public List<Course> getAllCoursesByStuid(Integer stuid) {
 
@@ -43,15 +45,16 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         studentQueryWrapper.eq("student_id", stuid);
         Student student = studentMapper.selectOne(studentQueryWrapper);
         if (student!= null){
-            QueryWrapper<TeacherCourseClassRelation> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("class_id", student.getClassId());
-            List<TeacherCourseClassRelation> relations = teacherCourseClassRelationMapper.selectList(queryWrapper);
-            for (TeacherCourseClassRelation relation : relations) {
-                QueryWrapper<Course> wrapper = new QueryWrapper<>();
-                wrapper.eq("course_id", relation.getCourseId());
-                Course course = courseMapper.selectOne(wrapper);
-                res.add(course);
-            }
+//            QueryWrapper<TeacherCourseClassRelation> queryWrapper = new QueryWrapper<>();
+//            queryWrapper.eq("class_id", student.getClassId());
+//            List<TeacherCourseClassRelation> relations = teacherCourseClassRelationMapper.selectList(queryWrapper);
+//            for (TeacherCourseClassRelation relation : relations) {
+//                QueryWrapper<Course> wrapper = new QueryWrapper<>();
+//                wrapper.eq("course_id", relation.getCourseId());
+//                Course course = courseMapper.selectOne(wrapper);
+//                res.add(course);
+//            }
+            return null;
         }
         return res;
     }
@@ -65,6 +68,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         courseMapper.selectPage(coursePage, queryWrapper);
         return coursePage;
     }
+
 }
 
 

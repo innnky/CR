@@ -6,14 +6,21 @@
 
     <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.CourseTime">
             <id property="timeId" column="time_id" jdbcType="INTEGER"/>
-            <result property="term" column="term" jdbcType="VARCHAR"/>
+            <result property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
             <result property="weekday" column="weekday" jdbcType="INTEGER"/>
             <result property="week" column="week" jdbcType="INTEGER"/>
             <result property="classSequence" column="class_sequence" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        time_id,term,weekday,
+        time_id,s_course_id,weekday,
         week,class_sequence
     </sql>
+    <select id="getAllByCourseId" resultType="xyz.innky.graduationproject.web.pojo.CourseTime">
+            select
+            <include refid="Base_Column_List"/>
+            from course_time
+            where
+            s_course_id = #{courseId,jdbcType=NUMERIC}
+    </select>
 </mapper>

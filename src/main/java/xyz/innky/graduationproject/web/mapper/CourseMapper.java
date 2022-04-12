@@ -1,7 +1,12 @@
 package xyz.innky.graduationproject.web.mapper;
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
 
 import xyz.innky.graduationproject.web.pojo.Course;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import xyz.innky.graduationproject.web.pojo.CourseTime;
 
 /**
 * @author xingyijin
@@ -10,6 +15,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity xyz.innky.graduationproject.web.pojo.Course
 */
 public interface CourseMapper extends BaseMapper<Course> {
+    Page<CourseTime> getAllByCourseId(@Param("page") Page<CourseTime> page, @Param("courseId") Integer courseId);
 
 }
 

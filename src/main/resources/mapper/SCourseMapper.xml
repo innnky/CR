@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.innky.graduationproject.web.mapper.SCourseMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.SCourse">
+            <id property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
+            <result property="teacherid" column="teacherId" jdbcType="INTEGER"/>
+            <result property="courseid" column="courseId" jdbcType="INTEGER"/>
+            <result property="term" column="term" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="SCourseVo" extends="BaseResultMap" type="xyz.innky.graduationproject.web.vo.SCourseVo">
+        <result property="teacherName" column="tname" jdbcType="VARCHAR"/>
+        <result property="courseName" column="cname" jdbcType="VARCHAR"/>
+        <collection property="classInfos" ofType="xyz.innky.graduationproject.web.pojo.ClassInfo">
+            <id property="classId" column="cid" jdbcType="INTEGER"/>
+            <result property="className" column="cname" jdbcType="VARCHAR"/>
+        </collection>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        s_course_id,teacherId,courseId,
+        term
+    </sql>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="sCourseId">
+        insert into s_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sCourseId != null">s_course_id,</if>
+            <if test="teacherid != null">teacherId,</if>
+            <if test="courseid != null">courseId,</if>
+            <if test="term != null">term,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sCourseId != null">#{sCourseId,jdbcType=INTEGER},</if>
+            <if test="teacherid != null">#{teacherid,jdbcType=INTEGER},</if>
+            <if test="courseid != null">#{courseid,jdbcType=INTEGER},</if>
+            <if test="term != null">#{term,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <delete id="deleteBySCourseId">
+        delete
+        from s_course
+        where s_course_id = #{sCourseId,jdbcType=NUMERIC}
+    </delete>
+    <select id="getAllSCourse" resultMap="SCourseVo">
+        select s_course.*, sccr.class_id cid, class_name cname, teacher_name tname, course_name cname
+        from s_course , s_course_class_relation sccr , class_info ci  ,teacher t ,course co
+        <where>
+            s_course.s_course_id = sccr.s_course_id
+            and sccr.class_id = ci.class_id
+            and s_course.teacherId = t.teacher_id
+            and s_course.courseId = co.course_id
+            <if test="teacherName != null and teacherName != ''">
+                and teacher_name like concat('%',#{teacherName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="courseName != null and courseName != ''">
+                and course_name like concat('%',#{courseName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="className != null and className != ''">
+                and class_name like concat('%',#{className,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+    <update id="updateSelective">
+        update s_course
+        <set>
+            <if test="teacherid != null">teacherId=#{teacherid,jdbcType=NUMERIC},</if>
+            <if test="courseid != null">courseId=#{courseid,jdbcType=NUMERIC},</if>
+            <if test="term != null">term=#{term,jdbcType=VARCHAR},</if>
+        </set>
+        where s_course_id = #{sCourseId,jdbcType=NUMERIC}
+    </update>
+</mapper>

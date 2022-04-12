@@ -15,4 +15,11 @@
         course_id,course_description,course_name,
         course_img
     </sql>
+    <select id="getAllByCourseId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from course
+        where
+        course_id = #{courseId,jdbcType=NUMERIC}
+    </select>
 </mapper>

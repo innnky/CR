@@ -9,36 +9,31 @@ import lombok.Data;
 
 /**
  * 
- * @TableName teacher_course_class_relation
+ * @TableName s_course
  */
-@TableName(value ="teacher_course_class_relation")
+@TableName(value ="s_course")
 @Data
-public class TeacherCourseClassRelation implements Serializable {
+public class SCourse implements Serializable {
     /**
      * 
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
-
-    /**
-     * 
-     */
-    private Integer teacherId;
-
-    /**
-     * 
-     */
     private Integer sCourseId;
 
     /**
      * 
      */
-    private Integer courseId;
+    private Integer teacherid;
 
     /**
      * 
      */
-    private Integer classId;
+    private Integer courseid;
+
+    /**
+     * 
+     */
+    private String term;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

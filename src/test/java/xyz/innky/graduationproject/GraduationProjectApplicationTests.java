@@ -8,11 +8,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import xyz.innky.graduationproject.web.mapper.MenuMapper;
 import xyz.innky.graduationproject.web.mapper.UserAccountMapper;
+import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.Scene;
 import xyz.innky.graduationproject.web.pojo.Teacher;
 import xyz.innky.graduationproject.web.service.CourseService;
+import xyz.innky.graduationproject.web.service.SCourseClassRelationService;
+import xyz.innky.graduationproject.web.service.SCourseService;
 import xyz.innky.graduationproject.web.vo.ClassInfoVo;
 import xyz.innky.graduationproject.web.vo.MenuVo;
+import xyz.innky.graduationproject.web.vo.SCourseVo;
 import xyz.innky.graduationproject.web.vo.TeacherVo;
 
 import java.lang.reflect.Array;
@@ -35,6 +39,11 @@ class GraduationProjectApplicationTests {
     @Autowired
     MenuMapper menuMapper;
 
+    @Autowired
+    SCourseClassRelationService sCourseClassRelationService;
+
+    @Autowired
+    SCourseService sCourseService;
 
     @Test
     void contextLoads() {
@@ -102,6 +111,21 @@ class GraduationProjectApplicationTests {
         Optional<Scene> op = Optional.ofNullable(new Scene(1,"aa"));
 //        op.map(Scene::getSceneName).map()
     }
+
+    @Test
+    void testsCourseClassRelationService(){
+//        sCourseClassRelationService.addSCourseClassRelation(1, Arrays.asList("1","2"));
+    }
+    @Test
+    void testsCourseClassRelationService2(){
+        SCourseVo sCourse = new SCourseVo();
+        sCourse.setCourseid(11);
+        sCourse.setTeacherid(2);
+        sCourse.setTerm("2020年春");
+//        sCourse.setClassInfos(Arrays.asList(1,2,3).stream().map(i->new ClassInfo(i, null,null,null,null,null)).collect(Collectors.toList()));
+        sCourseService.addSCourse(sCourse);
+    }
+
 
 
 }

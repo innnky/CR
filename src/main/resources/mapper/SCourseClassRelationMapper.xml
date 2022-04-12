@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.innky.graduationproject.web.mapper.SCourseClassRelationMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.SCourseClassRelation">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
+            <result property="classId" column="class_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,s_course_id,class_id
+    </sql>
+    <insert id="addSCourseClassRelation">
+        insert into s_course_class_relation(s_course_id,class_id) values
+        <foreach collection="classInfos" item="item" index="index" separator=",">
+            (#{sCourseId},#{item})
+        </foreach>
+    </insert>
+    <delete id="deleteBySCourseId">
+        delete
+        from s_course_class_relation
+        where s_course_id = #{sCourseId,jdbcType=NUMERIC}
+    </delete>
+</mapper>

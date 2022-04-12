@@ -53,6 +53,15 @@ export const getRequest = (url, param) => {
         params:param
     })
 }
+export const getRequestWithData = (url, param, data) => {
+    return axios.request({
+        url,
+        method: 'get',
+        params:param,
+        data:data
+    })
+}
+
 export const postRequest = (url, param) => {
     return axios.request({
         url,

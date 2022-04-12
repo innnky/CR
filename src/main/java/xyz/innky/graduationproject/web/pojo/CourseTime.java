@@ -23,7 +23,7 @@ public class CourseTime implements Serializable {
     /**
      * 
      */
-    private String term;
+    private Integer sCourseId;
 
     /**
      * 

@@ -1,10 +1,13 @@
 package xyz.innky.graduationproject.web.controller.admin;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
 import xyz.innky.graduationproject.web.pojo.Course;
+import xyz.innky.graduationproject.web.pojo.CourseTime;
 import xyz.innky.graduationproject.web.service.CourseService;
+import xyz.innky.graduationproject.web.service.CourseTimeService;
 import xyz.innky.graduationproject.web.vo.Result;
 
 @RestController
@@ -12,6 +15,7 @@ import xyz.innky.graduationproject.web.vo.Result;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+
 
     @PostMapping("/")
     public Result addCourse(Course course){
@@ -30,4 +34,7 @@ public class CourseController {
                                String courseId, String courseName){
         return Result.ok(courseService.getAllCourse(page, pageSize, courseId, courseName));
     }
+
+
+
 }
