@@ -32,7 +32,7 @@ public class SCourseController {
     }
 
     @PutMapping("/")
-    public Result updateSCourse(@RequestBody SCourse sCourse){
+    public Result updateSCourse(@RequestBody SCourseVo sCourse){
         return ResultUtil.returnResultByCondition(sCourseService.updateSCourse(sCourse), "更新课程安排");
     }
 
@@ -42,6 +42,12 @@ public class SCourseController {
         return Result.ok(sCourseService.getAllSCourse(page, pageSize, className, courseName, teacherName));
 
     }
+
+    @GetMapping("/{id}/class")
+    public Result getCourseClass(@PathVariable("id") Integer id){
+        return Result.ok(sCourseService.getCourseClass(id));
+    }
+
 
     @GetMapping("/{id}/time")
     public Result getCourseTimeByCourse(@PathVariable("id") Integer id, Integer page, Integer pageSize){
@@ -64,6 +70,8 @@ public class SCourseController {
         courseTime.setSCourseId(id);
         return ResultUtil.returnResultByCondition(courseTimeService.updateById(courseTime), "更新课程时间");
     }
+
+
 
 
 

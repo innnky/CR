@@ -1,6 +1,7 @@
 package xyz.innky.graduationproject.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.SCourseClassRelation;
 import xyz.innky.graduationproject.web.service.SCourseClassRelationService;
 import xyz.innky.graduationproject.web.mapper.SCourseClassRelationMapper;
@@ -25,6 +26,11 @@ public class SCourseClassRelationServiceImpl extends ServiceImpl<SCourseClassRel
     @Override
     public void removeSCourseClassRelation(Integer id) {
         getBaseMapper().deleteBySCourseId(id);
+    }
+
+    @Override
+    public List<ClassInfo> getCourseClass(Integer id) {
+        return getBaseMapper().getAllBySCourseId(id);
     }
 }
 

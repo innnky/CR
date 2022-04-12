@@ -13,9 +13,7 @@
             <el-tab-pane label="课程安排" name="second">
               <course-plan-panel/>
             </el-tab-pane>
-            <el-tab-pane label="课表管理" name="third">
-              <course-table-panel/>
-            </el-tab-pane>
+
           </el-tabs>
 
         </div>
@@ -28,14 +26,17 @@
 <script>
 import CoursePanel from "@/components/system/CoursePanel";
 import CoursePlanPanel from "@/components/system/CoursePlanPanel";
-import CourseTablePanel from "@/components/system/CourseTablePanel";
 export default {
   name: "CourseManagement",
-  components: {CourseTablePanel, CoursePlanPanel, CoursePanel},
+  components: { CoursePlanPanel, CoursePanel},
   data() {
     return {
       activeName:"first",
-
+    }
+  },
+  mounted() {
+    if (this.$route.query.isReturning){
+      this.activeName = 'second'
     }
   }
 }

@@ -9,18 +9,12 @@
             <result property="classId" column="class_id" jdbcType="INTEGER"/>
             <result property="studentId" column="student_id" jdbcType="INTEGER"/>
             <result property="dutyName" column="duty_name" jdbcType="VARCHAR"/>
+            <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,class_id,student_id,
-        duty_name
+        duty_name,start_time,end_time
     </sql>
-    <select id="searchAllByStudentId" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from duty
-        where
-        student_id = #{studentId,jdbcType=NUMERIC}
-    </select>
-
 </mapper>

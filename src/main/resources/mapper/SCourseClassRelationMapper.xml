@@ -24,4 +24,9 @@
         from s_course_class_relation
         where s_course_id = #{sCourseId,jdbcType=NUMERIC}
     </delete>
+    <select id="getAllBySCourseId" resultType="xyz.innky.graduationproject.web.pojo.ClassInfo">
+        select ci.* from s_course_class_relation left join class_info ci on s_course_class_relation.class_id = ci.class_id
+        where s_course_id=#{sCourseId,jdbcType=NUMERIC}
+    </select>
+
 </mapper>

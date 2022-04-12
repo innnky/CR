@@ -54,8 +54,11 @@ public class SCourseServiceImpl extends ServiceImpl<SCourseMapper, SCourse>
     }
 
     @Override
-    public boolean updateSCourse(SCourse sCourse) {
+    public boolean updateSCourse(SCourseVo sCourse) {
         if (getBaseMapper().updateSelective(sCourse)==1) {
+            sCourseClassRelationService.removeSCourseClassRelation(sCourse.getSCourseId());
+            List<Integer> classIds = sCourse.getClassInfos().stream().map(ClassInfo::getClassId).collect(java.util.stream.Collectors.toList());
+            sCourseClassRelationService.addSCourseClassRelation(sCourse.getSCourseId(), classIds);
             return true;
         }
         return false;
@@ -69,6 +72,11 @@ public class SCourseServiceImpl extends ServiceImpl<SCourseMapper, SCourse>
         allSCourse = allSCourse.stream().skip((page-1)*pageSize).limit(pageSize).collect(Collectors.toList());
         page1.setRecords(allSCourse);
         return page1;
+    }
+
+    @Override
+    public List<ClassInfo> getCourseClass(Integer id) {
+        return sCourseClassRelationService.getCourseClass(id);
     }
 
 }

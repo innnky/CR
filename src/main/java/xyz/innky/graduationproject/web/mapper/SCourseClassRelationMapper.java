@@ -1,6 +1,7 @@
 package xyz.innky.graduationproject.web.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.SCourseClassRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -17,6 +18,8 @@ public interface SCourseClassRelationMapper extends BaseMapper<SCourseClassRelat
     void addSCourseClassRelation(@Param("sCourseId") Integer sCourseId, @Param("classInfos") List<Integer> classInfos);
 
     int deleteBySCourseId(@Param("sCourseId") Integer sCourseId);
+
+    List<ClassInfo> getAllBySCourseId(@Param("sCourseId") Integer sCourseId);
 }
 
 

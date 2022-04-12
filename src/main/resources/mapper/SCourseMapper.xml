@@ -13,10 +13,10 @@
 
     <resultMap id="SCourseVo" extends="BaseResultMap" type="xyz.innky.graduationproject.web.vo.SCourseVo">
         <result property="teacherName" column="tname" jdbcType="VARCHAR"/>
-        <result property="courseName" column="cname" jdbcType="VARCHAR"/>
+        <result property="courseName" column="coname" jdbcType="VARCHAR"/>
         <collection property="classInfos" ofType="xyz.innky.graduationproject.web.pojo.ClassInfo">
             <id property="classId" column="cid" jdbcType="INTEGER"/>
-            <result property="className" column="cname" jdbcType="VARCHAR"/>
+            <result property="className" column="clname" jdbcType="VARCHAR"/>
         </collection>
 
     </resultMap>
@@ -46,7 +46,7 @@
         where s_course_id = #{sCourseId,jdbcType=NUMERIC}
     </delete>
     <select id="getAllSCourse" resultMap="SCourseVo">
-        select s_course.*, sccr.class_id cid, class_name cname, teacher_name tname, course_name cname
+        select s_course.*, sccr.class_id cid, class_name clname, teacher_name tname, course_name coname
         from s_course , s_course_class_relation sccr , class_info ci  ,teacher t ,course co
         <where>
             s_course.s_course_id = sccr.s_course_id

@@ -29,6 +29,7 @@ import ImageManagement from "@/views/common/ImageManagement";
 import StudentManagement from "@/views/system/StudentManagement";
 import TeacherManagement from "@/views/system/TeacherManagement";
 import CourseManagement from "@/views/system/CourseManagement";
+import CourseTablePanel from "@/components/system/CourseTablePanel";
 Vue.use(VueRouter)
 const routes = [
     {
@@ -148,6 +149,10 @@ const routes = [
                 path: '/CourseManagement',
                 component: CourseManagement
 
+            },
+            {
+                path: "/CourseTablePanel",
+                component: CourseTablePanel
             }
 
         ]

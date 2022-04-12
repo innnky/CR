@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import xyz.innky.graduationproject.web.mapper.StudentMapper;
+import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.Course;
 import xyz.innky.graduationproject.web.pojo.CourseTime;
 import xyz.innky.graduationproject.web.pojo.Student;
@@ -63,8 +64,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     public Page<Course> getAllCourse(Integer page, Integer pageSize, String courseId, String courseName) {
         Page<Course> coursePage = new Page<>(page, pageSize);
         QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(ObjectUtils.isEmpty(courseId), "course_id", courseId);
-        queryWrapper.eq(ObjectUtils.isEmpty(courseName), "course_name", courseName);
+        queryWrapper.eq(!ObjectUtils.isEmpty(courseId), "course_id", courseId);
+        queryWrapper.eq(!ObjectUtils.isEmpty(courseName), "course_name", courseName);
         courseMapper.selectPage(coursePage, queryWrapper);
         return coursePage;
     }

@@ -1,6 +1,7 @@
 package xyz.innky.graduationproject.web.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.innky.graduationproject.web.pojo.CourseTime;

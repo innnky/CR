@@ -18,11 +18,11 @@ public class CourseController {
 
 
     @PostMapping("/")
-    public Result addCourse(Course course){
+    public Result addCourse(@RequestBody Course course){
         return ResultUtil.returnResultByCondition(courseService.save(course), "添加课程");
     }
     @PutMapping("/")
-    public Result updateCourse(Course course){
+    public Result updateCourse(@RequestBody Course course){
         return ResultUtil.returnResultByCondition(courseService.updateById(course), "更新课程");
     }
     @DeleteMapping("/{id}")
