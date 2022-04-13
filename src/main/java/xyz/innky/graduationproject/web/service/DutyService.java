@@ -3,6 +3,8 @@ package xyz.innky.graduationproject.web.service;
 import xyz.innky.graduationproject.web.pojo.Duty;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
 * @author xingyijin
 * @description 针对表【duty】的数据库操作Service
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface DutyService extends IService<Duty> {
 
+    List<Duty> searchAllByStudentId(Integer studentId);
 }

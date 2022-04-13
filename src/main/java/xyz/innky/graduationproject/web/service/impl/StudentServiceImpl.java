@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import xyz.innky.graduationproject.web.mapper.ClassInfoMapper;
 import xyz.innky.graduationproject.web.mapper.DutyMapper;
@@ -12,11 +13,13 @@ import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.Duty;
 import xyz.innky.graduationproject.web.pojo.Student;
 import xyz.innky.graduationproject.web.service.ClassInfoService;
+import xyz.innky.graduationproject.web.service.ClassStudentRelationService;
 import xyz.innky.graduationproject.web.service.DutyService;
 import xyz.innky.graduationproject.web.service.StudentService;
 import xyz.innky.graduationproject.web.mapper.StudentMapper;
 import org.springframework.stereotype.Service;
 import xyz.innky.graduationproject.web.vo.ClassInfoVo;
+import xyz.innky.graduationproject.web.vo.ClassStudentVo;
 import xyz.innky.graduationproject.web.vo.StudentVo;
 
 import java.util.ArrayList;
@@ -28,12 +31,15 @@ import java.util.List;
 * @createDate 2022-04-06 15:13:05
 */
 @Service
+@Transactional
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
     implements StudentService{
     @Autowired
     DutyService dutyService;
     @Autowired
     ClassInfoService classInfoService;
+    @Autowired
+    ClassStudentRelationService classStudentRelationService;
     @Override
     public Page<StudentVo> getAllStudents(Integer page, Integer pageSize, String studentName, Integer studentId, String college, String grade, String major, String className, String gender) {
 
@@ -74,6 +80,21 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
     @Override
     public List<Student> getAllStudentsByName(String studentName) {
         return getBaseMapper().selectByStudentName(studentName);
+    }
+
+    @Override
+    public List<ClassStudentVo> getHistoryClass(Integer id) {
+        return classStudentRelationService.getHistoryClass(id);
+    }
+
+    @Override
+    public boolean addStudent(Student student) {
+        if (getBaseMapper().insertSelective(student)==1){
+            if (classStudentRelationService.addStudent(student)){
+                return true;
+            }
+        }
+        throw new RuntimeException();
     }
 
 }

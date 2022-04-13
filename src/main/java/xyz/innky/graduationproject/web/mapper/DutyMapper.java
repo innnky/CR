@@ -1,4 +1,6 @@
 package xyz.innky.graduationproject.web.mapper;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import xyz.innky.graduationproject.web.pojo.Duty;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -10,7 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity xyz.innky.graduationproject.web.pojo.Duty
 */
 public interface DutyMapper extends BaseMapper<Duty> {
-
+    List<Duty> searchAllByStudentId(@Param("studentId") Integer studentId);
 }
 
 

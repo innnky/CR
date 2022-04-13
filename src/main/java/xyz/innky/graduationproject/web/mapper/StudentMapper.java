@@ -25,6 +25,8 @@ public interface StudentMapper extends BaseMapper<Student> {
 
     List<Student> selectByStudentName(@Param("studentName") String studentName);
 
+    int insertSelective(Student student);
+
 }
 
 

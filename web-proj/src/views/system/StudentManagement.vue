@@ -66,8 +66,36 @@
             </el-table-column>
 
             <el-table-column
-                prop="classInfo.className" width="150"
+                prop="classInfo.className" width="230"
                 label="班级">
+              <template slot-scope="scope">
+                <el-tag type="success">{{scope.row.classInfo.className}}</el-tag>
+<!--                <el-button type="text" size="small" class="ms-1" @click="handelShowEdit(scope.row)">编辑</el-button>-->
+                <el-tag type="" class="ms-1" style="cursor: pointer" @click="handleHistory(scope.row)">历史</el-tag>
+                <el-popover
+                    placement="right"
+                    width="320"
+                    trigger="click">
+                  <el-select
+                      v-model="classValue"
+                      filterable
+                      remote
+                      reserve-keyword
+                      placeholder="请输入关键词"
+                      :remote-method="searchClasses"
+                      :loading="loading">
+                    <el-option
+                        v-for="item in classes"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                  </el-select>
+                  <el-button size="tiny" class="ms-1">确认</el-button>
+                  <el-button slot="reference" class="ms-1" size="small" type="warning" plain>变更</el-button>
+                </el-popover>
+
+              </template>
             </el-table-column>
             <el-table-column
                 prop="classInfo.college" width="150"
@@ -162,6 +190,37 @@
         <el-button type="primary" @click="doAddOrUpdate">确 定</el-button>
       </div>
     </el-dialog>
+
+
+    <el-dialog title="历史" :visible.sync="dialogFormVisibleHistory" width="70%" height="80%">
+      <el-table
+          :data="historyTableData"
+          stripe
+          style="width: 100%"
+          height="200">
+        <el-table-column
+            prop="classId"
+            label="班级id">
+        </el-table-column>
+        <el-table-column
+            prop="className"
+            label="班级名称">
+        </el-table-column>
+        <el-table-column
+            prop="startTime"
+            label="进入班级时间">
+        </el-table-column>
+        <el-table-column
+            prop="endTime"
+            label="退出班级时间">
+        </el-table-column>
+      </el-table>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibleHistory = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisibleHistory = false">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 
 </template>
@@ -193,6 +252,13 @@ export default {
       },
       dialogFormVisible: false,
       dialogFormTitle: '',
+      dialogFormVisibleHistory: false,
+      historyTableData: [],
+
+      visible: false,
+      classes: [],
+      classValue: '',
+      loading: false,
 
     }
   },
@@ -263,6 +329,35 @@ export default {
         })
       }
     },
+    handleHistory(row){
+      this.dialogFormVisibleHistory = true;
+      getRequest("/admin/student/" + row.studentId + "/history").then(res => {
+        this.historyTableData = res;
+      })
+    },
+    handleChangeClass(row){
+      row
+    },
+    searchClasses(query){
+      if (query !== '') {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.classes = [
+            {
+              value: '11',
+              label: '哈哈'
+            },{
+              value: '33',
+              label: '哈哈22'
+            }
+          ]
+        }, 200);
+      } else {
+        this.classes = [];
+      }
+
+    }
   }
 
 }

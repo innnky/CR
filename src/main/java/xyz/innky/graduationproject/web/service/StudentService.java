@@ -3,6 +3,7 @@ package xyz.innky.graduationproject.web.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.innky.graduationproject.web.pojo.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.innky.graduationproject.web.vo.ClassStudentVo;
 import xyz.innky.graduationproject.web.vo.StudentVo;
 
 import java.util.List;
@@ -21,4 +22,8 @@ public interface StudentService extends IService<Student> {
     List<Student> getStudentsByClass(Integer id);
 
     List<Student> getAllStudentsByName(String studentName);
+
+    List<ClassStudentVo> getHistoryClass(Integer id);
+
+    boolean addStudent(Student student);
 }

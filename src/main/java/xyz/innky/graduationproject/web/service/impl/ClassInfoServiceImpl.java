@@ -15,9 +15,11 @@ import xyz.innky.graduationproject.web.pojo.Student;
 import xyz.innky.graduationproject.web.service.ClassInfoService;
 import xyz.innky.graduationproject.web.mapper.ClassInfoMapper;
 import org.springframework.stereotype.Service;
+import xyz.innky.graduationproject.web.service.ClassStudentRelationService;
 import xyz.innky.graduationproject.web.service.StudentService;
 import xyz.innky.graduationproject.web.service.TeacherService;
 import xyz.innky.graduationproject.web.vo.ClassInfoVo;
+import xyz.innky.graduationproject.web.vo.ClassStudentVo;
 
 import java.util.List;
 
@@ -34,6 +36,8 @@ public class ClassInfoServiceImpl extends ServiceImpl<ClassInfoMapper, ClassInfo
     StudentService studentService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    ClassStudentRelationService classStudentRelationService;
 
     @Override
     public IPage<ClassInfoVo> getAllClass(Integer page, Integer pageSize, String college, String major, String grade, String className) {
@@ -72,8 +76,9 @@ public class ClassInfoServiceImpl extends ServiceImpl<ClassInfoMapper, ClassInfo
     }
 
     @Override
-    public List<Student> getStudentsByClass(Integer id) {
-        return studentService.getStudentsByClass(id);
+    public List<ClassStudentVo> getStudentsByClass(Integer id) {
+//        return studentService.getStudentsByClass(id);
+        return classStudentRelationService.getStudentsByClass(id);
     }
 }
 

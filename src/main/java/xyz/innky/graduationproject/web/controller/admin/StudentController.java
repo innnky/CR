@@ -14,7 +14,7 @@ public class StudentController {
     private StudentService studentService;
      @PostMapping("/")
     public Result addStudent(@RequestBody Student student) {
-        return ResultUtil.returnResultByCondition(studentService.save(student),"添加学生");
+        return ResultUtil.returnResultByCondition(studentService.addStudent(student),"添加学生");
     }
 
     @PutMapping("/")
@@ -34,5 +34,9 @@ public class StudentController {
         return Result.ok(studentService.getAllStudents(page,pageSize,studentName, studentId, college, grade, major, className, gender));
     }
 
+    @GetMapping("/{id}/history")
+    public  Result getHistoryClass(@PathVariable("id") Integer id){
+         return Result.ok(studentService.getHistoryClass(id));
+    }
 
 }

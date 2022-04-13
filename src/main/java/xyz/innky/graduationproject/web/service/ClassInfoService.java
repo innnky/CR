@@ -6,6 +6,7 @@ import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.innky.graduationproject.web.pojo.Student;
 import xyz.innky.graduationproject.web.vo.ClassInfoVo;
+import xyz.innky.graduationproject.web.vo.ClassStudentVo;
 
 import java.util.List;
 
@@ -22,5 +23,5 @@ public interface ClassInfoService extends IService<ClassInfo> {
 
     IPage<ClassInfoVo> getAllClassWithoutTotal(int i, int i1, String college, String major, String grade, String className);
 
-    List<Student> getStudentsByClass(Integer id);
+    List<ClassStudentVo> getStudentsByClass(Integer id);
 }

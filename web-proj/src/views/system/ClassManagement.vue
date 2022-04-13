@@ -18,11 +18,11 @@
                 <el-input placeholder="请输入"  class="w-75" v-model="conditions.major"></el-input>
               </el-form-item>
             </div>
-            <div class="col-4">
-              <el-form-item label="年级">
-                <el-input placeholder="请输入"  class="w-75" v-model="conditions.grade"></el-input>
-              </el-form-item>
-            </div>
+<!--            <div class="col-4">-->
+<!--              <el-form-item label="年级">-->
+<!--                <el-input placeholder="请输入"  class="w-75" v-model="conditions.grade"></el-input>-->
+<!--              </el-form-item>-->
+<!--            </div>-->
             <div class="col-4">
               <el-form-item label="班级">
                 <el-input placeholder="请输入" class="w-75" v-model="conditions.className"></el-input>
@@ -67,10 +67,10 @@
                 label="专业"
             width="160">
             </el-table-column>
-            <el-table-column
-                prop="grade"
-                label="年级" width="60">
-            </el-table-column>
+<!--            <el-table-column-->
+<!--                prop="grade"-->
+<!--                label="年级" width="60">-->
+<!--            </el-table-column>-->
             <el-table-column
                 prop="teacherName"
                 label="班主任" width="80">
@@ -165,6 +165,10 @@
         <el-table-column
             prop="studentName"
             label="学生姓名">
+        </el-table-column>
+        <el-table-column
+            prop="startTime"
+            label="进入班级时间">
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">

@@ -27,6 +27,8 @@ class HttpRequest{
         instance.interceptors.response.use(function (response) {
             if(response.data.code === 200 && response.data.message !== ''){
                 Message.success(response.data.message);
+            }else if(response.data.code === 500 && response.data.message !== ''){
+                Message.error(response.data.message);
             }
             return response.data.data;
         }, function (error) {

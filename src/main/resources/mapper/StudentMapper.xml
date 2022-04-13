@@ -43,4 +43,24 @@
         student_name = #{studentName,jdbcType=VARCHAR}
         </if>
     </select>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="studentId">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studentId != null">student_id,</if>
+            <if test="studentName != null">student_name,</if>
+            <if test="classId != null">class_id,</if>
+            <if test="admissiondate != null">admissionDate,</if>
+            <if test="gender != null">gender,</if>
+            <if test="contact != null">contact,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studentId != null">#{studentId,jdbcType=INTEGER},</if>
+            <if test="studentName != null">#{studentName,jdbcType=VARCHAR},</if>
+            <if test="classId != null">#{classId,jdbcType=INTEGER},</if>
+            <if test="admissiondate != null">#{admissiondate,jdbcType=DATE},</if>
+            <if test="gender != null">#{gender,jdbcType=CHAR},</if>
+            <if test="contact != null">#{contact,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
 </mapper>

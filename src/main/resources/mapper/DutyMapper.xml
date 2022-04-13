@@ -17,4 +17,11 @@
         id,class_id,student_id,
         duty_name,start_time,end_time
     </sql>
+    <select id="searchAllByStudentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from duty
+        where
+        student_id = #{studentId,jdbcType=NUMERIC}
+    </select>
 </mapper>
