@@ -7,6 +7,13 @@ spring:
     username: root
     password: '000508'
     driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-request-size: 1000MB
+      max-file-size: 100MB
 logging:
   level:
     xyz.innky.graduationproject: debug
+
+openstack:
+  baseurl: '192.168.50.53'

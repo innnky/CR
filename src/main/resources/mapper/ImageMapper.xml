@@ -8,9 +8,11 @@
             <id property="imageId" column="image_id" jdbcType="INTEGER"/>
             <result property="imageName" column="image_name" jdbcType="VARCHAR"/>
             <result property="imageType" column="image_type" jdbcType="VARCHAR"/>
+            <result property="uuid" column="uuid" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        image_id,image_name,image_type
+        image_id,image_name,image_type,
+        uuid
     </sql>
 </mapper>

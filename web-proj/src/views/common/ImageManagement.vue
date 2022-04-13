@@ -52,6 +52,10 @@
                 label="镜像类型">
             </el-table-column>
             <el-table-column
+                prop="uuid"
+                label="uuid">
+            </el-table-column>
+            <el-table-column
                 fixed="right"
                 label="操作" width="200">
               <template slot-scope="scope">
@@ -89,6 +93,16 @@
                 <el-input class="w-75" v-model="inputData.imageType" placeholder="请输入镜像类型"></el-input>
               </el-form-item>
             </div>
+<!--            <input v-model="imageFile" type="file"/>-->
+            <el-upload
+                v-if="dialogFormTitle==='添加'"
+                class="upload-demo"
+                action="http://localhost:8081/common/image/file"
+                :file-list="fileList"
+                ref="imageUpload"
+            :on-success="onSuccess">
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
           </div>
         </div>
       </el-form>
@@ -119,12 +133,13 @@ export default {
 
       inputData: {
         imageName: '',
-        imageType: ''
+        imageType: '',
+        fileName:''
+
       },
       dialogFormVisible: false,
       dialogFormTitle: '',
-
-
+      fileList:[],
     }
   },
   mounted() {
@@ -157,7 +172,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        delRequest("/common/image/" + id.imageId).then(() => {
+        delRequest("/common/image/" + id.imageId+"/"+id.uuid).then(() => {
           this.initTableData();
         })
       }).catch(() => {
@@ -171,8 +186,11 @@ export default {
     handelShowAdd(){
       this.inputData = {
         imageName: '',
-        imageType: ''
+        imageType: '',
+        fileName:''
       };
+      // this.$refs.imageUpload.clearFiles()
+      this.fileList=[]
       this.dialogFormTitle = '添加';
       this.dialogFormVisible = true;
     },
@@ -188,12 +206,17 @@ export default {
           this.initTableData();
         })
       }else{
+        console.log(this.fileList);
         postRequest("/common/image/", this.inputData).then(() => {
           this.dialogFormVisible = false;
           this.initTableData();
         })
       }
     },
+    onSuccess(response, file, fileList){
+      this.inputData.fileName = file.name;
+      fileList
+    }
 
 
   }

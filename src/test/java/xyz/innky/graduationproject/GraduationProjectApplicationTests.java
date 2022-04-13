@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import xyz.innky.graduationproject.openstack.api.ImageApi;
 import xyz.innky.graduationproject.web.mapper.MenuMapper;
 import xyz.innky.graduationproject.web.mapper.UserAccountMapper;
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
@@ -19,6 +20,7 @@ import xyz.innky.graduationproject.web.vo.MenuVo;
 import xyz.innky.graduationproject.web.vo.SCourseVo;
 import xyz.innky.graduationproject.web.vo.TeacherVo;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Date;
@@ -44,6 +46,9 @@ class GraduationProjectApplicationTests {
 
     @Autowired
     SCourseService sCourseService;
+
+    @Autowired
+    ImageApi imageApi;
 
     @Test
     void contextLoads() {
@@ -126,6 +131,10 @@ class GraduationProjectApplicationTests {
         sCourseService.addSCourse(sCourse);
     }
 
+    @Test
+    void testImageApi(){
+        imageApi.createImage(new File("/Users/xingyijin/IdeaProjects/graduationProject/src/main/resources/static/cirros-0.3.0-x86_64-disk.img"), "javatest");
+    }
 
 
 }

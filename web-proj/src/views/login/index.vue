@@ -40,7 +40,7 @@ export default {
     return {
       username: '',
       form: {
-        username: "innkly@163.com",
+        username: "admin@163.com",
         password: "123456"
       },
       rules: {

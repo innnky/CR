@@ -30,6 +30,11 @@ public class Image implements Serializable {
      */
     private String imageType;
 
+    /**
+     * 
+     */
+    private String uuid;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }
