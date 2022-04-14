@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers("/**/*.img").permitAll()
                 .mvcMatchers("/common/image/file").permitAll()
+                .mvcMatchers("/**/*file").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

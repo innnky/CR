@@ -57,11 +57,16 @@
                 prop="image.imageType"
                 label="设备类型">
             </el-table-column>
+<!--            uuid-->
+            <el-table-column
+                prop="uuid"
+                label="uuid">
+            </el-table-column>
             <el-table-column
                 label="当前状态">
               <template slot-scope="scope">
-                <el-tag type="success" v-if="scope.row.status === 1">正常</el-tag>
-                <el-tag type="danger" v-if="scope.row.status === 0">异常</el-tag>
+                <el-tag type="success" v-if="scope.row.status === 1">运行</el-tag>
+                <el-tag type="danger" v-if="scope.row.status === 0">关机</el-tag>
               </template>
             </el-table-column>
             <el-table-column
@@ -74,10 +79,20 @@
                 fixed="right"
                 label="操作" width="350">
               <template slot-scope="scope">
+
                 <el-button type="info" size="small" @click="handleShowEdit(scope.row)">编辑</el-button>
+                <el-dropdown @command="handleCommand">
+                  <el-button type="info" size="small" class="mx-2">
+                    命令
+                  </el-button>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item :command="'a'+scope.row.uuid">开机</el-dropdown-item>
+                    <el-dropdown-item :command="'b'+scope.row.uuid">关机</el-dropdown-item>
+                    <el-dropdown-item :command="'c'+scope.row.uuid">远程连接</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
                 <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
-                <el-button type="danger" size="small" >开机</el-button>
-                <el-button type="danger" size="small" >关机</el-button>
+
               </template>
             </el-table-column>
 
@@ -110,11 +125,6 @@
                 <el-input class="w-75" v-model="inputData.imageId" placeholder="请输入镜像id"></el-input>
               </el-form-item>
             </div>
-            <div class="col-4">
-              <el-form-item label="状态">
-                <el-input class="w-75" v-model="inputData.status" placeholder="请输入状态"></el-input>
-              </el-form-item>
-            </div>
           </div>
         </div>
       </el-form>
@@ -129,6 +139,7 @@
 
 <script>
 import {delRequest, getRequest, postRequest, putRequest} from "@/api/data";
+import config from "@/config";
 
 export default {
   name: "DeviceManagement",
@@ -145,10 +156,11 @@ export default {
       inputData: {
         deviceName: '',
         imageType: '',
-        status: '',
+        // status: '',
       },
       dialogFormVisible: false,
       dialogFormTitle: '',
+      openstackUrl: config.openstackUrl
 
     }
   },
@@ -197,15 +209,16 @@ export default {
       this.inputData = {
         deviceName: '',
         imageType: '',
-        status: '',
+        // status: '',
       };
       this.dialogFormTitle = '添加';
       this.dialogFormVisible = true;
     },
     handleShowEdit(row){
-      this.dialogFormTitle = '编辑';
-      Object.assign(this.inputData, row);
-      this.dialogFormVisible = true;
+      window.open(this.openstackUrl+"dashboard/project/instances/"+row.uuid, '_blank');
+      // this.dialogFormTitle = '编辑';
+      // Object.assign(this.inputData, row);
+      // this.dialogFormVisible = true;
     },
     doAddOrUpdate(){
       if(this.dialogFormTitle === '编辑'){
@@ -220,6 +233,36 @@ export default {
         })
       }
     },
+    handleCommand(command){
+      // if(command === 'edit'){
+      //   this.handleShowEdit(row);
+      // }else if(command === 'delete'){
+      //   this.handleDelete(row);
+      // }
+      const uuid = command.substr(1)
+      if (command[0] ==="a"){
+        postRequest("/common/device/"+ uuid+"/start").then(() => {
+          this.initTableData();
+        })
+      }
+      if (command[0] ==="b"){
+        postRequest("/common/device/"+ uuid+"/stop").then(() => {
+          this.initTableData();
+        })
+      }
+      if(command[0] === "c"){
+        getRequest("/common/device/"+ uuid+"/vnc/").then(res => {
+          window.open(res, '_blank');
+        })
+      }
+      // console.log(command);
+    },
+    getVnc(row){
+      getRequest("/common/device/"+ row.uuid+"/vnc/").then(res => {
+        window.open(res.vncUrl, '_blank');
+      })
+      // window.open(this.openstackUrl+"dashboard/project/instances/"+row.uuid, '_blank');
+    }
 
   }
 
@@ -227,5 +270,11 @@ export default {
 </script>
 
 <style scoped>
-
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409EFF;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 </style>

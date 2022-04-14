@@ -9,11 +9,12 @@
             <result property="status" column="status" jdbcType="INTEGER"/>
             <result property="deviceName" column="device_name" jdbcType="VARCHAR"/>
             <result property="imageId" column="image_id" jdbcType="VARCHAR"/>
+            <result property="uuid" column="uuid" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         device_id,status,device_name,
-        image_id
+        image_id,uuid
     </sql>
     <select id="selectPageVo" resultType="xyz.innky.graduationproject.web.vo.DeviceVo">
         select
@@ -23,4 +24,9 @@
             ${ew.sqlSegment}
         </where>
     </select>
+    <update id="updateStatusByUuid">
+        update device
+        set status = #{status,jdbcType=NUMERIC}
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </update>
 </mapper>

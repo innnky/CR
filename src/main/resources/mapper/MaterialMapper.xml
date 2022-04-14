@@ -8,7 +8,7 @@
             <id property="materialId" column="material_id" jdbcType="INTEGER"/>
             <result property="materialName" column="material_name" jdbcType="VARCHAR"/>
             <result property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
-            <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="materialPath" column="material_path" jdbcType="VARCHAR"/>
     </resultMap>
 

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
+import xyz.innky.graduationproject.openstack.api.DeviceApi;
 import xyz.innky.graduationproject.web.pojo.Device;
 import xyz.innky.graduationproject.web.pojo.Image;
 import xyz.innky.graduationproject.web.service.DeviceService;
@@ -26,7 +27,8 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
 
     @Autowired
     ImageService imageService;
-
+    @Autowired
+    DeviceApi deviceApi;
 
     @Override
     public Page<DeviceVo> getAllDeviceByConditionAndPage(String page, String pageSize, String deviceName, String imageType, String status, Integer deviceId) {
@@ -48,6 +50,30 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
             deviceVo.setImage(imageService.getById(deviceVo.getImageId()));
         }
         return deviceVoPage;
+    }
+
+    @Override
+    public boolean addDevice(Device device) {
+        String device1 = deviceApi.createDevice(imageService.getById(device.getImageId()).getUuid(), device.getDeviceName());
+        device.setUuid(device1);
+        return save(device);
+    }
+
+    @Override
+    public boolean removeDevice(String id) {
+        Device device = getById(id);
+        deviceApi.deleteDevice(device.getUuid());
+        return removeById(id);
+    }
+
+    @Override
+    public void stopDevice(String uuid) {
+        getBaseMapper().updateStatusByUuid(0, uuid);
+    }
+
+    @Override
+    public void startDevice(String uuid) {
+        getBaseMapper().updateStatusByUuid(1, uuid);
     }
 }
 

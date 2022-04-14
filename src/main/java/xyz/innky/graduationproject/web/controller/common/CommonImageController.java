@@ -1,6 +1,7 @@
 package xyz.innky.graduationproject.web.controller.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
@@ -20,6 +21,8 @@ public class CommonImageController {
     private ImageService imageService;
     @Autowired
     private ImageApi api;
+    @Value("${static.path}")
+    String fileRootPath;
 
 
     @PostMapping("/")
@@ -49,7 +52,7 @@ public class CommonImageController {
     @PostMapping("/file")
     public Result uploadFile(MultipartFile file){
         try {
-            File file1 = new File("/Users/xingyijin/IdeaProjects/graduationProject/src/main/resources/static/" + file.getOriginalFilename());
+            File file1 = new File(fileRootPath+ file.getOriginalFilename());
             file.transferTo(file1);
 //            api.createImage(file1, "sadasddsdsdsad");
             return Result.ok("上传成功");

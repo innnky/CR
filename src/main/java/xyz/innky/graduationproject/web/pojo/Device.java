@@ -35,6 +35,11 @@ public class Device implements Serializable {
      */
     private String imageId;
 
+    /**
+     * 
+     */
+    private String uuid;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

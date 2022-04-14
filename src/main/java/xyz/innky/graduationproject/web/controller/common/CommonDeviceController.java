@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
+import xyz.innky.graduationproject.openstack.api.DeviceApi;
 import xyz.innky.graduationproject.web.pojo.Device;
 import xyz.innky.graduationproject.web.pojo.Image;
 import xyz.innky.graduationproject.web.service.DeviceService;
@@ -14,6 +15,9 @@ import xyz.innky.graduationproject.web.vo.Result;
 public class CommonDeviceController {
 
     @Autowired
+    private DeviceApi deviceApi;
+
+    @Autowired
     private DeviceService deviceService;
 
     @PutMapping("/")
@@ -22,11 +26,12 @@ public class CommonDeviceController {
     }
     @PostMapping("/")
     public Result addDevice(@RequestBody Device device) {
-        return ResultUtil.returnResultByCondition(deviceService.save(device), "添加设备");
+        device.setStatus(1);
+        return ResultUtil.returnResultByCondition(deviceService.addDevice(device), "添加设备");
     }
     @DeleteMapping("/{id}")
     public Result deleteDevice(@PathVariable("id") String id) {
-        return ResultUtil.returnResultByCondition(deviceService.removeById(id), "删除设备");
+        return ResultUtil.returnResultByCondition(deviceService.removeDevice(id), "删除设备");
     }
 
     @GetMapping("/")
@@ -35,6 +40,23 @@ public class CommonDeviceController {
                                                  Integer deviceId) {
         return Result.ok(deviceService.getAllDeviceByConditionAndPage(page, pageSize, deviceName, imageType, status, deviceId));
 
+    }
+
+    @PostMapping("{uuid}/start")
+    public Result startDevice(@PathVariable("uuid") String uuid) {
+        deviceApi.startServer(uuid);
+        deviceService.startDevice(uuid);
+        return Result.ok("启动设备");
+    }
+    @PostMapping("{uuid}/stop")
+    public Result stopDevice(@PathVariable("uuid") String uuid) {
+        deviceApi.stopServer(uuid);
+        deviceService.stopDevice(uuid);
+        return Result.ok("停止设备");
+    }
+    @GetMapping("{uuid}/vnc")
+    public Result getVnc(@PathVariable("uuid") String uuid) {
+        return new Result(200,"",deviceApi.getVncAddress(uuid));
     }
 
 }

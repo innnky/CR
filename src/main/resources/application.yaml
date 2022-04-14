@@ -1,5 +1,6 @@
 server:
   port: 8081
+  address: localhost
 
 spring:
   datasource:
@@ -17,3 +18,5 @@ logging:
 
 openstack:
   baseurl: '192.168.50.53'
+static:
+  path: "/Users/xingyijin/IdeaProjects/graduationProject/src/main/resources/static/"

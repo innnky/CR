@@ -10,12 +10,13 @@ import xyz.innky.graduationproject.web.vo.DeviceVo;
 /**
 * @author xingyijin
 * @description 针对表【device】的数据库操作Mapper
-* @createDate 2022-04-06 15:13:05
+* @createDate 2022-04-14 17:36:12
 * @Entity xyz.innky.graduationproject.web.pojo.Device
 */
 public interface DeviceMapper extends BaseMapper<Device> {
-
     Page<DeviceVo> selectPageVo(@Param("deviceVoPage") Page<DeviceVo> deviceVoPage, @Param("ew") LambdaQueryWrapper<Device> ew);
+
+    int updateStatusByUuid(@Param("status") Integer status, @Param("uuid") String uuid);
 }
 
 

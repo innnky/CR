@@ -13,4 +13,12 @@ import xyz.innky.graduationproject.web.vo.DeviceVo;
 public interface DeviceService extends IService<Device> {
 
     Page<DeviceVo> getAllDeviceByConditionAndPage(String page, String pageSize, String deviceName, String imageType, String status, Integer deviceId);
+
+    boolean addDevice(Device device);
+
+    boolean removeDevice(String id);
+
+    void stopDevice(String uuid);
+
+    void startDevice(String uuid);
 }
