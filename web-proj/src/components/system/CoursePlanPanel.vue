@@ -30,7 +30,7 @@
         :data="tableData"
         stripe
         style="width: 100%"
-        height="460">
+        height="420">
       <el-table-column
           prop="scourseId"
           label="计划id">
@@ -47,7 +47,7 @@
       <el-table-column
           label="授课班级">
         <template slot-scope="scope">
-        <el-button size="small" type="text" @click="showClasses(scope.row)">查看</el-button>
+          <el-button size="small" type="text" @click="showClasses(scope.row)">查看</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -106,19 +106,31 @@
         <div class="container">
           <div class="row">
             <div class="col-4">
-              <el-form-item label="课程id">
-                <el-input v-model="inputData.courseid" class="w-75" placeholder="请输入课程id"></el-input>
-              </el-form-item>
+              <el-select
+                  v-model="inputData.courseId"
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="请输入课程名"
+                  :remote-method="searchCourse"
+                  :loading="loading">
+                <el-option
+                    v-for="item in courseOptions"
+                    :key="item.courseId"
+                    :label="item.courseName"
+                    :value="item.courseId">
+                </el-option>
+              </el-select>
             </div>
             <div class="col-4">
               <el-form-item label="教师id">
-                <el-input v-model="inputData.teacherid" class="w-75" placeholder="请输入教师id"></el-input>
+                <el-input v-model="inputData.teacherId" class="w-75" placeholder="请输入教师id"></el-input>
               </el-form-item>
             </div>
             <div class="col-4">
               <el-form-item label="班级id">
                 <el-input class="w-75" v-model="tclassId" placeholder="请输入班级id" @keyup.enter.native="addClass"></el-input>
-<!--                <span v-for="cl in inputData.classInfos" :key="cl">{{cl.classId}}</span>-->
+                <!--                <span v-for="cl in inputData.classInfos" :key="cl">{{cl.classId}}</span>-->
                 <el-tag
                     :key="cl"
                     v-for="cl in inputData.classInfos"
@@ -130,10 +142,10 @@
               </el-form-item>
             </div>
             <div class="col-4">
-            <el-form-item label="学期">
-              <el-input placeholder="请输入学期" class="w-75" v-model="inputData.term"></el-input>
-            </el-form-item>
-          </div>
+              <el-form-item label="学期">
+                <el-input placeholder="请输入学期" class="w-75" v-model="inputData.term"></el-input>
+              </el-form-item>
+            </div>
 
           </div>
         </div>
@@ -164,14 +176,21 @@ export default {
       dialogClassVisible: false,
       inputData: {
         classInfos: [],
-        courseid: "",
-        teacherid: "",
+        courseId: "",
+        teacherId: "",
         term: "",
       },
       tclassId: "",
       dialogFormVisible: false,
       dialogFormTitle: '',
-
+      //下拉鞋标相关数据
+      courseOptions: [],
+      teacherOptions: [],
+      classOptions: [],
+      courseValue: "",
+      teacherValue: "",
+      classValue: "",
+      loading: false,
     }
   },
   mounted() {
@@ -223,8 +242,8 @@ export default {
     handelShowAdd(){
       this.inputData = {
         classInfos: [],
-        courseid: "",
-        teacherid: "",
+        courseId: "",
+        teacherId: "",
         term: "",
       };
       this.dialogFormTitle = '添加';
@@ -265,7 +284,52 @@ export default {
 
 
       })
-    }
+    },
+    searchCourse(query){
+      if (query !== '') {
+        this.loading = true;
+        getRequest("/admin/course/",{
+          page: 1,
+          pageSize: -1,
+          courseName: query
+        }).then(res => {
+          this.courseOptions = res.records;
+          this.loading = false;
+        })
+      } else {
+        this.courseOptions = [];
+      }
+    },
+    searchTeacher(query){
+      if (query !== '') {
+        this.loading = true;
+        getRequest("/admin/teacher/",{
+          page: 1,
+          pageSize: -1,
+          teacherName: query
+        }).then(res => {
+          this.teacherOptions = res.records;
+          this.loading = false;
+        })
+      } else {
+        this.teacherOptions = [];
+      }
+    },
+    searchClass(query){
+      if (query !== '') {
+        this.loading = true;
+        getRequest("/admin/class/",{
+          page: 1,
+          pageSize: -1,
+          className: query
+        }).then(res => {
+          this.classOptions = res.records;
+          this.loading = false;
+        })
+      } else {
+        this.classOptions = [];
+      }
+    },
   },
 
 

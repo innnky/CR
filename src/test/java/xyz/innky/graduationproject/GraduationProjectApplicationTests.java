@@ -124,8 +124,8 @@ class GraduationProjectApplicationTests {
     @Test
     void testsCourseClassRelationService2(){
         SCourseVo sCourse = new SCourseVo();
-        sCourse.setCourseid(11);
-        sCourse.setTeacherid(2);
+        sCourse.setCourseId(11);
+        sCourse.setTeacherId(2);
         sCourse.setTerm("2020年春");
 //        sCourse.setClassInfos(Arrays.asList(1,2,3).stream().map(i->new ClassInfo(i, null,null,null,null,null)).collect(Collectors.toList()));
         sCourseService.addSCourse(sCourse);

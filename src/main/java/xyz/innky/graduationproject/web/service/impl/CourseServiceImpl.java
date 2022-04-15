@@ -65,7 +65,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         Page<Course> coursePage = new Page<>(page, pageSize);
         QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(!ObjectUtils.isEmpty(courseId), "course_id", courseId);
-        queryWrapper.eq(!ObjectUtils.isEmpty(courseName), "course_name", courseName);
+        queryWrapper.like(!ObjectUtils.isEmpty(courseName), "course_name", courseName);
         courseMapper.selectPage(coursePage, queryWrapper);
         return coursePage;
     }

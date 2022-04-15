@@ -23,12 +23,12 @@ public class SCourse implements Serializable {
     /**
      * 
      */
-    private Integer teacherid;
+    private Integer teacherId;
 
     /**
      * 
      */
-    private Integer courseid;
+    private Integer courseId;
 
     /**
      * 

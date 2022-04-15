@@ -50,92 +50,92 @@
         </div>
         <div class="row px-3">
           <div class="col-12">
-          <div class="container">
-          <el-table
-              :data="tableData"
-              stripe
-              style="width: 100%"
-              height="400">
-            <el-table-column
-                prop="studentNumber" width="150"
-                label="学号">
-            </el-table-column>
-            <el-table-column
-                prop="studentName" width="150"
-                label="姓名">
-            </el-table-column>
+            <div class="container">
+              <el-table
+                  :data="tableData"
+                  stripe
+                  style="width: 100%"
+                  height="400">
+                <el-table-column
+                    prop="studentNumber" width="150"
+                    label="学号">
+                </el-table-column>
+                <el-table-column
+                    prop="studentName" width="150"
+                    label="姓名">
+                </el-table-column>
 
-            <el-table-column
-                prop="classInfo.className" width="230"
-                label="班级">
-              <template slot-scope="scope">
-                <el-tag type="success">{{scope.row.classInfo.className}}</el-tag>
-<!--                <el-button type="text" size="small" class="ms-1" @click="handelShowEdit(scope.row)">编辑</el-button>-->
-                <el-tag type="" class="ms-1" style="cursor: pointer" @click="handleHistory(scope.row)">历史</el-tag>
-                <el-popover
-                    placement="right"
-                    width="320"
-                    trigger="click">
-                  <el-select
-                      v-model="classValue"
-                      filterable
-                      remote
-                      reserve-keyword
-                      placeholder="请输入关键词"
-                      :remote-method="searchClasses"
-                      :loading="loading">
-                    <el-option
-                        v-for="item in classes"
-                        :key="item.classId"
-                        :label="item.className"
-                        :value="item.classId">
-                    </el-option>
-                  </el-select>
-                  <el-button size="tiny" class="ms-1" @click="handleChangeClass(scope.row)">确认</el-button>
-                  <el-button slot="reference" class="ms-1" size="small" type="warning" plain>变更</el-button>
-                </el-popover>
+                <el-table-column
+                    prop="classInfo.className" width="230"
+                    label="班级">
+                  <template slot-scope="scope">
+                    <el-tag type="success">{{scope.row.classInfo.className}}</el-tag>
+                    <!--                <el-button type="text" size="small" class="ms-1" @click="handelShowEdit(scope.row)">编辑</el-button>-->
+                    <el-tag type="" class="ms-1" style="cursor: pointer" @click="handleHistory(scope.row)">历史</el-tag>
+                    <el-popover
+                        placement="right"
+                        width="320"
+                        trigger="click">
+                      <el-select
+                          v-model="classValue"
+                          filterable
+                          remote
+                          reserve-keyword
+                          placeholder="请输入关键词"
+                          :remote-method="searchClasses"
+                          :loading="loading">
+                        <el-option
+                            v-for="item in classes"
+                            :key="item.classId"
+                            :label="item.className"
+                            :value="item.classId">
+                        </el-option>
+                      </el-select>
+                      <el-button size="tiny" class="ms-1" @click="handleChangeClass(scope.row)">确认</el-button>
+                      <el-button slot="reference" class="ms-1" size="small" type="warning" plain>变更</el-button>
+                    </el-popover>
 
-              </template>
-            </el-table-column>
-            <el-table-column
-                prop="classInfo.college" width="150"
-                label="院系">
-            </el-table-column>
-            <el-table-column
-                prop="classInfo.major" width="150"
-                label="专业">
-            </el-table-column>
-            <el-table-column
-                prop="date" width="150"
-                label="班级职务">
-              <template>
-                <el-button type="text" size="small">查看</el-button>
-              </template>
-            </el-table-column>
-            <el-table-column
-                prop="admissiondate" width="150"
-                label="入学时间">
-            </el-table-column>
-            <el-table-column
-                prop="gender" width="150"
-                label="性别">
-            </el-table-column>
-            <el-table-column
-                prop="contact" width="150"
-                label="联系方式">
-            </el-table-column>
-            <el-table-column
-                fixed="right"
-                label="操作" width="200">
-              <template slot-scope="scope">
-                <el-button type="info" size="small" @click="handleShowEdit(scope.row)">编辑</el-button>
-                <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
-              </template>
-            </el-table-column>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    prop="classInfo.college" width="150"
+                    label="院系">
+                </el-table-column>
+                <el-table-column
+                    prop="classInfo.major" width="150"
+                    label="专业">
+                </el-table-column>
+                <el-table-column
+                    prop="date" width="150"
+                    label="班级职务">
+                  <template>
+                    <el-button type="text" size="small">查看</el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    prop="admissiondate" width="150"
+                    label="入学时间">
+                </el-table-column>
+                <el-table-column
+                    prop="gender" width="150"
+                    label="性别">
+                </el-table-column>
+                <el-table-column
+                    prop="contact" width="150"
+                    label="联系方式">
+                </el-table-column>
+                <el-table-column
+                    fixed="right"
+                    label="操作" width="200">
+                  <template slot-scope="scope">
+                    <el-button type="info" size="small" @click="handleShowEdit(scope.row)">编辑</el-button>
+                    <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
+                  </template>
+                </el-table-column>
 
-          </el-table>
-          </div>
-          <div class="justify-content-end d-flex mt-2">
+              </el-table>
+            </div>
+            <div class="justify-content-end d-flex mt-2">
               <el-pagination
                   @size-change="handleSizeChange"
                   @current-change="handleCurrentChange"

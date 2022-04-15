@@ -23,7 +23,7 @@
       :data="tableData"
       stripe
       style="width: 100%"
-      max-height="460">
+      height="420">
     <el-table-column
         prop="courseId"
         label="课程id">
