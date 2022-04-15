@@ -6,6 +6,7 @@ import xyz.innky.graduationproject.common.utils.ResultUtil;
 import xyz.innky.graduationproject.web.pojo.Scene;
 import xyz.innky.graduationproject.web.service.SceneService;
 import xyz.innky.graduationproject.web.vo.Result;
+import xyz.innky.graduationproject.web.vo.SceneVo;
 
 @RestController
 @RequestMapping("/common/scene")
@@ -14,8 +15,9 @@ public class CommonSceneController {
     SceneService sceneService;
 
     @PostMapping("/")
-    public Result addScene(@RequestBody Scene scene) {
-        return ResultUtil.returnResultByCondition(sceneService.save(scene),"添加场景");
+    public Result addScene(@RequestBody SceneVo scene) {
+        System.out.println(scene.getDeviceIds());
+        return ResultUtil.returnResultByCondition(sceneService.addScene(scene),"添加场景");
     }
 
     @PutMapping("/")

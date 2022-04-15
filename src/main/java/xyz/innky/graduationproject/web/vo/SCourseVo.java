@@ -11,4 +11,5 @@ public class SCourseVo extends SCourse {
     List<ClassInfo> classInfos;
     String teacherName;
     String courseName;
+    List<Integer> classIds;
 }

@@ -123,11 +123,11 @@
                 <el-input v-model="inputData.className" class="w-75"></el-input>
               </el-form-item>
             </div>
-            <div class="col-4">
-              <el-form-item label="年级">
-                <el-input v-model="inputData.grade" class="w-75"></el-input>
-              </el-form-item>
-            </div>
+<!--            <div class="col-4">-->
+<!--              <el-form-item label="年级">-->
+<!--                <el-input v-model="inputData.grade" class="w-75"></el-input>-->
+<!--              </el-form-item>-->
+<!--            </div>-->
             <div class="col-4">
               <el-form-item label="专业">
                 <el-input v-model="inputData.major" class="w-75"></el-input>

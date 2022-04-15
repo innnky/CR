@@ -25,7 +25,7 @@
       <div class="col-12 bg-white py-2 mt-3" >
         <div class="row justify-content-between">
           <div class="col-3">      <i class="el-icon-data-analysis m-2"></i><span class="smalltitle">数据列表</span></div>
-          <div class="col-1 p-2">      <el-button  class="" size="small">新增</el-button></div>
+          <div class="col-1 p-2"><a  href="http://192.168.50.53/dashboard/project/network_topology/">编辑拓扑</a>    <el-button  class="" size="small" @click="handelShowAdd">新增</el-button></div>
         </div>
         <div class="row px-3">
           <div class="container">
@@ -73,12 +73,30 @@
       </div>
       </div>
     </div>
+    <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible" width="70%">
+      <el-form :model="inputData">
+        <div class="container">
+          <div class="row">
+            <div class="col-4">
+              <el-form-item label="场景名称">
+                <el-input class="w-75" v-model="inputData.sceneName" placeholder="请输入场景名称"></el-input>
+              </el-form-item>
+            </div>
+            <el-transfer :titles="['可用设备', '已选择']" v-model="inputData.deviceIds" :data="availableData"></el-transfer>
+          </div>
+        </div>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="doAddOrUpdate">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
 
 <script>
-import {delRequest, getRequest} from "@/api/data";
+import {delRequest, getRequest, postRequest, putRequest} from "@/api/data";
 
 export default {
   name: "SceneManagement",
@@ -90,6 +108,13 @@ export default {
         sceneId: '',
         sceneName: '',
       },
+      inputData: {
+        sceneName: '',
+        deviceIds: [],
+      },
+      dialogFormVisible: false,
+      dialogFormTitle: '',
+      availableData: [],
     }
   },
   mounted() {
@@ -129,6 +154,62 @@ export default {
           message: '已取消删除'
         });
       });
+    },
+    handelShowAdd(){
+      this.getAvailableData()
+      this.inputData = {
+        sceneName: '',
+        deviceIds: [],
+      };
+      this.dialogFormTitle = '添加';
+      this.dialogFormVisible = true;
+    },
+    handleShowEdit(row){
+      this.getAvailableData()
+      this.dialogFormTitle = '编辑';
+      Object.assign(this.inputData, row);
+      this.dialogFormVisible = true;
+    },
+    doAddOrUpdate(){
+      if(this.dialogFormTitle === '编辑'){
+        putRequest("/common/scene/", this.inputData).then(() => {
+          this.dialogFormVisible = false;
+          this.initTableData();
+        })
+      }else{
+        console.log(this.fileList);
+        postRequest("/common/scene/", this.inputData).then(() => {
+          this.dialogFormVisible = false;
+          this.initTableData();
+        })
+      }
+    },
+    getAvailableData(){
+      getRequest("/common/device/unused").then(res => {
+        // this.availableData = res;
+        // [
+        //   {
+        //     "deviceId": 46,
+        //     "status": 0,
+        //     "deviceName": "哈哈哈",
+        //     "imageId": "73",
+        //     "uuid": "67456214-7603-483b-a7fd-765153326989"
+        //   }
+        // ]
+
+        // [
+        //   {
+        //     key: '46',
+        //     label: '哈哈哈',
+        //   }
+        // ]
+        this.availableData = res.map(item => {
+          return {
+            key: item.deviceId,
+            label: item.deviceName,
+          }
+        })
+      })
     },
   }
 

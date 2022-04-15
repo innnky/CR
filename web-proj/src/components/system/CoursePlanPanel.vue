@@ -106,12 +106,13 @@
         <div class="container">
           <div class="row">
             <div class="col-4">
+              <span class="me-2">课程</span>
               <el-select
                   v-model="inputData.courseId"
                   filterable
                   remote
                   reserve-keyword
-                  placeholder="请输入课程名"
+                  placeholder="课程名"
                   :remote-method="searchCourse"
                   :loading="loading">
                 <el-option
@@ -123,23 +124,56 @@
               </el-select>
             </div>
             <div class="col-4">
-              <el-form-item label="教师id">
-                <el-input v-model="inputData.teacherId" class="w-75" placeholder="请输入教师id"></el-input>
-              </el-form-item>
+<!--              <el-form-item label="教师id">-->
+<!--                <el-input v-model="inputData.teacherId" class="w-75" placeholder="请输入教师id"></el-input>-->
+<!--              </el-form-item>-->
+              <span class="me-2">教师</span>
+              <el-select
+                  v-model="inputData.teacherId"
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="教师名"
+                  :remote-method="searchTeacher"
+                  :loading="loading">
+                <el-option
+                    v-for="item in teacherOptions"
+                    :key="item.teacherId"
+                    :label="item.teacherName"
+                    :value="item.teacherId">
+                </el-option>
+              </el-select>
             </div>
             <div class="col-4">
-              <el-form-item label="班级id">
-                <el-input class="w-75" v-model="tclassId" placeholder="请输入班级id" @keyup.enter.native="addClass"></el-input>
-                <!--                <span v-for="cl in inputData.classInfos" :key="cl">{{cl.classId}}</span>-->
-                <el-tag
-                    :key="cl"
-                    v-for="cl in inputData.classInfos"
-                    closable
-                    :disable-transitions="false"
-                    @close="delClass(cl)" style="margin-left: 10px">
-                  {{cl.classId}}
-                </el-tag>
-              </el-form-item>
+<!--              <el-form-item label="班级id">-->
+<!--                <el-input class="w-75" v-model="tclassId" placeholder="请输入班级id" @keyup.enter.native="addClass"></el-input>-->
+<!--                &lt;!&ndash;                <span v-for="cl in inputData.classInfos" :key="cl">{{cl.classId}}</span>&ndash;&gt;-->
+<!--                <el-tag-->
+<!--                    :key="cl"-->
+<!--                    v-for="cl in inputData.classInfos"-->
+<!--                    closable-->
+<!--                    :disable-transitions="false"-->
+<!--                    @close="delClass(cl)" style="margin-left: 10px">-->
+<!--                  {{cl.classId}}-->
+<!--                </el-tag>-->
+<!--              </el-form-item>-->
+              <span class="me-2">班级</span>
+              <el-select
+                  v-model="inputData.classIds"
+                  filterable
+                  remote
+                  multiple
+                  reserve-keyword
+                  placeholder="班级名"
+                  :remote-method="searchClass"
+                  :loading="loading">
+                <el-option
+                    v-for="item in classOptions"
+                    :key="item.classId"
+                    :label="item.className"
+                    :value="item.classId">
+                </el-option>
+              </el-select>
             </div>
             <div class="col-4">
               <el-form-item label="学期">
@@ -176,6 +210,7 @@ export default {
       dialogClassVisible: false,
       inputData: {
         classInfos: [],
+        classIds: [],
         courseId: "",
         teacherId: "",
         term: "",
@@ -183,7 +218,7 @@ export default {
       tclassId: "",
       dialogFormVisible: false,
       dialogFormTitle: '',
-      //下拉鞋标相关数据
+      //下拉列表相关数据
       courseOptions: [],
       teacherOptions: [],
       classOptions: [],
@@ -246,13 +281,21 @@ export default {
         teacherId: "",
         term: "",
       };
+      this.courseOptions = [];
+      this.teacherOptions = [];
+      this.classOptions = [];
+
       this.dialogFormTitle = '添加';
       this.dialogFormVisible = true;
     },
     handleShowEdit(row){
       this.initTableData()
       this.dialogFormTitle = '编辑';
+      this.searchCourse(row.courseName);
+      this.searchTeacher(row.teacherName);
+      this.searchClass(row.className);
       Object.assign(this.inputData, row);
+      this.inputData.classIds = this.inputData.classInfos.map(cl => cl.classId);
       this.dialogFormVisible = true;
     },
     doAddOrUpdate(){

@@ -65,7 +65,8 @@ public class ImageApi {
                 "    \"name\": \""+name+"\",\n" +
                 "    \"id\": \""+ id +"\"\n" +
                 "}";
-        postJson(api.getImageUrl()+"/v2/images", bodyJson);
+        String s = postJson(api.getImageUrl() + "/v2/images", bodyJson);
+        System.out.println(s);
         putFile(api.getImageUrl()+"/v2/images/"+id+"/file",file);
         file.delete();
         return id;

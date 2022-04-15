@@ -75,6 +75,11 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
     public void startDevice(String uuid) {
         getBaseMapper().updateStatusByUuid(1, uuid);
     }
+
+    @Override
+    public List<Device> getUnusedDevice() {
+        return getBaseMapper().getUnusedDevice();
+    }
 }
 
 

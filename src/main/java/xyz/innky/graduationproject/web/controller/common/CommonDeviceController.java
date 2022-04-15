@@ -58,5 +58,8 @@ public class CommonDeviceController {
     public Result getVnc(@PathVariable("uuid") String uuid) {
         return new Result(200,"",deviceApi.getVncAddress(uuid));
     }
-
+    @GetMapping("/unused")
+    public Result getUnusedDevice() {
+        return Result.ok(deviceService.getUnusedDevice());
+    }
 }

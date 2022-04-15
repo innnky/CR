@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -13,6 +16,8 @@ import lombok.Data;
  */
 @TableName(value ="device_scene_relation")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DeviceSceneRelation implements Serializable {
     /**
      * 
@@ -34,6 +39,16 @@ public class DeviceSceneRelation implements Serializable {
      * 
      */
     private String endTime;
+
+    /**
+     * 
+     */
+    private Integer deviceId;
+
+    /**
+     * 
+     */
+    private Integer sceneId;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

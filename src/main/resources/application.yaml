@@ -12,6 +12,9 @@ spring:
     multipart:
       max-request-size: 1000MB
       max-file-size: 100MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 logging:
   level:
     xyz.innky.graduationproject: debug
@@ -20,3 +23,7 @@ openstack:
   baseurl: '192.168.50.53'
 static:
   path: "/Users/xingyijin/IdeaProjects/graduationProject/src/main/resources/static/"
+
+#  spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
+#  spring.jackson.time-zone=GMT+8
+

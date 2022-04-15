@@ -11,23 +11,32 @@
           stripe
           style="width: 100%"
           height="560">
-        <el-table-column
-            prop="scourseId"
-            label="计划id">
-        </el-table-column>
+<!--        <el-table-column-->
+<!--            prop="scourseId"-->
+<!--            label="计划id">-->
+<!--        </el-table-column>-->
 
 
         <el-table-column
             prop="week"
-            label="周次">
+            label="教学周">
+          <template slot-scope="scope">
+            <span>{{scope.row.week}}</span>
+          </template>
         </el-table-column>
         <el-table-column
             prop="weekday"
             label="周几">
+          <template slot-scope="scope">
+            <el-tag type="info">星期{{scope.row.weekday}}</el-tag>
+          </template>
         </el-table-column>
         <el-table-column
             prop="classSequence"
             label="节次">
+          <template slot-scope="scope">
+            <el-tag>第{{scope.row.weekday}}大节</el-tag>
+          </template>
         </el-table-column>
         <el-table-column
             fixed="right"

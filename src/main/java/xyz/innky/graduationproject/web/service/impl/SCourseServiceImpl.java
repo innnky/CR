@@ -33,7 +33,7 @@ public class SCourseServiceImpl extends ServiceImpl<SCourseMapper, SCourse>
         //添加scourse表
         if (getBaseMapper().insertSelective(sCourse)==1) {
             //添加scourse班级关联表
-            List<Integer> classIds = sCourse.getClassInfos().stream().map(ClassInfo::getClassId).collect(java.util.stream.Collectors.toList());
+            List<Integer> classIds = sCourse.getClassIds();
             sCourseClassRelationService.addSCourseClassRelation(sCourse.getSCourseId(), classIds);
             return true;
         }
@@ -57,7 +57,7 @@ public class SCourseServiceImpl extends ServiceImpl<SCourseMapper, SCourse>
     public boolean updateSCourse(SCourseVo sCourse) {
         if (getBaseMapper().updateSelective(sCourse)==1) {
             sCourseClassRelationService.removeSCourseClassRelation(sCourse.getSCourseId());
-            List<Integer> classIds = sCourse.getClassInfos().stream().map(ClassInfo::getClassId).collect(java.util.stream.Collectors.toList());
+            List<Integer> classIds = sCourse.getClassIds();
             sCourseClassRelationService.addSCourseClassRelation(sCourse.getSCourseId(), classIds);
             return true;
         }

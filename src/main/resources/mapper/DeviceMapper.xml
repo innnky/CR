@@ -24,6 +24,10 @@
             ${ew.sqlSegment}
         </where>
     </select>
+    <select id="getUnusedDevice" resultType="xyz.innky.graduationproject.web.pojo.Device">
+        select <include refid="Base_Column_List"/> from device
+        where device_id not in (select device_id from device_scene_relation)
+    </select>
     <update id="updateStatusByUuid">
         update device
         set status = #{status,jdbcType=NUMERIC}

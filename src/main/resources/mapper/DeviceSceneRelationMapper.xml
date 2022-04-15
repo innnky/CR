@@ -9,10 +9,26 @@
             <result property="role" column="role" jdbcType="VARCHAR"/>
             <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
             <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+            <result property="deviceId" column="device_id" jdbcType="INTEGER"/>
+            <result property="sceneId" column="scene_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,role,start_time,
-        end_time
+        end_time,device_id,scene_id
     </sql>
+    <delete id="delBySceneId">
+        delete
+        from device_scene_relation
+        where scene_id = #{sceneId,jdbcType=NUMERIC}
+    </delete>
+    <insert id="insertBatch">
+        insert into device_scene_relation(id,role,start_time,
+        end_time,device_id,scene_id)
+        values
+        <foreach collection="deviceSceneRelationCollection" item="item" separator=",">
+            (#{item.id,jdbcType=NUMERIC},#{item.role,jdbcType=VARCHAR},#{item.startTime,jdbcType=VARCHAR},
+            #{item.endTime,jdbcType=VARCHAR},#{item.deviceId,jdbcType=NUMERIC},#{item.sceneId,jdbcType=NUMERIC})
+        </foreach>
+    </insert>
 </mapper>

@@ -154,9 +154,18 @@
         <div class="container">
           <div class="row">
             <div class="col-4">
-              <el-form-item label="入学日期">
-                <el-input class="w-75" v-model="inputData.admissiondate" placeholder="请输入入学日期"></el-input>
-              </el-form-item>
+<!--              <el-form-item label="入学日期">-->
+<!--                <el-input class="w-75" v-model="inputData.admissiondate" placeholder="请输入入学日期"></el-input>-->
+<!--              </el-form-item>-->
+              <span class="me-2">入学日期</span>
+              <el-date-picker
+                  v-model="inputData.admissiondate"
+                  type="date"
+                  placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  class="w-75">
+              </el-date-picker>
             </div>
             <div class="col-4">
               <el-form-item label="联系方式">
