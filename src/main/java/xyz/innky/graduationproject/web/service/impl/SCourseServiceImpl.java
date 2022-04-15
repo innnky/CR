@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
+import xyz.innky.graduationproject.web.pojo.Course;
 import xyz.innky.graduationproject.web.pojo.SCourse;
 import xyz.innky.graduationproject.web.service.SCourseClassRelationService;
 import xyz.innky.graduationproject.web.service.SCourseService;
@@ -77,6 +78,11 @@ public class SCourseServiceImpl extends ServiceImpl<SCourseMapper, SCourse>
     @Override
     public List<ClassInfo> getCourseClass(Integer id) {
         return sCourseClassRelationService.getCourseClass(id);
+    }
+
+    @Override
+    public Course getCourseBySid(Integer sCourseId) {
+        return getBaseMapper().getCourseBySid(sCourseId);
     }
 
 }

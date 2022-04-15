@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface CourseTimeMapper extends BaseMapper<CourseTime> {
 
     Page<CourseTime> getAllByCourseId(@Param("page") Page<CourseTime> page, @Param("courseId") Integer courseId);
+
 }
 
 

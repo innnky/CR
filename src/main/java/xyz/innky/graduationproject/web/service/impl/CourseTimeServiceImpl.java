@@ -7,6 +7,8 @@ import xyz.innky.graduationproject.web.service.CourseTimeService;
 import xyz.innky.graduationproject.web.mapper.CourseTimeMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author xingyijin
 * @description 针对表【course_time】的数据库操作Service实现
@@ -19,6 +21,11 @@ public class CourseTimeServiceImpl extends ServiceImpl<CourseTimeMapper, CourseT
     @Override
     public Page<CourseTime> getAllByCourseId(Page<CourseTime> courseTimePage, Integer id) {
         return getBaseMapper().getAllByCourseId(courseTimePage,id);
+    }
+
+    @Override
+    public List<CourseTime> getBySCid(Integer scid) {
+        return getBaseMapper().getAllByCourseId(new Page<>(1,-1), scid).getRecords();
     }
 }
 

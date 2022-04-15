@@ -16,4 +16,21 @@
         material_id,material_name,s_course_id,
         update_time,material_path
     </sql>
+    <select id="getAllBySCourseId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from material
+        where
+        s_course_id = #{sCourseId,jdbcType=NUMERIC}
+    </select>
+    <select id="getAllBySCourseIdIn" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from material
+        where
+        s_course_id in
+        <foreach collection="sCourseIdList" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=NUMERIC}
+        </foreach>
+    </select>
 </mapper>

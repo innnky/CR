@@ -80,6 +80,11 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
     public List<Device> getUnusedDevice() {
         return getBaseMapper().getUnusedDevice();
     }
+
+    @Override
+    public List<DeviceVo> getAllDevicesByScene(Integer sceneId) {
+        return getBaseMapper().getAllDevicesByScene(sceneId);
+    }
 }
 
 

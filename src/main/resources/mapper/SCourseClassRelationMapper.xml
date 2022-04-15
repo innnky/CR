@@ -28,5 +28,12 @@
         select ci.* from s_course_class_relation left join class_info ci on s_course_class_relation.class_id = ci.class_id
         where s_course_id=#{sCourseId,jdbcType=NUMERIC}
     </select>
+    <select id="getAllByClassId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from s_course_class_relation
+        where
+        class_id = #{classId,jdbcType=NUMERIC}
+    </select>
 
 </mapper>

@@ -20,6 +20,8 @@ public interface SCourseClassRelationMapper extends BaseMapper<SCourseClassRelat
     int deleteBySCourseId(@Param("sCourseId") Integer sCourseId);
 
     List<ClassInfo> getAllBySCourseId(@Param("sCourseId") Integer sCourseId);
+
+    List<SCourseClassRelation> getAllByClassId(@Param("classId") Integer classId);
 }
 
 

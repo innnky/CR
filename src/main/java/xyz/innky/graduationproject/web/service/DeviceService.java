@@ -25,4 +25,6 @@ public interface DeviceService extends IService<Device> {
     void startDevice(String uuid);
 
     List<Device> getUnusedDevice();
+
+    List<DeviceVo> getAllDevicesByScene(Integer sceneId);
 }

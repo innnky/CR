@@ -28,6 +28,12 @@
         select <include refid="Base_Column_List"/> from device
         where device_id not in (select device_id from device_scene_relation)
     </select>
+    <select id="getAllDevicesByScene" resultType="xyz.innky.graduationproject.web.vo.DeviceVo">
+
+        select d.device_id,d.status,d.device_name,d.image_id,d.uuid,dsr.role
+        from device_scene_relation dsr left join device d on dsr.device_id = d.device_id
+        where dsr.scene_id = #{sceneId}
+    </select>
     <update id="updateStatusByUuid">
         update device
         set status = #{status,jdbcType=NUMERIC}

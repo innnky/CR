@@ -21,6 +21,9 @@ public interface DeviceMapper extends BaseMapper<Device> {
     int updateStatusByUuid(@Param("status") Integer status, @Param("uuid") String uuid);
 
     List<Device> getUnusedDevice();
+
+
+    List<DeviceVo> getAllDevicesByScene(Integer sceneId);
 }
 
 

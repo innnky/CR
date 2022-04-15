@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 
 /**
@@ -28,12 +29,12 @@ public class Exercise implements Serializable {
     /**
      * 
      */
-    private String startTime;
+    private Date startTime;
 
     /**
      * 
      */
-    private String endTime;
+    private Date endTime;
 
     /**
      * 
@@ -44,6 +45,11 @@ public class Exercise implements Serializable {
      * 
      */
     private String attachmentPath;
+
+    /**
+     * 
+     */
+    private Integer sceneId;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

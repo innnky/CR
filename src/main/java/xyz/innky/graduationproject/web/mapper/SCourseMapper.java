@@ -2,6 +2,7 @@ package xyz.innky.graduationproject.web.mapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
+import xyz.innky.graduationproject.web.pojo.Course;
 import xyz.innky.graduationproject.web.pojo.SCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import xyz.innky.graduationproject.web.vo.SCourseVo;
@@ -23,6 +24,8 @@ public interface SCourseMapper extends BaseMapper<SCourse> {
     int updateSelective(SCourse sCourse);
 
     List<SCourseVo> getAllSCourse(@Param("className") String className, @Param("courseName") String courseName, @Param("teacherName") String teacherName);
+
+    Course getCourseBySid(Integer sCourseId);
 }
 
 

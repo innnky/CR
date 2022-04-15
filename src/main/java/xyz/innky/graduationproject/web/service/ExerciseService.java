@@ -3,6 +3,8 @@ package xyz.innky.graduationproject.web.service;
 import xyz.innky.graduationproject.web.pojo.Exercise;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
 * @author xingyijin
 * @description 针对表【exercise】的数据库操作Service
@@ -10,4 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface ExerciseService extends IService<Exercise> {
 
+    List<Exercise> getExerciseBySCid(Integer scid);
+
+    List<Exercise> getExercise(Integer studentId);
 }

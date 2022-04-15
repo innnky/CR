@@ -8,5 +8,6 @@ import xyz.innky.graduationproject.web.pojo.Image;
 public class DeviceVo extends Device {
 
     private Image image;
+    private String role;
 
 }

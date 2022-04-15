@@ -7,14 +7,33 @@
     <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.Exercise">
             <id property="exerciseId" column="exercise_id" jdbcType="INTEGER"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
-            <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+            <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
             <result property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
             <result property="attachmentPath" column="attachment_path" jdbcType="VARCHAR"/>
+            <result property="sceneId" column="scene_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         exercise_id,content,start_time,
-        end_time,s_course_id,attachment_path
+        end_time,s_course_id,attachment_path,
+        scene_id
     </sql>
+    <select id="getAllBySCourseId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from exercise
+        where
+        s_course_id = #{sCourseId,jdbcType=NUMERIC}
+    </select>
+    <select id="getAllBySCourseIdIn" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from exercise
+        where
+        s_course_id in
+        <foreach collection="sCourseIdList" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=NUMERIC}
+        </foreach>
+    </select>
 </mapper>

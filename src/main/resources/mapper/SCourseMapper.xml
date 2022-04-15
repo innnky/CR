@@ -64,6 +64,11 @@
             </if>
         </where>
     </select>
+    <select id="getCourseBySid" resultType="xyz.innky.graduationproject.web.pojo.Course">
+        select course.*
+        from s_course left join course on s_course.courseId = course.course_id
+        where s_course_id = #{sCourseId,jdbcType=NUMERIC}
+    </select>
     <update id="updateSelective">
         update s_course
         <set>

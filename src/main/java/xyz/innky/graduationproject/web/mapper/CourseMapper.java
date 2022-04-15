@@ -16,6 +16,7 @@ import xyz.innky.graduationproject.web.pojo.CourseTime;
 */
 public interface CourseMapper extends BaseMapper<Course> {
     Page<CourseTime> getAllByCourseId(@Param("page") Page<CourseTime> page, @Param("courseId") Integer courseId);
+
 }
 
 

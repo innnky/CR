@@ -32,6 +32,11 @@ public class SCourseClassRelationServiceImpl extends ServiceImpl<SCourseClassRel
     public List<ClassInfo> getCourseClass(Integer id) {
         return getBaseMapper().getAllBySCourseId(id);
     }
+
+    @Override
+    public List<SCourseClassRelation> getByClassId(Integer classId) {
+        return getBaseMapper().getAllByClassId(classId);
+    }
 }
 
 

@@ -1,10 +1,9 @@
 package xyz.innky.graduationproject.web.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import xyz.innky.graduationproject.web.pojo.ClassInfo;
-import xyz.innky.graduationproject.web.pojo.Course;
+import xyz.innky.graduationproject.web.pojo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import xyz.innky.graduationproject.web.pojo.CourseTime;
+import xyz.innky.graduationproject.web.vo.StuCourseVo;
 
 import java.util.List;
 
@@ -19,4 +18,11 @@ public interface CourseService extends IService<Course> {
 
     Page<Course> getAllCourse(Integer page, Integer pageSize, String courseId, String courseName);
 
+    List<StuCourseVo> getCourses(Integer studentId, String courseName);
+
+    List<CourseTime> getCourseTime(Integer scid);
+
+    List<Exercise> getCourseExercise(Integer scid);
+
+    List<Material> getCourseMaterial(Integer scid);
 }

@@ -1,4 +1,7 @@
 package xyz.innky.graduationproject.web.mapper;
+import java.util.Collection;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import xyz.innky.graduationproject.web.pojo.Material;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -11,6 +14,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface MaterialMapper extends BaseMapper<Material> {
 
+    List<Material> getAllBySCourseId(@Param("sCourseId") Integer sCourseId);
+
+    List<Material> getAllBySCourseIdIn(@Param("sCourseIdList") Collection<Integer> sCourseIdList);
 }
 
 

@@ -18,4 +18,6 @@ public interface SCourseClassRelationService extends IService<SCourseClassRelati
     void removeSCourseClassRelation(Integer id);
 
     List<ClassInfo> getCourseClass(Integer id);
+
+    List<SCourseClassRelation> getByClassId(Integer classId);
 }
