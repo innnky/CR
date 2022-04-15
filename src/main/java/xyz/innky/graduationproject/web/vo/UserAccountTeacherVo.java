@@ -7,5 +7,6 @@ import xyz.innky.graduationproject.web.pojo.UserAccount;
 public class UserAccountTeacherVo extends UserAccount {
 
     private String teacherName;
+    private String teacherNumber;
 
 }

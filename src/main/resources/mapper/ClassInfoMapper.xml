@@ -11,11 +11,13 @@
             <result property="major" column="major" jdbcType="VARCHAR"/>
             <result property="college" column="college" jdbcType="VARCHAR"/>
             <result property="headTeacherId" column="head_teacher_id" jdbcType="INTEGER"/>
+            <result property="classNumber" column="class_number" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         class_id,class_name,grade,
-        major,college,head_teacher_id
+        major,college,head_teacher_id,
+        class_number
     </sql>
     <select id="selectPageVo" resultType="xyz.innky.graduationproject.web.vo.ClassInfoVo">
         select <include refid="Base_Column_List"></include> ,teacher_name

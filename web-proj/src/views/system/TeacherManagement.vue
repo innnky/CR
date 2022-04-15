@@ -46,8 +46,8 @@
               style="width: 100%"
               height="400">
             <el-table-column
-                prop="teacherId"
-                label="教师id">
+                prop="teacherNumber"
+                label="教师工号">
             </el-table-column>
             <el-table-column
                 prop="teacherName"

@@ -36,8 +36,8 @@
               style="width: 100%"
               height="400">
             <el-table-column
-                prop="departmentId"
-                label="部门id">
+                prop="departmentNumber"
+                label="部门编号">
             </el-table-column>
             <el-table-column
                 prop="departmentName"

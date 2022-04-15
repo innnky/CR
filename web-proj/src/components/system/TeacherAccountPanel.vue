@@ -33,8 +33,8 @@
         label="账号">
     </el-table-column>
     <el-table-column
-        prop="teacherId"
-        label="教师id">
+        prop="teacherNumber"
+        label="教师工号">
     </el-table-column>
     <el-table-column
         prop="password"

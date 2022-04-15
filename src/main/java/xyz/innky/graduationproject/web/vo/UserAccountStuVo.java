@@ -8,4 +8,5 @@ import xyz.innky.graduationproject.web.pojo.UserAccount;
 public class UserAccountStuVo extends UserAccount {
 
     private String studentName;
+    private String studentNumber;
 }

@@ -40,6 +40,11 @@ public class Teacher implements Serializable {
      */
     private String teacherName;
 
+    /**
+     * 
+     */
+    private String teacherNumber;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

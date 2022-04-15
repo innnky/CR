@@ -7,10 +7,11 @@
     <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.Department">
             <id property="departmentId" column="department_id" jdbcType="INTEGER"/>
             <result property="departmentName" column="department_name" jdbcType="VARCHAR"/>
+            <result property="departmentNumber" column="department_number" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        department_id,department_name
+        department_id,department_name,department_number
     </sql>
     <select id="selectPageVo" resultType="xyz.innky.graduationproject.web.vo.DepartmentVo">
         select <include refid="Base_Column_List"></include>

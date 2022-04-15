@@ -1,19 +1,19 @@
 package xyz.innky.graduationproject.web.mapper;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.ibatis.annotations.Param;
 
 import xyz.innky.graduationproject.web.pojo.Teacher;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
+
 import xyz.innky.graduationproject.web.vo.TeacherVo;
 
 import java.util.List;
 
 /**
-* @author xingyijin
+* @author xingyijins
 * @description 针对表【teacher(教师信息表)】的数据库操作Mapper
-* @createDate 2022-04-06 15:13:05
+* @createDate 2022-04-14 21:06:41
 * @Entity xyz.innky.graduationproject.web.pojo.Teacher
 */
 public interface TeacherMapper extends BaseMapper<Teacher> {

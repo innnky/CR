@@ -45,8 +45,8 @@
               style="width: 100%"
               height="400">
             <el-table-column
-                prop="classId"
-                label="班级id">
+                prop="classNumber"
+                label="班级编号">
             </el-table-column>
             <el-table-column
                 prop="className"

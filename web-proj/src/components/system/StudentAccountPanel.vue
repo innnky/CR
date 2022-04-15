@@ -34,8 +34,8 @@
         label="账号">
     </el-table-column>
     <el-table-column
-        prop="studentId"
-        label="学生id">
+        prop="studentNumber"
+        label="学号">
     </el-table-column>
     <el-table-column
         prop="password"

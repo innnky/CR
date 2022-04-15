@@ -11,11 +11,13 @@
             <result property="admissiondate" column="admissionDate" jdbcType="DATE"/>
             <result property="gender" column="gender" jdbcType="CHAR"/>
             <result property="contact" column="contact" jdbcType="VARCHAR"/>
+            <result property="studentNumber" column="student_number" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         student_id,student_name,class_id,
-        admissionDate,gender,contact
+        admissionDate,gender,contact,
+        student_number
     </sql>
     <select id="selectByClassId" resultMap="BaseResultMap">
         select
@@ -39,8 +41,8 @@
         <include refid="Base_Column_List"/>
         from student
         <if test="studentName!=null and studentName!=''">
-        where
-        student_name = #{studentName,jdbcType=VARCHAR}
+            where
+            student_name = #{studentName,jdbcType=VARCHAR}
         </if>
     </select>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="studentId">

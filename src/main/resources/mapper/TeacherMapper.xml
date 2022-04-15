@@ -10,11 +10,12 @@
             <result property="contact" column="contact" jdbcType="VARCHAR"/>
             <result property="gender" column="gender" jdbcType="CHAR"/>
             <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+            <result property="teacherNumber" column="teacher_number" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         teacher_id,department_id,contact,
-        gender,teacher_name
+        gender,teacher_name,teacher_number
     </sql>
     <select id="searchAllByDepartmentId" resultMap="BaseResultMap">
         select
@@ -33,7 +34,7 @@
 
     <select id="searchAllCountByDepartmentId" resultType="java.lang.Integer">
         select
-        count(*)
+            count(*)
         from teacher
         where department_id = #{departmentId}
     </select>
@@ -53,8 +54,8 @@
         <include refid="Base_Column_List"/>
         from teacher
         <if test="teacherName != null and teacherName != ''">
-        where
-        teacher_name = #{teacherName,jdbcType=VARCHAR}
-    </if>
+            where
+            teacher_name = #{teacherName,jdbcType=VARCHAR}
+        </if>
     </select>
 </mapper>

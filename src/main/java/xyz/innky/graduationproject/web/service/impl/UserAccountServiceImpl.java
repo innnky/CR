@@ -75,6 +75,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         for (UserAccountStuVo record : userAccountStuVoPage.getRecords()) {
             Student student = studentService.getById(record.getStudentId());
             record.setStudentName(student.getStudentName());
+            record.setStudentNumber(student.getStudentNumber());
         }
         return userAccountStuVoPage;
     }
@@ -96,6 +97,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         for (UserAccountTeacherVo record : userAccountTeacherVoPage.getRecords()) {
             Teacher teacher = teacherService.getById(record.getTeacherId());
             record.setTeacherName(teacher.getTeacherName());
+            record.setTeacherNumber(teacher.getTeacherNumber());
         }
         return userAccountTeacherVoPage;
 

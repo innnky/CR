@@ -46,6 +46,11 @@ public class Student implements Serializable {
      */
     private String contact;
 
+    /**
+     * 
+     */
+    private String studentNumber;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

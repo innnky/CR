@@ -57,8 +57,8 @@
               style="width: 100%"
               height="400">
             <el-table-column
-                prop="studentId" width="150"
-                label="学生id">
+                prop="studentNumber" width="150"
+                label="学号">
             </el-table-column>
             <el-table-column
                 prop="studentName" width="150"
@@ -104,10 +104,6 @@
             <el-table-column
                 prop="classInfo.major" width="150"
                 label="专业">
-            </el-table-column>
-            <el-table-column
-                prop="classInfo.grade" width="150"
-                label="年级">
             </el-table-column>
             <el-table-column
                 prop="date" width="150"
