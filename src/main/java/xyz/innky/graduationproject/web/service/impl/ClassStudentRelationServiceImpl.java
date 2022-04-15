@@ -53,6 +53,20 @@ public class ClassStudentRelationServiceImpl extends ServiceImpl<ClassStudentRel
         }
         throw new RuntimeException();
     }
+
+    @Override
+    public boolean changeStudentClass(Student student) {
+        if(getBaseMapper().updateEndTimeByStudentId(new Date(System.currentTimeMillis()), student.getStudentId())==1){
+            ClassStudentRelation relation = new ClassStudentRelation();
+            relation.setClassId(student.getClassId());
+            relation.setStudentId(student.getStudentId());
+            relation.setStartTime(new Date(System.currentTimeMillis()));
+            if(getBaseMapper().insertSelective(relation)==1){
+                return true;
+            }
+        }
+        throw new RuntimeException();
+    }
 }
 
 

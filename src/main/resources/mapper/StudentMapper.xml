@@ -65,4 +65,9 @@
             <if test="contact != null">#{contact,jdbcType=VARCHAR},</if>
         </trim>
     </insert>
+    <update id="updateClassIdByStudentId">
+        update student
+        set class_id = #{classId,jdbcType=NUMERIC}
+        where student_id = #{studentId,jdbcType=NUMERIC}
+    </update>
 </mapper>

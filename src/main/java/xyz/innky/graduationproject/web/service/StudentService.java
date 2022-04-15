@@ -26,4 +26,6 @@ public interface StudentService extends IService<Student> {
     List<ClassStudentVo> getHistoryClass(Integer id);
 
     boolean addStudent(Student student);
+
+    boolean updateStudentClass(Student student);
 }

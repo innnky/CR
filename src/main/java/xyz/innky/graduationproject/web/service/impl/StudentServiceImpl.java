@@ -97,6 +97,16 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         throw new RuntimeException();
     }
 
+    @Override
+    public boolean updateStudentClass(Student student) {
+        if (getBaseMapper().updateClassIdByStudentId(student.getClassId(),student.getStudentId())==1){
+            if (classStudentRelationService.changeStudentClass(student)){
+                return true;
+            }
+        }
+        throw new RuntimeException();
+    }
+
 }
 
 

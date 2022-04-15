@@ -39,4 +39,10 @@ public class StudentController {
          return Result.ok(studentService.getHistoryClass(id));
     }
 
+    @PutMapping("/{id}/class")
+    public Result updateStudentClass(@PathVariable("id") Integer id,@RequestBody Student student){
+         student.setStudentId(id);
+         return ResultUtil.returnResultByCondition(studentService.updateStudentClass(student),"修改学生班级");
+    }
+
 }

@@ -26,6 +26,7 @@ public interface StudentMapper extends BaseMapper<Student> {
 
     int insertSelective(Student student);
 
+    int updateClassIdByStudentId(@Param("classId") Integer classId, @Param("studentId") Integer studentId);
 }
 
 

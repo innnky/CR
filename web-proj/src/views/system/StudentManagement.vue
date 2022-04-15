@@ -86,12 +86,12 @@
                       :loading="loading">
                     <el-option
                         v-for="item in classes"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
+                        :key="item.classId"
+                        :label="item.className"
+                        :value="item.classId">
                     </el-option>
                   </el-select>
-                  <el-button size="tiny" class="ms-1">确认</el-button>
+                  <el-button size="tiny" class="ms-1" @click="handleChangeClass(scope.row)">确认</el-button>
                   <el-button slot="reference" class="ms-1" size="small" type="warning" plain>变更</el-button>
                 </el-popover>
 
@@ -255,6 +255,7 @@ export default {
       classes: [],
       classValue: '',
       loading: false,
+      changeClassVisible: false,
 
     }
   },
@@ -332,23 +333,21 @@ export default {
       })
     },
     handleChangeClass(row){
-      row
+      putRequest("/admin/student/"+row.studentId+"/class", {classId: this.classValue}).then(() => {
+        this.initTableData();
+      })
     },
     searchClasses(query){
       if (query !== '') {
         this.loading = true;
-        setTimeout(() => {
+        getRequest("/admin/class/", {
+          page: 1,
+          pageSize: -1,
+          className: query
+        }).then(res => {
+          this.classes = res.records;
           this.loading = false;
-          this.classes = [
-            {
-              value: '11',
-              label: '哈哈'
-            },{
-              value: '33',
-              label: '哈哈22'
-            }
-          ]
-        }, 200);
+        })
       } else {
         this.classes = [];
       }
