@@ -18,6 +18,8 @@ public interface ExerciseMapper extends BaseMapper<Exercise> {
 
     List<Exercise> getAllBySCourseIdIn(@Param("sCourseIdList") Collection<Integer> sCourseIdList);
 
+    int insertSelective(Exercise exercise);
+
 }
 
 

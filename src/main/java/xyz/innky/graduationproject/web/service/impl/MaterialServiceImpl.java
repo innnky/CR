@@ -7,7 +7,7 @@ import xyz.innky.graduationproject.web.service.CourseService;
 import xyz.innky.graduationproject.web.service.MaterialService;
 import xyz.innky.graduationproject.web.mapper.MaterialMapper;
 import org.springframework.stereotype.Service;
-import xyz.innky.graduationproject.web.vo.StuCourseVo;
+import xyz.innky.graduationproject.web.vo.CourseVo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,9 +30,9 @@ public class MaterialServiceImpl extends ServiceImpl<MaterialMapper, Material>
 
     @Override
     public List<Material> getMaterial(Integer studentId) {
-        List<StuCourseVo> courses = courseService.getCourses(studentId, null);
+        List<CourseVo> courses = courseService.getCourses(studentId, null);
 //        return getBaseMapper().getAllBySCourseIdIn(courses.stream().map(StuCourseVo::getSCourseId).collect(Collectors.toList()));
-        return getBaseMapper().getAllBySCourseIdIn(courses.stream().map(StuCourseVo::getSCourseId).collect(Collectors.toList()));
+        return getBaseMapper().getAllBySCourseIdIn(courses.stream().map(CourseVo::getSCourseId).collect(Collectors.toList()));
     }
 }
 

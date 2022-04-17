@@ -36,4 +36,26 @@
             #{item,jdbcType=NUMERIC}
         </foreach>
     </select>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="exerciseId">
+        insert into exercise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="exerciseId != null">exercise_id,</if>
+            <if test="content != null">content,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="sCourseId != null">s_course_id,</if>
+            <if test="attachmentPath != null">attachment_path,</if>
+            <if test="sceneId != null">scene_id,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="exerciseId != null">#{exerciseId,jdbcType=INTEGER},</if>
+            <if test="content != null">#{content,jdbcType=VARCHAR},</if>
+            <if test="startTime != null">#{startTime,jdbcType=TIMESTAMP},</if>
+            <if test="endTime != null">#{endTime,jdbcType=TIMESTAMP},</if>
+            <if test="sCourseId != null">#{sCourseId,jdbcType=INTEGER},</if>
+            <if test="attachmentPath != null">#{attachmentPath,jdbcType=VARCHAR},</if>
+            <if test="sceneId != null">#{sceneId,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
 </mapper>

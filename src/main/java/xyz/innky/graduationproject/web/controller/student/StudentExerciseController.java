@@ -27,7 +27,7 @@ public class StudentExerciseController {
     @GetMapping("/")
     public Result getAllExercise() {
         Integer studentId = AccountUtil.getStudentId();
-        return Result.ok(exerciseService.getExercise(studentId));
+        return Result.ok(exerciseService.getStudentExercise(studentId));
     }
     @GetMapping("/{exerciseId}")
     public Result getMaterial(@PathVariable("exerciseId") Integer exerciseId) {

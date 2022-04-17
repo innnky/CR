@@ -11,41 +11,86 @@
               stripe
               style="width: 100%"
               max-height="360">
+<!--            <el-table-column-->
+<!--                prop="date"-->
+<!--                label="作业任务">-->
+<!--              <template slot-scope="scope">-->
+<!--                <i class="el-icon-time"></i>-->
+<!--                <span @click="showExerciseDetail()" style="margin-left: 10px;color: #7fb6ff;cursor: pointer">{{ scope.row.name }}</span>-->
+<!--              </template>-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--                prop="name"-->
+<!--                label="开始时间">-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--                prop="address"-->
+<!--                label="截止时间">-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--                prop="date"-->
+<!--                label="所属课程">-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--                prop="date"-->
+<!--                label="可用场景">-->
+<!--              <template slot-scope="scope">-->
+<!--                <el-tag size="medium" :href="scope">查看</el-tag>-->
+<!--              </template>-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--                prop="date"-->
+<!--                label="状态">-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--                prop="date"-->
+<!--                label="成绩">-->
+<!--            </el-table-column>-->
+<!--            {-->
+<!--            "exerciseId": 4,-->
+<!--            "content": "阿斯达四大多所撒",-->
+<!--            "startTime": null,-->
+<!--            "endTime": null,-->
+<!--            "attachmentPath": null,-->
+<!--            "sceneId": null,-->
+<!--            "scourseId": 3-->
+<!--            },-->
             <el-table-column
-                prop="date"
+                prop="name"
                 label="作业任务">
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
-                <span @click="showExerciseDetail()" style="margin-left: 10px;color: #7fb6ff;cursor: pointer">{{ scope.row.name }}</span>
+                <span @click="showExerciseDetail(scope.row)" style="margin-left: 10px;color: #7fb6ff;cursor: pointer">{{ scope.row.content }}</span>
               </template>
             </el-table-column>
             <el-table-column
-                prop="name"
+                prop="startTime"
                 label="开始时间">
             </el-table-column>
             <el-table-column
-                prop="address"
+                prop="endTime"
                 label="截止时间">
             </el-table-column>
             <el-table-column
-                prop="date"
+                prop="courseName"
                 label="所属课程">
             </el-table-column>
             <el-table-column
-                prop="date"
+                prop="sceneName"
                 label="可用场景">
               <template slot-scope="scope">
                 <el-tag size="medium" :href="scope">查看</el-tag>
               </template>
             </el-table-column>
             <el-table-column
-                prop="date"
+                prop="status"
                 label="状态">
             </el-table-column>
             <el-table-column
-                prop="date"
+                prop="score"
                 label="成绩">
             </el-table-column>
+
           </el-table>
 
         </div>
@@ -56,41 +101,35 @@
 </template>
 
 <script>
+import {getRequest} from "@/api/data";
+
 export default {
   name: "StudentExercise",
   data() {
     return {
       activeName:"first",
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普8 弄'
-        }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀19 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普'
-      }]
+      tableData: []
     }
   },
   methods:{
-    showExerciseDetail(){
+    showExerciseDetail(row){
       console.log(111);
-      this.$router.push("/StudentExerciseDetail")
+      // "/StudentExerciseDetail"
+      this.$router.push({
+        path: "/StudentExerciseDetail",
+        query: {
+          id: row.exerciseId
+        }
+      })
+    },
+    initData(){
+      getRequest("/student/exercise/").then(res=>{
+        this.tableData = res;
+      })
     }
+  },
+  mounted(){
+    this.initData();
   }
 }
 </script>

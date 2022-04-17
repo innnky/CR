@@ -19,4 +19,38 @@
         submit_time,image,score,
         results_analysis
     </sql>
+    <select id="countByExerciseIdAndSubmitTimeNotNull" resultType="int">
+        select count(*)
+        from student_exercise_relation
+        where exercise_id = #{exerciseId,jdbcType=NUMERIC} and submit_time is not null
+    </select>
+    <select id="countByExerciseId" resultType="int">
+        select count(*)
+        from student_exercise_relation
+        where exercise_id = #{exerciseId,jdbcType=NUMERIC}
+    </select>
+    <select id="countByExerciseIdAndScoreNotNull" resultType="int">
+        select count(*)
+        from student_exercise_relation
+        where exercise_id = #{exerciseId,jdbcType=NUMERIC}
+          AND score is not null
+    </select>
+    <select id="getAllByExerciseIdIn" resultType="xyz.innky.graduationproject.web.vo.ExerciseMarkVo">
+        select student_exercise_relation.*, student_name,course_name, content, class_name
+        from student_exercise_relation left join exercise e on student_exercise_relation.exercise_id = e.exercise_id
+        left join s_course sc on e.s_course_id = sc.s_course_id
+        left join course c on sc.courseId = c.course_id
+        left join student s on student_exercise_relation.student_id = s.student_id
+        left join class_info ci on s.class_id = ci.class_id
+        where
+        student_exercise_relation.exercise_id in
+        <foreach collection="exerciseIdList" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=NUMERIC}
+        </foreach>
+    </select>
+    <update id="updateScoreById">
+        update student_exercise_relation
+        set score = #{score,jdbcType=NUMERIC}
+        where id = #{id,jdbcType=NUMERIC}
+    </update>
 </mapper>

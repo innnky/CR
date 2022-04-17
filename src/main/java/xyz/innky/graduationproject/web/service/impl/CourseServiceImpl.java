@@ -4,20 +4,24 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-import xyz.innky.graduationproject.web.mapper.StudentMapper;
+import org.springframework.web.multipart.MultipartFile;
 import xyz.innky.graduationproject.web.pojo.*;
 //import xyz.innky.graduationproject.web.pojo.TeacherCourseClassRelation;
 import xyz.innky.graduationproject.web.service.*;
 import xyz.innky.graduationproject.web.mapper.CourseMapper;
 import org.springframework.stereotype.Service;
-import xyz.innky.graduationproject.web.vo.StuCourseVo;
+import xyz.innky.graduationproject.web.vo.CourseVo;
 
-import java.sql.Wrapper;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
 * @author xingyijin
@@ -38,11 +42,25 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     @Autowired
     SCourseClassRelationService sCourseClassRelationService;
     @Autowired
+    StudentExerciseRelationService studentExerciseRelationService;
+    @Autowired
     SCourseService sCourseService;
     @Autowired
     ExerciseService exerciseService;
     @Autowired
     MaterialService materialService;
+//    static.path
+    @Value("${static.path}")
+    private String staticPath;
+//    server.address
+    @Value("${server.address}")
+    private String serverAddress;
+//    server.port
+    @Value("${server.port}")
+    private String serverPort;
+
+
+
 
     @Override
     public List<Course> getAllCoursesByStuid(Integer stuid) {
@@ -77,18 +95,18 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     }
 
     @Override
-    public List<StuCourseVo> getCourses(Integer studentId, String courseName) {
+    public List<CourseVo> getCourses(Integer studentId, String courseName) {
         Student byId = studentService.getById(studentId);
         List<SCourseClassRelation> byClassId = sCourseClassRelationService.getByClassId(byId.getClassId());
-        List<StuCourseVo> collect = byClassId.stream().map((r) -> {
+        List<CourseVo> collect = byClassId.stream().map((r) -> {
             Course courseBySid = sCourseService.getCourseBySid(r.getSCourseId());
-            StuCourseVo stuCourseVo = new StuCourseVo();
-            stuCourseVo.setCourseId(courseBySid.getCourseId());
-            stuCourseVo.setCourseName(courseBySid.getCourseName());
-            stuCourseVo.setCourseImg(courseBySid.getCourseImg());
-            stuCourseVo.setCourseDescription(courseBySid.getCourseDescription());
-            stuCourseVo.setSCourseId(r.getSCourseId());
-            return stuCourseVo;
+            CourseVo courseVo = new CourseVo();
+            courseVo.setCourseId(courseBySid.getCourseId());
+            courseVo.setCourseName(courseBySid.getCourseName());
+            courseVo.setCourseImg(courseBySid.getCourseImg());
+            courseVo.setCourseDescription(courseBySid.getCourseDescription());
+            courseVo.setSCourseId(r.getSCourseId());
+            return courseVo;
         }).filter((course -> {
             if (courseName == null) {
                 return true;
@@ -111,6 +129,55 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     @Override
     public List<Material> getCourseMaterial(Integer scid) {
         return materialService.getMaterialBySCid(scid);
+    }
+
+    @Override
+    public List<CourseVo> getTeacherCourses(Integer teacherId) {
+        return getBaseMapper().getAllByTeacherId(teacherId);
+    }
+
+    @Override
+    public boolean addCourseMaterial(Integer scid, MultipartFile material) {
+        String fileName = material.getOriginalFilename();
+        String filePath = staticPath + "material/" + fileName;
+        try {
+            material.transferTo(new File(filePath));
+            Material material1 = new Material();
+            material1.setMaterialName(fileName);
+            material1.setMaterialPath("http://"+ serverAddress +":"+ serverPort + "/material/" + fileName);
+            material1.setUpdateTime(new Date(System.currentTimeMillis()));
+            material1.setSCourseId(scid);
+            return materialService.save(material1);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addCourseExercise(Exercise exercise) {
+        boolean save = exerciseService.saveExercise(exercise);
+        if (save) {
+            //通过scid查到所有的班级->学生
+            List<Integer> classIds = sCourseClassRelationService.getCourseClass(exercise.getSCourseId()).stream().map(ClassInfo::getClassId).collect(Collectors.toList());
+//            studentService.getStudentsByClass()
+            List<Student> students = new ArrayList<>();
+            classIds.forEach(classId -> {
+                students.addAll(studentService.getStudentsByClass(classId));
+            });
+            //将学生关系添加进student_exercise_relation表
+            Stream<StudentExerciseRelation> studentExerciseRelationStream = students.stream().map(student -> {
+                StudentExerciseRelation studentExerciseRelation = new StudentExerciseRelation();
+                studentExerciseRelation.setExerciseId(exercise.getExerciseId());
+                studentExerciseRelation.setStudentId(student.getStudentId());
+                return studentExerciseRelation;
+            });
+
+            studentExerciseRelationService.saveBatch(studentExerciseRelationStream.collect(Collectors.toList()));
+            return true;
+        }
+        return false;
     }
 
 }

@@ -14,7 +14,6 @@ import okhttp3.Response;
 
 
 public class LoginTokenApi {
-    private final String baseUrl;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
     final OkHttpClient client = new OkHttpClient();
@@ -22,8 +21,10 @@ public class LoginTokenApi {
     private String deviceUrl;
     private String imageUrl;
 
-    public LoginTokenApi(String baseUrl) {
-        this.baseUrl=baseUrl;
+    public LoginTokenApi() {
+    }
+
+    public LoginTokenApi(String baseUrl) throws JsonProcessingException {
         String bodyJson = "{\n" +
                 "    \"auth\": {\n" +
                 "        \"identity\": {\n" +
@@ -50,17 +51,14 @@ public class LoginTokenApi {
                 "        }\n" +
                 "    }\n" +
                 "}";
-        String url = "http://"+ this.baseUrl +":5000/v3/auth/tokens";
+        String url = "http://"+ baseUrl +":5000/v3/auth/tokens";
         ObjectMapper objectMapper = new ObjectMapper();
         String result = post(url, bodyJson);
-        try {
-            Map resultMap = objectMapper.readValue(result, HashMap.class);
-            List list = (List) ((Map) resultMap.get("token")).get("catalog");
-            this.deviceUrl = (String) ((Map)((List)((Map)list.get(3)).get("endpoints")).get(0)).get("url");
-            this.imageUrl = (String) ((Map)((List)((Map)list.get(10)).get("endpoints")).get(0)).get("url");
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        Map resultMap = objectMapper.readValue(result, HashMap.class);
+        List list = (List) ((Map) resultMap.get("token")).get("catalog");
+        this.deviceUrl = (String) ((Map)((List)((Map)list.get(3)).get("endpoints")).get(0)).get("url");
+        this.imageUrl = (String) ((Map)((List)((Map)list.get(10)).get("endpoints")).get(0)).get("url");
+
 
     }
 

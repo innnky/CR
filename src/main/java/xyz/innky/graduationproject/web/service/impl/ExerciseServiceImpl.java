@@ -2,12 +2,17 @@ package xyz.innky.graduationproject.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import xyz.innky.graduationproject.common.utils.CopyUtil;
 import xyz.innky.graduationproject.web.pojo.Exercise;
 import xyz.innky.graduationproject.web.service.CourseService;
 import xyz.innky.graduationproject.web.service.ExerciseService;
 import xyz.innky.graduationproject.web.mapper.ExerciseMapper;
 import org.springframework.stereotype.Service;
-import xyz.innky.graduationproject.web.vo.StuCourseVo;
+import xyz.innky.graduationproject.web.service.SCourseService;
+import xyz.innky.graduationproject.web.service.StudentExerciseRelationService;
+import xyz.innky.graduationproject.web.vo.CourseVo;
+import xyz.innky.graduationproject.web.vo.ExerciseMarkVo;
+import xyz.innky.graduationproject.web.vo.ExerciseVo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +28,10 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
 
     @Autowired
     CourseService courseService;
+    @Autowired
+    SCourseService sCourseService;
+    @Autowired
+    StudentExerciseRelationService studentExerciseRelationService;
 
     @Override
     public List<Exercise> getExerciseBySCid(Integer scid) {
@@ -30,10 +39,51 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
     }
 
     @Override
-    public List<Exercise> getExercise(Integer studentId) {
-        List<StuCourseVo> courses = courseService.getCourses(studentId, null);
-//        courses.stream().map(StuCourseVo::getSCourseId).collect(Collectors.toList())
-        return getBaseMapper().getAllBySCourseIdIn(courses.stream().map(StuCourseVo::getSCourseId).collect(Collectors.toList()));
+    public List<Exercise> getStudentExercise(Integer studentId) {
+        List<CourseVo> courses = courseService.getCourses(studentId, null);
+        return getBaseMapper().getAllBySCourseIdIn(courses.stream().map(CourseVo::getSCourseId).collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<ExerciseVo> getTeacherExercise(Integer teacherId) {
+        List<CourseVo> courses = courseService.getTeacherCourses(teacherId);
+        List<Exercise> allBySCourseIdIn = getBaseMapper().getAllBySCourseIdIn(courses.stream().map(CourseVo::getSCourseId).collect(Collectors.toList()));
+        List<ExerciseVo> collect = allBySCourseIdIn.stream().map(e->{
+            ExerciseVo exerciseVo = CopyUtil.copy(e, ExerciseVo.class);
+            exerciseVo.setCourse(sCourseService.getCourseBySid( e.getSCourseId()));
+            exerciseVo.setClassInfoList(sCourseService.getCourseClass(e.getSCourseId()));
+            exerciseVo.setSubmittedCount(studentExerciseRelationService.getSubmittedCount(e.getExerciseId()));
+            exerciseVo.setStudentCount(studentExerciseRelationService.getStudentCount(e.getExerciseId()));
+            exerciseVo.setMarkedCount(studentExerciseRelationService.getMarkedCount(e.getExerciseId()));
+            return exerciseVo;
+        }).collect(Collectors.toList());
+
+        return collect;
+    }
+
+    @Override
+    public boolean saveExercise(Exercise exercise) {
+        return getBaseMapper().insertSelective(exercise) > 0;
+    }
+
+    @Override
+    public List<ExerciseMarkVo> getMark(Integer teacherId, Integer scid) {
+        List<CourseVo> courses = courseService.getTeacherCourses(teacherId);
+        List<Integer> exercises = getBaseMapper().getAllBySCourseIdIn(courses.stream().map(CourseVo::getSCourseId).filter(i->{
+            if(scid == null){
+                return true;
+            }
+            else {
+                return i.equals(scid);
+            }}).collect(Collectors.toList()))
+                        .stream().map(Exercise::getExerciseId).collect(Collectors.toList());
+        return studentExerciseRelationService.getMark(exercises);
+//        List<ExerciseMarkVo> collect = allBySCourseIdIn.stream().map(e->{
+    }
+
+    @Override
+    public boolean doMark(Integer id, Integer score) {
+        return studentExerciseRelationService.doMark(id, score);
     }
 }
 

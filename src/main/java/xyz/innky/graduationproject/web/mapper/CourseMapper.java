@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import xyz.innky.graduationproject.web.pojo.Course;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import xyz.innky.graduationproject.web.pojo.CourseTime;
+import xyz.innky.graduationproject.web.vo.CourseVo;
 
 /**
 * @author xingyijin
@@ -16,6 +17,9 @@ import xyz.innky.graduationproject.web.pojo.CourseTime;
 */
 public interface CourseMapper extends BaseMapper<Course> {
     Page<CourseTime> getAllByCourseId(@Param("page") Page<CourseTime> page, @Param("courseId") Integer courseId);
+
+    List<CourseVo> getAllByTeacherId(@Param("teacherId") Integer teacherId);
+
 
 }
 

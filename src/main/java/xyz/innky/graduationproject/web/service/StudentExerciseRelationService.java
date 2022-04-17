@@ -2,6 +2,9 @@ package xyz.innky.graduationproject.web.service;
 
 import xyz.innky.graduationproject.web.pojo.StudentExerciseRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.innky.graduationproject.web.vo.ExerciseMarkVo;
+
+import java.util.List;
 
 /**
 * @author xingyijin
@@ -10,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface StudentExerciseRelationService extends IService<StudentExerciseRelation> {
 
+    Integer getSubmittedCount(Integer exerciseId);
+
+    Integer getStudentCount(Integer exerciseId);
+
+    Integer getMarkedCount(Integer exerciseId);
+
+    List<ExerciseMarkVo> getMark(List<Integer> exercises);
+
+    boolean doMark(Integer id, Integer score);
 }

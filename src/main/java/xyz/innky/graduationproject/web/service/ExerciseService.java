@@ -2,6 +2,8 @@ package xyz.innky.graduationproject.web.service;
 
 import xyz.innky.graduationproject.web.pojo.Exercise;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.innky.graduationproject.web.vo.ExerciseMarkVo;
+import xyz.innky.graduationproject.web.vo.ExerciseVo;
 
 import java.util.List;
 
@@ -14,5 +16,13 @@ public interface ExerciseService extends IService<Exercise> {
 
     List<Exercise> getExerciseBySCid(Integer scid);
 
-    List<Exercise> getExercise(Integer studentId);
+    List<Exercise> getStudentExercise(Integer studentId);
+
+    List<ExerciseVo> getTeacherExercise(Integer teacherId);
+
+    boolean saveExercise(Exercise exercise);
+
+    List<ExerciseMarkVo> getMark(Integer teacherId, Integer scid);
+
+    boolean doMark(Integer id, Integer score);
 }
