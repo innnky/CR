@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import xyz.innky.graduationproject.openstack.api.ImageApi;
 import xyz.innky.graduationproject.web.mapper.MenuMapper;
 import xyz.innky.graduationproject.web.mapper.UserAccountMapper;
@@ -56,7 +57,8 @@ class GraduationProjectApplicationTests {
     }
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    PasswordEncoder bCryptPasswordEncoder;
     @Test
     void test(){
         System.out.println(bCryptPasswordEncoder.encode("123456"));
@@ -134,6 +136,11 @@ class GraduationProjectApplicationTests {
     @Test
     void testImageApi(){
         imageApi.createImage(new File("/Users/xingyijin/IdeaProjects/graduationProject/src/main/resources/static/cirros-0.3.0-x86_64-disk.img"), "javatest");
+    }
+
+    @Test
+    void teeeasdads(){
+        bCryptPasswordEncoder.matches("123456","");
     }
 
 

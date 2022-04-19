@@ -18,7 +18,36 @@ public class UserController {
     }
 
     @PostMapping("/changePassword")
-    public Result changePassword(@RequestBody String oldPassword, @RequestBody String newPassword){
-        return ResultUtil.returnResultByCondition(userService.changePassword(oldPassword, newPassword),"修改密码");
+    public Result changePassword(@RequestBody Param param){
+        System.out.println("asdasdasdasdasd"+param.toString());
+        return ResultUtil.returnResultByCondition(userService.changePassword(param.getOldPassword(), param.getNewPassword()),"修改密码");
+    }
+    static class Param{
+        private String oldPassword;
+        private String newPassword;
+
+        public String getOldPassword() {
+            return oldPassword;
+        }
+
+        public void setOldPassword(String oldPassword) {
+            this.oldPassword = oldPassword;
+        }
+
+        public String getNewPassword() {
+            return newPassword;
+        }
+
+        public void setNewPassword(String newPassword) {
+            this.newPassword = newPassword;
+        }
+
+        @Override
+        public String toString() {
+            return "Param{" +
+                    "oldPassword='" + oldPassword + '\'' +
+                    ", newPassword='" + newPassword + '\'' +
+                    '}';
+        }
     }
 }

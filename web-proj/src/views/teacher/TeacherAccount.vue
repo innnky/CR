@@ -7,16 +7,30 @@
         </div>
         <div class="row px-4  py-2">
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="基本信息" name="first">
-              <div class="w-100 my-2"><span class="m-3">邮箱</span><el-input class="w-25"></el-input></div>
-              <div class="w-100 my-2"><span class="m-3">个人简介</span><el-input class="w-25"></el-input></div>
-              <el-button class="m-2 ms-1">提交修改</el-button>
-            </el-tab-pane>
-            <el-tab-pane label="修改密码" name="second">
-              <div class="w-100 my-2"><span class="m-3">旧密码</span><el-input class="w-25"></el-input></div>
-              <div class="w-100 my-2"><span class="m-3">新密码</span><el-input class="w-25"></el-input></div>
-              <div class="w-100 my-2"><span class="m-3">新密码确认</span><el-input class="w-25"></el-input></div>
-              <el-button class="m-2 ms-1">提交修改</el-button>
+            <el-tab-pane label="修改密码" name="first">
+              <!--              <div class="w-100 my-2"><span class="m-3">旧密码</span><el-input v-model="formData.oldPassword" class="w-25"></el-input></div>-->
+              <!--              <div class="w-100 my-2"><span class="m-3">新密码</span><el-input class="w-25"></el-input></div>-->
+              <!--              <div class="w-100 my-2"><span class="m-3">新密码确认</span><el-input class="w-25"></el-input></div>-->
+              <!--              <el-button class="m-2 ms-1">提交修改</el-button>-->
+              <el-form
+                  :model="formData"
+                  :rules="rules"
+                  ref="form"
+                  label-width="100px"
+                  class="demo-ruleForm">
+                <el-form-item label="旧密码" prop="oldPassword">
+                  <el-input v-model="formData.oldPassword" type="password"></el-input>
+                </el-form-item>
+                <el-form-item label="新密码" prop="newPassword">
+                  <el-input v-model="formData.newPassword" type="password"></el-input>
+                </el-form-item>
+                <el-form-item label="新密码确认" prop="newPasswordConfirm">
+                  <el-input v-model="formData.newPasswordConfirm" type="password"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="handleSubmit('form')">提交</el-button>
+                </el-form-item>
+              </el-form>
             </el-tab-pane>
           </el-tabs>
 
@@ -28,36 +42,58 @@
 </template>
 
 <script>
+import {postRequest} from "@/api/data";
+
 export default {
   name: "TeacherAccount",
   data() {
     return {
       activeName:"first",
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
+      formData: {
+        oldPassword: '',
+        newPassword: '',
+        newPasswordConfirm: '',
+      },
+      rules: {
+        oldPassword: [
+          { required: true, message: '请输入旧密码', trigger: 'blur' },
+        ],
+        newPassword: [
+          { required: true, message: '请输入新密码', trigger: 'blur' },
+        ],
+        newPasswordConfirm: [
+          { required: true, message: '请输入新密码确认', trigger: 'blur' },
+          { validator: this.comparePasswords, trigger: 'blur' },
+        ],
+      },
     }
-  }
+  },
+  methods:{
+    comparePasswords(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (this.formData.newPassword !== value) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    },
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    handleSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          postRequest("/user/changePassword",this.formData).then(res=>{
+            res
+          })
+        } else {
+          console.log('error submit!');
+          return false;
+        }
+      });
+    },
+  },
 }
 </script>
 

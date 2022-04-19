@@ -170,69 +170,6 @@
 
 <script>
 
-// {
-//   "exerciseId": 8,
-//     "content": "string",
-//     "startTime": null,
-//     "endTime": null,
-//     "attachmentPath": "http://localhost:8081/exercise/string",
-//     "sceneId": 3,
-//     "course": {
-//   "courseId": 6,
-//       "courseDescription": "课程描述信息课程描述信息课程描述信息课程描述信息",
-//       "courseName": "课程D",
-//       "courseImg": "https://home.innky.xyz:25566/images/srchttp3A2F2Fimg.taopic.com2Fuploads2Fallimg2F1402212F234921-1402210U23076.jpgreferhttp3A2F2Fimg.taopic.jpg"
-// },
-//   "classInfoList": [
-//   {
-//     "classId": 8,
-//     "className": "计算18-3",
-//     "grade": "大四",
-//     "major": "计算机科sss学与技术",
-//     "college": "电子与信xsxx息工程1",
-//     "headTeacherId": 1,
-//     "classNumber": "18200103"
-//   },
-//   {
-//     "classId": 4,
-//     "className": "计算18-1",
-//     "grade": "大四",
-//     "major": "计算机科学与技术",
-//     "college": "电子与信息工程",
-//     "headTeacherId": 1,
-//     "classNumber": "18200101"
-//   },
-//   {
-//     "classId": 59,
-//     "className": "软件18-2",
-//     "grade": "",
-//     "major": "软件工程",
-//     "college": "软件工程",
-//     "headTeacherId": 1,
-//     "classNumber": "18210102"
-//   }
-// ],
-//     "submittedCount": 0,
-//     "markedCount": 1,
-//     "studentCount": 2,
-//     "scourseId": 3
-// }
-
-
-// {
-//     "id": 1,
-//     "studentId": 15,
-//     "exerciseId": 8,
-//     "submitTime": null,
-//     "image": null,
-//     "score": 10,
-//     "resultsAnalysis": null,
-//     "studentName": "学生A",
-//     "courseName": "课程D",
-//     "content": "string",
-//     "className": "计算18-1"
-// }
-
 import {getRequest, postRequest} from "@/api/data";
 
 export default {

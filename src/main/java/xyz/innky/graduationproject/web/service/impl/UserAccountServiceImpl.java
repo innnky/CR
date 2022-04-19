@@ -118,10 +118,10 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     @Override
     public boolean changePassword(String oldPassword, String newPassword) {
         UserAccountDetail userAccountDetail = AccountUtil.getUserAccountDetail();
-        if(passwordEncoder.encode(oldPassword).equals(userAccountDetail.getPassword())){
+        if(passwordEncoder.matches(oldPassword,userAccountDetail.getPassword())){
             UserAccount userAccount = userAccountDetail.getUserAccount();
             userAccount.setPassword(passwordEncoder.encode(newPassword));
-            return this.save(userAccount);
+            return this.updateById(userAccount);
         }
         return false;
     }
