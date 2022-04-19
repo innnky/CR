@@ -8,90 +8,130 @@
             <el-tab-pane label="全部作业" name="first">
 
               <el-table
-                  :data="tableData"
+                  :data="tableAll"
                   stripe
                   style="width: 100%"
                   max-height="360">
                 <el-table-column
-                    prop="date"
+                    prop="content"
                     label="作业任务">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="course.courseName"
                     label="从属课程">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="startTime"
                     label="开始时间">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="endTime"
                     label="截止时间">
                 </el-table-column>
                 <el-table-column
                     prop="date"
                     label="班级">
+                  <template slot-scope="scope">
+                    <span v-for="item in scope.row.classInfoList" :key="item.classId">{{item.className}} </span>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="submittedCount"
                     label="已提交">
+                  <template slot-scope="scope">
+                    <span >{{scope.row.submittedCount}}/{{scope.row.studentCount}} </span>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="markedCount"
                     label="已评阅">
+                  <template slot-scope="scope">
+                    <span >{{scope.row.markedCount}}/{{scope.row.submittedCount}} </span>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                    prop="date"
                     label="状态">
+                  <template >
+                    <el-tag type="success" >已发布</el-tag>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                    prop="date"
-                    label="场景">
-                </el-table-column>
-                <el-table-column
-                    prop="date"
-                    label="操作">
+                    label="操作"
+                    width="200">
+                  <template slot-scope="scope">
+                    <el-button type="info" size="small" @click="handleShowEdit(scope.row)">编辑</el-button>
+                    <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
+                  </template>
                 </el-table-column>
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="作业评分" name="second">
+
+              <el-form :model="scid">
+                <div class="row px-3">
+                  <div class="col-4">
+                    <el-form-item label="课程安排">
+                      <el-input placeholder="请输入" class="w-75" v-model="scid"></el-input>
+                    </el-form-item>
+                  </div>
+
+                  <div class="col-1 offset-7">      <el-button  class="" size="small"  @click="initData">查询</el-button></div>
+
+                </div>
+
+              </el-form>
               <el-table
-                  :data="tableData"
+                  :data="tableMark"
                   stripe
                   style="width: 100%"
                   max-height="360">
                 <el-table-column
-                    prop="date"
+                    prop="content"
                     label="作业任务">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="courseName"
                     label="从属课程">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="studentName"
                     label="学生">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="className"
                     label="班级">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="submitTime"
                     label="提交时间">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
                     label="详情">
+                  <template slot-scope="scope">
+                    <el-button type="primary" size="small" @click="handleShowDetail(scope.row)">查看</el-button>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                    prop="date"
                     label="状态">
+                  <template slot-scope="scope">
+<!--                    若scope.row.submitTime为空则显示未提交,若scope.row.score不为空则显示已批改,此外显示未批改-->
+                    <el-tag type="danger" v-if="scope.row.submitTime==null">未提交</el-tag>
+                    <el-tag type="success" v-else-if="scope.row.score!=null">已批改</el-tag>
+
+                    <el-tag type="warning" v-else>未批改</el-tag>
+
+                  </template>
                 </el-table-column>
-                <el-table-column
-                    prop="date"
-                    label="操作">
-                </el-table-column>
+<!--                <el-table-column-->
+<!--                    prop="date"-->
+<!--                    label="操作"-->
+<!--                    width="200">-->
+<!--                  <template slot-scope="scope">-->
+<!--                    <el-button type="info" size="small" @click="handleShowEdit(scope.row)">编辑</el-button>-->
+<!--                    <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>-->
+<!--                  </template>-->
+
+<!--                </el-table-column>-->
               </el-table>
             </el-tab-pane>
           </el-tabs>
@@ -99,40 +139,144 @@
         </div>
       </div>
     </div>
+
+    <el-dialog title="查看详情" :visible.sync="dialogVisible" width="60%">
+      <div>
+        <el-form :model="form" label-width="80px">
+          <span>截图</span><br>
+          <el-image
+              v-for="(item,index) in form.image"
+              :key="index"
+              style="width: 40%;margin-left: 10px;margin-bottom: 10px;"
+              :src="item"
+              fit="fill"></el-image>
+          <el-form-item label="结果分析">
+            <el-input v-model="form.resultsAnalysis" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="评分">
+            <el-input v-model="form.score"></el-input>
+          </el-form-item>
+
+        </el-form>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button @click="submitMark">评 分</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
 
 <script>
+
+// {
+//   "exerciseId": 8,
+//     "content": "string",
+//     "startTime": null,
+//     "endTime": null,
+//     "attachmentPath": "http://localhost:8081/exercise/string",
+//     "sceneId": 3,
+//     "course": {
+//   "courseId": 6,
+//       "courseDescription": "课程描述信息课程描述信息课程描述信息课程描述信息",
+//       "courseName": "课程D",
+//       "courseImg": "https://home.innky.xyz:25566/images/srchttp3A2F2Fimg.taopic.com2Fuploads2Fallimg2F1402212F234921-1402210U23076.jpgreferhttp3A2F2Fimg.taopic.jpg"
+// },
+//   "classInfoList": [
+//   {
+//     "classId": 8,
+//     "className": "计算18-3",
+//     "grade": "大四",
+//     "major": "计算机科sss学与技术",
+//     "college": "电子与信xsxx息工程1",
+//     "headTeacherId": 1,
+//     "classNumber": "18200103"
+//   },
+//   {
+//     "classId": 4,
+//     "className": "计算18-1",
+//     "grade": "大四",
+//     "major": "计算机科学与技术",
+//     "college": "电子与信息工程",
+//     "headTeacherId": 1,
+//     "classNumber": "18200101"
+//   },
+//   {
+//     "classId": 59,
+//     "className": "软件18-2",
+//     "grade": "",
+//     "major": "软件工程",
+//     "college": "软件工程",
+//     "headTeacherId": 1,
+//     "classNumber": "18210102"
+//   }
+// ],
+//     "submittedCount": 0,
+//     "markedCount": 1,
+//     "studentCount": 2,
+//     "scourseId": 3
+// }
+
+
+// {
+//     "id": 1,
+//     "studentId": 15,
+//     "exerciseId": 8,
+//     "submitTime": null,
+//     "image": null,
+//     "score": 10,
+//     "resultsAnalysis": null,
+//     "studentName": "学生A",
+//     "courseName": "课程D",
+//     "content": "string",
+//     "className": "计算18-1"
+// }
+
+import {getRequest, postRequest} from "@/api/data";
+
 export default {
   name: "TeacherExercise",
   data() {
     return {
       activeName:"first",
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      tableAll: [],
+      tableMark: [],
+      scid:'',
+      dialogVisible: false,
+      form:{},
+      score:'',
     }
+  },
+  methods: {
+    initData(){
+      getRequest("/teacher/exercise/").then(res=>{
+        this.tableAll = res;
+      })
+      getRequest("/teacher/exercise/mark",{
+        scid:this.scid
+      }).then(res=>{
+        this.tableMark = res;
+        for(let i=0;i<this.tableMark.length;i++){
+          this.tableMark[i].image = this.tableMark[i].image.split(",");
+        }
+        console.log(res);
+      })
+    },
+    handleShowDetail(row){
+      this.dialogVisible = true;
+      this.form = row;
+    },
+    submitMark(){
+      postRequest("/teacher/exercise/mark/"+this.form.id+"/"+this.form.score,{}).then(res=>{
+        res
+        this.dialogVisible = false;
+        this.initData();
+      })
+    },
+  },
+  mounted() {
+    this.initData();
   }
 }
 </script>

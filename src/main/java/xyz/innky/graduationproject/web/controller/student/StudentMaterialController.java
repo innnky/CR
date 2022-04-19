@@ -22,7 +22,7 @@ public class StudentMaterialController {
     @GetMapping("/")
     public Result getAllMaterial() {
         Integer studentId = AccountUtil.getStudentId();
-        return Result.ok(materialService.getMaterial(studentId));
+            return Result.ok(materialService.getMaterial(studentId));
     }
 
 

@@ -44,6 +44,11 @@ public class StudentExerciseRelationServiceImpl extends ServiceImpl<StudentExerc
     public boolean doMark(Integer id, Integer score) {
         return getBaseMapper().updateScoreById(score, id) == 1;
     }
+
+    @Override
+    public boolean submitExercise(StudentExerciseRelation content) {
+        return getBaseMapper().updateSelective(content) == 1;
+    }
 }
 
 

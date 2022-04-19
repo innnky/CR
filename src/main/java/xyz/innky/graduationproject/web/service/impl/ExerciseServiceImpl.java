@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.innky.graduationproject.common.utils.CopyUtil;
 import xyz.innky.graduationproject.web.pojo.Exercise;
+import xyz.innky.graduationproject.web.pojo.StudentExerciseRelation;
 import xyz.innky.graduationproject.web.service.CourseService;
 import xyz.innky.graduationproject.web.service.ExerciseService;
 import xyz.innky.graduationproject.web.mapper.ExerciseMapper;
@@ -85,6 +86,13 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
     public boolean doMark(Integer id, Integer score) {
         return studentExerciseRelationService.doMark(id, score);
     }
+
+    @Override
+    public boolean submitExercise(StudentExerciseRelation content) {
+        return studentExerciseRelationService.submitExercise(content);
+    }
+
+
 }
 
 

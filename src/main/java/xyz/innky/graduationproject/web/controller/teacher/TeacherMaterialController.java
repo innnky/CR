@@ -3,8 +3,7 @@ package xyz.innky.graduationproject.web.controller.teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
 import xyz.innky.graduationproject.web.pojo.Material;
@@ -15,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-@Controller
+@RestController
 @RequestMapping("/teacher/material")
 public class TeacherMaterialController {
 
@@ -35,20 +34,43 @@ public class TeacherMaterialController {
         material.setUpdateTime(new Date(System.currentTimeMillis()));
         return ResultUtil.returnResultByCondition(materialService.save(material),"添加材料");
     }
-    
+
+
+//    @PostMapping("/file")
+//    public Result addExerciseFile(MultipartFile file) {
+////        Integer teacherId = AccountUtil.getTeacherId();
+//        String  filePath = staticPath + file.getOriginalFilename();
+//        try {
+//            file.transferTo(new java.io.File(filePath));
+//            return Result.ok("");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return Result.err("上传失败");
+//        }
+//    }
 
 
 
-    @PostMapping("/file")
-    public Result addFile(MultipartFile multipartFile){
-        File file = new File(fileRootPath+multipartFile.getOriginalFilename());
+    @PostMapping("/file/{scid}")
+    public Result addFile(MultipartFile file, @PathVariable("scid") Integer scid) {
+        File file1 = new File(fileRootPath+"material/"+file.getOriginalFilename());
         try {
-            multipartFile.transferTo(file);
-            return Result.ok("上传成功");
+            file.transferTo(file1);
+            Material material = new Material();
+            material.setMaterialName(file.getOriginalFilename());
+            material.setSCourseId(scid);
+            material.setMaterialPath("http://"+serverAddress+":"+serverPort+"/material/"+file.getOriginalFilename());
+            material.setUpdateTime(new Date(System.currentTimeMillis()));
+            return ResultUtil.returnResultByCondition(materialService.save(material),"添加材料");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return Result.err("上传失败");
+    }
+
+    @DeleteMapping("/{mid}")
+    public Result deleteMaterial(@PathVariable("mid") Integer mid){
+        return ResultUtil.returnResultByCondition(materialService.removeById(mid),"删除材料");
     }
 
 

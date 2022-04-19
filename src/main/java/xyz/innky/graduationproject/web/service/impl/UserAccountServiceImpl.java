@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ObjectUtils;
 import xyz.innky.graduationproject.common.utils.AccountUtil;
 import xyz.innky.graduationproject.web.pojo.*;
@@ -37,6 +38,9 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     RoleMenuRelationService roleMenuRelationService;
     @Autowired
     MenuService menuService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -109,6 +113,17 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         List<RoleMenuRelation> listByRoleId = roleMenuRelationService.getListByRoleId(userAccount.getRoleId());
         List<Integer> menuIds = listByRoleId.stream().map(RoleMenuRelation::getMenuId).collect(Collectors.toList());
         return menuService.getMenusByMenuIds(menuIds);
+    }
+
+    @Override
+    public boolean changePassword(String oldPassword, String newPassword) {
+        UserAccountDetail userAccountDetail = AccountUtil.getUserAccountDetail();
+        if(passwordEncoder.encode(oldPassword).equals(userAccountDetail.getPassword())){
+            UserAccount userAccount = userAccountDetail.getUserAccount();
+            userAccount.setPassword(passwordEncoder.encode(newPassword));
+            return this.save(userAccount);
+        }
+        return false;
     }
 }
 

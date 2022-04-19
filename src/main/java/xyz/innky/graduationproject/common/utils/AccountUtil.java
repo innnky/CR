@@ -16,5 +16,8 @@ public class AccountUtil {
         UserAccountDetail principal = (UserAccountDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return principal.getUserAccount().getTeacherId();
     }
+    public static UserAccountDetail getUserAccountDetail() {
+        return (UserAccountDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
 
 }

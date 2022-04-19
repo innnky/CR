@@ -22,4 +22,6 @@ public interface StudentExerciseRelationService extends IService<StudentExercise
     List<ExerciseMarkVo> getMark(List<Integer> exercises);
 
     boolean doMark(Integer id, Integer score);
+
+    boolean submitExercise(StudentExerciseRelation content);
 }

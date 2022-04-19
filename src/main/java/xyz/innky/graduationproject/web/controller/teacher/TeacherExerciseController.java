@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.innky.graduationproject.common.utils.AccountUtil;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
+import xyz.innky.graduationproject.web.pojo.Exercise;
 import xyz.innky.graduationproject.web.service.ExerciseService;
 import xyz.innky.graduationproject.web.vo.Result;
 
@@ -42,7 +43,7 @@ public class TeacherExerciseController {
     @PostMapping("/file")
     public Result addExerciseFile(MultipartFile file) {
 //        Integer teacherId = AccountUtil.getTeacherId();
-        String  filePath = staticPath + file.getOriginalFilename();
+        String  filePath = staticPath+"exercise/" + file.getOriginalFilename();
         try {
             file.transferTo(new java.io.File(filePath));
             return Result.ok("");
@@ -57,7 +58,15 @@ public class TeacherExerciseController {
         return ResultUtil.returnResultByCondition(exerciseService.doMark(id, score),"评分");
     }
 
+    @DeleteMapping("/{id}")
+    public Result deleteExercise(@PathVariable("id") Integer id) {
+        return ResultUtil.returnResultByCondition(exerciseService.removeById(id),"删除");
+    }
 
+    @PutMapping("/")
+    public Result updateExercise(@RequestBody Exercise exercise) {
+        return ResultUtil.returnResultByCondition(exerciseService.updateById(exercise),"更新");
+    }
 
 
 }

@@ -26,4 +26,6 @@ public interface UserAccountService extends IService<UserAccount>, UserDetailsSe
     Page<UserAccountTeacherVo> getTeacherAccounts(Integer page, Integer pageSize, String teacherName, Integer teacherId, String account);
 
     List<MenuVo> getMenu();
+
+    boolean changePassword(String oldPassword, String newPassword);
 }

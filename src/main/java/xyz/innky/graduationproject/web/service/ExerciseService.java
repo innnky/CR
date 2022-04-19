@@ -1,7 +1,9 @@
 package xyz.innky.graduationproject.web.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import xyz.innky.graduationproject.web.pojo.Exercise;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.innky.graduationproject.web.pojo.StudentExerciseRelation;
 import xyz.innky.graduationproject.web.vo.ExerciseMarkVo;
 import xyz.innky.graduationproject.web.vo.ExerciseVo;
 
@@ -25,4 +27,6 @@ public interface ExerciseService extends IService<Exercise> {
     List<ExerciseMarkVo> getMark(Integer teacherId, Integer scid);
 
     boolean doMark(Integer id, Integer score);
+
+    boolean submitExercise(StudentExerciseRelation content);
 }

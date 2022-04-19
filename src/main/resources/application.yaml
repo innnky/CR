@@ -22,7 +22,7 @@ logging:
 openstack:
   baseurl: '192.168.50.53'
 static:
-  path: "/Users/xingyijin/IdeaProjects/graduationProject/src/main/resources/static/"
+  path: "/Users/xingyijin/IdeaProjects/graduationProject/target/classes/static/"
 
 #  spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
 #  spring.jackson.time-zone=GMT+8
