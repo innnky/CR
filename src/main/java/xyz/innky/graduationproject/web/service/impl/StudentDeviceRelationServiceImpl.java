@@ -21,14 +21,18 @@ public class StudentDeviceRelationServiceImpl extends ServiceImpl<StudentDeviceR
     implements StudentDeviceRelationService{
 
     @Override
-    public List<StudentDeviceReservation> getAllDevicesByStudentId(Integer studentId) {
-        List<StudentDeviceReservation> allByStudentId = getBaseMapper().getAllByStudentId(studentId);
-        allByStudentId.forEach(studentDeviceReservation -> {
-            Date startTime = studentDeviceReservation.getStartTime();
-            studentDeviceReservation.setDate(startTime);
-//            studentDeviceReservation.setSequence();
-        }
-        return allByStudentId;
+    public List<StudentDeviceRelation> getAllDevicesByStudentId(Integer studentId) {
+        return getBaseMapper().getAllByStudentId(studentId);
+    }
+
+    @Override
+    public boolean deleteReservation(Integer deviceId, Integer studentId) {
+        return getBaseMapper().deleteByDeviceIdAndStudentId(deviceId, studentId) > 0;
+    }
+
+    @Override
+    public StudentDeviceRelation getReservation(Integer deviceId, Integer studentId) {
+        return getBaseMapper().getOneByDeviceIdAndStudentId(deviceId, studentId);
     }
 }
 

@@ -95,21 +95,30 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
     }
 
     @Override
-    public boolean addReservation(Integer deviceId, StudentDeviceReservation reservation) {
-        StudentDeviceRelation relation = new StudentDeviceRelation();
-        relation.setDeviceId(deviceId);
-        relation.setStudentId(AccountUtil.getStudentId());
-        TimePeriod period = TimePeriod.getInstance(reservation.getSequence());
-        Date start = new Date(reservation.getDate().getTime()+ period.getStart());
-        Date end = new Date(reservation.getDate().getTime()+ period.getEnd());
-        relation.setStartTime(start);
-        relation.setEndTime(end);
-        return studentDeviceRelationService.save(relation);
+    public boolean addReservation(StudentDeviceRelation reservation) {
+        return studentDeviceRelationService.saveOrUpdate(reservation);
     }
 
     @Override
-    public List<StudentDeviceReservation> getAllDevicesByStudentId(Integer studentId) {
+    public List<StudentDeviceRelation> getAllDevicesByStudentId(Integer studentId) {
         return studentDeviceRelationService.getAllDevicesByStudentId(studentId);
+    }
+
+    @Override
+    public String getVncUrl(Integer deviceId) {
+        Device dev = getById(deviceId);
+        return deviceApi.getVncAddress(dev.getUuid());
+    }
+
+    @Override
+    public boolean deleteReservation(Integer deviceId, Integer studentId) {
+
+        return studentDeviceRelationService.deleteReservation(deviceId, studentId);
+    }
+
+    @Override
+    public StudentDeviceRelation getReservation(Integer deviceId, Integer studentId) {
+        return studentDeviceRelationService.getReservation(deviceId, studentId);
     }
 }
 

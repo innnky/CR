@@ -24,22 +24,22 @@ public class StudentDeviceRelation implements Serializable {
     /**
      * 
      */
-    private Date startTime;
-
-    /**
-     * 
-     */
-    private Date endTime;
-
-    /**
-     * 
-     */
     private Integer studentId;
 
     /**
      * 
      */
     private Integer deviceId;
+
+    /**
+     * 
+     */
+    private Integer sequence;
+
+    /**
+     * 
+     */
+    private Date date;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

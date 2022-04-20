@@ -6,24 +6,35 @@
 
     <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.StudentDeviceRelation">
             <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
-            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
             <result property="studentId" column="student_id" jdbcType="INTEGER"/>
             <result property="deviceId" column="device_id" jdbcType="INTEGER"/>
+            <result property="sequence" column="sequence" jdbcType="INTEGER"/>
+            <result property="date" column="date" jdbcType="DATE"/>
     </resultMap>
 
-
-
     <sql id="Base_Column_List">
-        id,start_time,end_time,
-        student_id,device_id
+        id,student_id,device_id,
+        sequence,date
     </sql>
-    <select id="getAllByStudentId" resultType="xyz.innky.graduationproject.web.vo.StudentDeviceReservation">
+    <select id="getAllByStudentId" resultMap="BaseResultMap">
         select
-            d.*,start_time
-        from student_device_relation left join device d on student_device_relation.device_id = d.device_id
+        <include refid="Base_Column_List"/>
+        from student_device_relation
         where
-            student_id = #{studentId,jdbcType=NUMERIC}
+        student_id = #{studentId,jdbcType=NUMERIC}
     </select>
-
+    <delete id="deleteByDeviceIdAndStudentId">
+        delete
+        from student_device_relation
+        where device_id = #{deviceId,jdbcType=NUMERIC}
+          AND student_id = #{studentId,jdbcType=NUMERIC}
+    </delete>
+    <select id="getOneByDeviceIdAndStudentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student_device_relation
+        where
+        device_id = #{deviceId,jdbcType=NUMERIC}
+        AND student_id = #{studentId,jdbcType=NUMERIC}
+    </select>
 </mapper>

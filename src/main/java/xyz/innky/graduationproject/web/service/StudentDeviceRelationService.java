@@ -13,5 +13,9 @@ import java.util.List;
 */
 public interface StudentDeviceRelationService extends IService<StudentDeviceRelation> {
 
-    List<StudentDeviceReservation> getAllDevicesByStudentId(Integer studentId);
+    List<StudentDeviceRelation> getAllDevicesByStudentId(Integer studentId);
+
+    boolean deleteReservation(Integer deviceId, Integer studentId);
+
+    StudentDeviceRelation getReservation(Integer deviceId, Integer studentId);
 }

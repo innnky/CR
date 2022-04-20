@@ -3,6 +3,7 @@ package xyz.innky.graduationproject.web.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.innky.graduationproject.web.pojo.Device;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
 import xyz.innky.graduationproject.web.vo.DeviceVo;
 import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
 
@@ -29,7 +30,13 @@ public interface DeviceService extends IService<Device> {
 
     List<DeviceVo> getAllDevicesByScene(Integer sceneId);
 
-    boolean addReservation(Integer deviceId, StudentDeviceReservation reservation);
+    boolean addReservation(StudentDeviceRelation reservation);
 
-    List<StudentDeviceReservation> getAllDevicesByStudentId(Integer studentId);
+    List<StudentDeviceRelation> getAllDevicesByStudentId(Integer studentId);
+
+    String getVncUrl(Integer deviceId);
+
+    boolean deleteReservation(Integer deviceId, Integer studentId);
+
+    StudentDeviceRelation getReservation(Integer deviceId, Integer studentId);
 }
