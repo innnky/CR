@@ -4,13 +4,17 @@
 
     <div class="col-12 bg-white py-3 px-5 mb-3" style="height: 90%">
 
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs v-model="activeName" @tab-click="handleClick" >
         <el-tab-pane label="任务内容" name="first">
           <div class="row justify-content-between">
             <div class="col-8">          <span class="ms-1" style="font-size: 20px"> {{dta.content}}</span>
-              </div>
-            <div class="col-3"><el-link class="ms-3" :ref="dta.attachmentPath">下载附件</el-link><el-button class="ms-3" type="primary" @click="handleComplete">去完成</el-button></div>
+
+            </div>
+            <div class="col-3"><el-link class="ms-3" :ref="dta.attachmentPath">下载附件</el-link>
+              <el-button class="ms-3" type="primary" @click="handleComplete" :disabled="dta.submitTime!=null">去完成</el-button></div>
           </div>
+          <span class="ms-2">开始时间  {{dta.startTime}}</span><br>
+          <span class="ms-2">截止时间  {{dta.endTime}}</span>
         </el-tab-pane>
       </el-tabs>
       <el-tabs  class="mt-3">
@@ -46,7 +50,7 @@
                 prop="address"
                 label="设备列表">
               <template slot-scope="scope">
-                <el-button @click="handleReservation(scope.row)" :disabled="reservation!=null">预约</el-button>
+                <el-button @click="handleReservation(scope.row)" :disabled="reservation!=null || dta.submitTime!=null">预约</el-button>
               </template>
 
             </el-table-column>
@@ -94,7 +98,9 @@
           <el-input v-model="completeData.resultsAnalysis"></el-input>
         </el-form-item>
         <el-form-item label="远程连接">
-          <el-button type="primary" size="small" @click="handleConnect">连接</el-button>
+
+          <el-button type="primary" size="small" @click="handleConnect" v-if="vncStatus==='正在使用'">连接</el-button>
+          <el-button type="danger" size="small"  v-else disabled>{{vncStatus}}</el-button>
         </el-form-item>
         <el-form-item label="结果截图">
           <el-upload
@@ -148,6 +154,8 @@ export default {
       },
       complete:false,
       fileList: [],
+      vncAddress: "",
+      vncStatus: '',
 
     }
   },
@@ -166,6 +174,10 @@ export default {
                 }
               })
             }
+
+            if(this.complete){
+              this.handleComplete()
+            }
           })
         })
       })
@@ -178,7 +190,7 @@ export default {
       this.dialogFormVisibleReservation = true;
     },
     handleDeleteReservation(){
-      delRequest("/student/device/"+this.reservation.deviceId).then((res)=>{
+      delRequest("/student/device/"+this.reservation.deviceId+"/"+this.exerciseId).then((res)=>{
         res
         this.reservation = null;
         this.initData();
@@ -193,6 +205,10 @@ export default {
       })
     },
     handleComplete(){
+      if(this.dta.submitTime!=null){
+        return
+      }
+      this.getVncAddress()
       this.completeData.exerciseId = this.exerciseId;
       this.dialogFormVisibleComplete = true;
     },
@@ -211,15 +227,22 @@ export default {
     uploadSuccess(res, file, fileList){
       this.fileList = fileList;
     },
+    getVncAddress(){
+      getRequest("student/device/"+this.exerciseId+"/vnc").then((res)=>{
+        this.vncAddress = res.vncUrl;
+        this.vncStatus = res.status;
+      })
+    },
+    handleConnect(){
+      window.open(this.vncAddress);
+    }
 
   },
   mounted() {
     //从query中取出exerciseId
     this.exerciseId = this.$route.query.id
     this.complete = this.$route.query.complete
-    if(this.complete){
-      this.handleComplete()
-    }
+
     this.initData()
   }
 }

@@ -7,7 +7,8 @@ import xyz.innky.graduationproject.common.utils.ResultUtil;
 import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
 import xyz.innky.graduationproject.web.service.DeviceService;
 import xyz.innky.graduationproject.web.vo.Result;
-import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/student/device")
@@ -33,15 +34,14 @@ public class StudentDeviceController {
         return Result.ok(deviceService.getAllDevicesByStudentId( studentId));
     }
 
-    @GetMapping("/{deviceId}/vnc")
-    public Result getVncUrl(@PathVariable("deviceId") Integer deviceId) {
-        return Result.ok(deviceService.getVncUrl(deviceId));
+    @GetMapping("/{exerciseId}/vnc")
+    public Result getVncUrl(@PathVariable("exerciseId") Integer exerciseId) {
+        return Result.ok(deviceService.getStudentVncUrl(exerciseId));
     }
 
-    @DeleteMapping("/{deviceId}")
-    public Result deleteReservation(@PathVariable("deviceId") Integer deviceId) {
-
-        return ResultUtil.returnResultByCondition(deviceService.deleteReservation(deviceId, AccountUtil.getStudentId()),"取消");
+    @DeleteMapping("/{deviceId}/{exerciseId}")
+    public Result deleteReservation(@PathVariable("deviceId") Integer deviceId, @PathVariable("exerciseId") Integer exerciseId) {
+        return ResultUtil.returnResultByCondition(deviceService.deleteReservation(deviceId,  AccountUtil.getStudentId(),exerciseId),"取消");
     }
 
     @GetMapping("/reservation/{exerciseId}")

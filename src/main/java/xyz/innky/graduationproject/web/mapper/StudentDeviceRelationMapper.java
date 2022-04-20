@@ -18,6 +18,8 @@ public interface StudentDeviceRelationMapper extends BaseMapper<StudentDeviceRel
 
     int deleteByDeviceIdAndStudentId(@Param("deviceId") Integer deviceId, @Param("studentId") Integer studentId);
 
+    int deleteByDeviceIdAndStudentIdAndExerciseId(@Param("deviceId") Integer deviceId, @Param("studentId") Integer studentId, @Param("exerciseId") Integer exerciseId);
+
     StudentDeviceRelation getOneByDeviceIdAndStudentId(@Param("deviceId") Integer deviceId, @Param("studentId") Integer studentId);
 
 

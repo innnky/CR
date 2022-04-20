@@ -84,4 +84,12 @@
         </set>
         where student_id=#{studentId,jdbcType=NUMERIC} and exercise_id=#{exerciseId,jdbcType=NUMERIC}
     </update>
+    <select id="getOneByExerciseIdAndStudentId" resultType="xyz.innky.graduationproject.web.vo.StudentExerciseVo">
+        select
+        e.*, submit_time, score
+        from student_exercise_relation left join exercise e on student_exercise_relation.exercise_id = e.exercise_id
+        where
+            student_exercise_relation.exercise_id = #{exerciseId,jdbcType=NUMERIC}
+        AND student_id = #{studentId,jdbcType=NUMERIC}
+    </select>
 </mapper>

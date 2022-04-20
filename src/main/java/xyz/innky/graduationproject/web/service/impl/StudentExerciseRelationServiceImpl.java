@@ -6,6 +6,7 @@ import xyz.innky.graduationproject.web.service.StudentExerciseRelationService;
 import xyz.innky.graduationproject.web.mapper.StudentExerciseRelationMapper;
 import org.springframework.stereotype.Service;
 import xyz.innky.graduationproject.web.vo.ExerciseMarkVo;
+import xyz.innky.graduationproject.web.vo.StudentExerciseVo;
 
 import java.util.List;
 
@@ -48,6 +49,11 @@ public class StudentExerciseRelationServiceImpl extends ServiceImpl<StudentExerc
     @Override
     public boolean submitExercise(StudentExerciseRelation content) {
         return getBaseMapper().updateSelective(content) == 1;
+    }
+
+    @Override
+    public StudentExerciseVo getByIdAndStudentId(Integer exerciseId, Integer studentId) {
+        return getBaseMapper().getOneByExerciseIdAndStudentId(exerciseId, studentId);
     }
 }
 

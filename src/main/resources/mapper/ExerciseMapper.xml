@@ -36,6 +36,13 @@
             #{item,jdbcType=NUMERIC}
         </foreach>
     </select>
+    <select id="getAllByStudentId" resultType="xyz.innky.graduationproject.web.vo.StudentExerciseVo">
+        select
+        exercise.*, ser.score, ser.submit_time
+        from student_exercise_relation ser , exercise
+        where ser.student_id = #{studentId,jdbcType=NUMERIC}
+        and exercise.exercise_id = ser.exercise_id
+    </select>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="exerciseId">
         insert into exercise
         <trim prefix="(" suffix=")" suffixOverrides=",">

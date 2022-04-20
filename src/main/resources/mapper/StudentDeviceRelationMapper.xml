@@ -47,4 +47,11 @@
         exercise_id = #{exerciseId,jdbcType=NUMERIC}
         AND student_id = #{studentId,jdbcType=NUMERIC}
     </select>
+    <delete id="deleteByDeviceIdAndStudentIdAndExerciseId">
+        delete
+        from student_device_relation
+        where device_id = #{deviceId,jdbcType=NUMERIC}
+          AND student_id = #{studentId,jdbcType=NUMERIC}
+          AND exercise_id = #{exerciseId,jdbcType=NUMERIC}
+    </delete>
 </mapper>

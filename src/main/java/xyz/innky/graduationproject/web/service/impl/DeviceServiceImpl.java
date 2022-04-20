@@ -17,10 +17,11 @@ import org.springframework.stereotype.Service;
 import xyz.innky.graduationproject.web.service.ImageService;
 import xyz.innky.graduationproject.web.service.StudentDeviceRelationService;
 import xyz.innky.graduationproject.web.vo.DeviceVo;
-import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author xingyijin
@@ -111,14 +112,39 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
     }
 
     @Override
-    public boolean deleteReservation(Integer deviceId, Integer studentId) {
+    public boolean deleteReservation(Integer deviceId, Integer studentId, Integer exerciseId) {
 
-        return studentDeviceRelationService.deleteReservation(deviceId, studentId);
+        return studentDeviceRelationService.deleteReservation(deviceId, studentId,exerciseId);
     }
 
     @Override
     public StudentDeviceRelation getReservation(Integer exerciseId, Integer studentId) {
         return studentDeviceRelationService.getReservation(exerciseId, studentId);
+    }
+
+    @Override
+    public Object getStudentVncUrl(Integer exerciseId) {
+        Map<String, Object> map = new HashMap<>();
+        Integer studentId = AccountUtil.getStudentId();
+        StudentDeviceRelation reservation = getReservation(exerciseId, studentId);
+        if (reservation == null) {
+            map.put("status","未预约");
+            return map;
+        }
+        long startTick = reservation.getDate().getTime() + TimePeriod.getInstance(reservation.getSequence()).getStart();
+        long endTick = reservation.getDate().getTime() + TimePeriod.getInstance(reservation.getSequence()).getEnd();
+        long now = System.currentTimeMillis();
+        if(now > startTick && now < endTick){
+            map.put("status","正在使用");
+            map.put("vncUrl", getVncUrl(reservation.getDeviceId()));
+        }
+        else if(now > endTick){
+            map.put("status","已过期");
+        }
+        else{
+            map.put("status","未开始");
+        }
+        return map;
     }
 }
 

@@ -14,6 +14,7 @@ import xyz.innky.graduationproject.web.service.StudentExerciseRelationService;
 import xyz.innky.graduationproject.web.vo.CourseVo;
 import xyz.innky.graduationproject.web.vo.ExerciseMarkVo;
 import xyz.innky.graduationproject.web.vo.ExerciseVo;
+import xyz.innky.graduationproject.web.vo.StudentExerciseVo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,9 +41,8 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
     }
 
     @Override
-    public List<Exercise> getStudentExercise(Integer studentId) {
-        List<CourseVo> courses = courseService.getCourses(studentId, null);
-        return getBaseMapper().getAllBySCourseIdIn(courses.stream().map(CourseVo::getSCourseId).collect(Collectors.toList()));
+    public List<StudentExerciseVo> getStudentExercise(Integer studentId) {
+        return getBaseMapper().getAllByStudentId(studentId);
     }
 
     @Override
@@ -90,6 +90,11 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
     @Override
     public boolean submitExercise(StudentExerciseRelation content) {
         return studentExerciseRelationService.submitExercise(content);
+    }
+
+    @Override
+    public StudentExerciseVo getByIdAndStudentId(Integer exerciseId, Integer studentId) {
+        return studentExerciseRelationService.getByIdAndStudentId(exerciseId, studentId);
     }
 
 

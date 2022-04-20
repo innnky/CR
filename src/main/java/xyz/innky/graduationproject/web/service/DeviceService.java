@@ -5,7 +5,6 @@ import xyz.innky.graduationproject.web.pojo.Device;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
 import xyz.innky.graduationproject.web.vo.DeviceVo;
-import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
 
 import java.util.List;
 
@@ -36,7 +35,9 @@ public interface DeviceService extends IService<Device> {
 
     String getVncUrl(Integer deviceId);
 
-    boolean deleteReservation(Integer deviceId, Integer studentId);
+    boolean deleteReservation(Integer deviceId, Integer studentId, Integer exerciseId);
 
     StudentDeviceRelation getReservation(Integer exerciseId, Integer studentId);
+
+    Object getStudentVncUrl(Integer exerciseId);
 }

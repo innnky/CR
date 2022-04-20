@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import xyz.innky.graduationproject.web.pojo.StudentExerciseRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import xyz.innky.graduationproject.web.vo.ExerciseMarkVo;
+import xyz.innky.graduationproject.web.vo.StudentExerciseVo;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +27,8 @@ public interface StudentExerciseRelationMapper extends BaseMapper<StudentExercis
     int updateScoreById(@Param("score") Integer score, @Param("id") Integer id);
 
     int updateSelective(StudentExerciseRelation studentExerciseRelation);
+
+    StudentExerciseVo getOneByExerciseIdAndStudentId(@Param("exerciseId") Integer exerciseId, @Param("studentId") Integer studentId);
 
 }
 

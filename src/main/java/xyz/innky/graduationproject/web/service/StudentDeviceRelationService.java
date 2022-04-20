@@ -2,7 +2,6 @@ package xyz.innky.graduationproject.web.service;
 
 import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
-import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface StudentDeviceRelationService extends IService<StudentDeviceRela
 
     List<StudentDeviceRelation> getAllDevicesByStudentId(Integer studentId);
 
-    boolean deleteReservation(Integer deviceId, Integer studentId);
+    public boolean deleteReservation(Integer deviceId, Integer studentId, Integer exerciseId);
 
     StudentDeviceRelation getReservation(Integer exerciseId, Integer studentId);
 }

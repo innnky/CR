@@ -5,7 +5,6 @@ import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
 import xyz.innky.graduationproject.web.service.StudentDeviceRelationService;
 import xyz.innky.graduationproject.web.mapper.StudentDeviceRelationMapper;
 import org.springframework.stereotype.Service;
-import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -26,8 +25,8 @@ public class StudentDeviceRelationServiceImpl extends ServiceImpl<StudentDeviceR
     }
 
     @Override
-    public boolean deleteReservation(Integer deviceId, Integer studentId) {
-        return getBaseMapper().deleteByDeviceIdAndStudentId(deviceId, studentId) > 0;
+    public boolean deleteReservation(Integer deviceId, Integer studentId, Integer exerciseId) {
+        return getBaseMapper().deleteByDeviceIdAndStudentIdAndExerciseId(deviceId, studentId, exerciseId) > 0;
     }
 
     @Override

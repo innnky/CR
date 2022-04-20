@@ -84,21 +84,22 @@ public class DeviceApi {
     }
 
     public String getVncAddress(String uuid){
-        String body = "{\n" +
-                "    \"os-getVNCConsole\": {\n" +
-                "        \"type\": \"novnc\"\n" +
-                "    }\n" +
-                "}";
-        String res = postJson(api.getDeviceUrl() + "/servers/" + uuid + "/action", body);
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            Map resultMap = objectMapper.readValue(res, HashMap.class);
-            Object o = ((Map) resultMap.get("console")).get("url");
-            return (String) o;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
+//        String body = "{\n" +
+//                "    \"os-getVNCConsole\": {\n" +
+//                "        \"type\": \"novnc\"\n" +
+//                "    }\n" +
+//                "}";
+//        String res = postJson(api.getDeviceUrl() + "/servers/" + uuid + "/action", body);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        try {
+//            Map resultMap = objectMapper.readValue(res, HashMap.class);
+//            Object o = ((Map) resultMap.get("console")).get("url");
+//            return (String) o;
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//            throw new RuntimeException();
+//        }
+        return "测试url";
     }
 
     public void startServer(String uuid){

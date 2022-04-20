@@ -31,7 +31,7 @@ public class StudentExerciseController {
     }
     @GetMapping("/{exerciseId}")
     public Result getMaterial(@PathVariable("exerciseId") Integer exerciseId) {
-        return Result.ok(exerciseService.getById(exerciseId));
+        return Result.ok(exerciseService.getByIdAndStudentId(exerciseId, AccountUtil.getStudentId()));
     }
 
     @PostMapping("/image")

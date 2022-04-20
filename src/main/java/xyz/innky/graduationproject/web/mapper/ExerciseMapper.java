@@ -3,6 +3,7 @@ package xyz.innky.graduationproject.web.mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.innky.graduationproject.web.pojo.Exercise;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import xyz.innky.graduationproject.web.vo.StudentExerciseVo;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +18,8 @@ public interface ExerciseMapper extends BaseMapper<Exercise> {
     List<Exercise> getAllBySCourseId(@Param("sCourseId") Integer sCourseId);
 
     List<Exercise> getAllBySCourseIdIn(@Param("sCourseIdList") Collection<Integer> sCourseIdList);
+
+    List<StudentExerciseVo> getAllByStudentId(@Param("studentId") Integer studentId);
 
     int insertSelective(Exercise exercise);
 
