@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.innky.graduationproject.web.pojo.Device;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.innky.graduationproject.web.vo.DeviceVo;
+import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
 
 import java.util.List;
 
@@ -27,4 +28,8 @@ public interface DeviceService extends IService<Device> {
     List<Device> getUnusedDevice();
 
     List<DeviceVo> getAllDevicesByScene(Integer sceneId);
+
+    boolean addReservation(Integer deviceId, StudentDeviceReservation reservation);
+
+    List<StudentDeviceReservation> getAllDevicesByStudentId(Integer studentId);
 }

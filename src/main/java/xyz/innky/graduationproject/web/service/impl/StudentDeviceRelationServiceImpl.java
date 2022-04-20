@@ -5,6 +5,11 @@ import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
 import xyz.innky.graduationproject.web.service.StudentDeviceRelationService;
 import xyz.innky.graduationproject.web.mapper.StudentDeviceRelationMapper;
 import org.springframework.stereotype.Service;
+import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 /**
 * @author xingyijin
@@ -15,6 +20,16 @@ import org.springframework.stereotype.Service;
 public class StudentDeviceRelationServiceImpl extends ServiceImpl<StudentDeviceRelationMapper, StudentDeviceRelation>
     implements StudentDeviceRelationService{
 
+    @Override
+    public List<StudentDeviceReservation> getAllDevicesByStudentId(Integer studentId) {
+        List<StudentDeviceReservation> allByStudentId = getBaseMapper().getAllByStudentId(studentId);
+        allByStudentId.forEach(studentDeviceReservation -> {
+            Date startTime = studentDeviceReservation.getStartTime();
+            studentDeviceReservation.setDate(startTime);
+//            studentDeviceReservation.setSequence();
+        }
+        return allByStudentId;
+    }
 }
 
 

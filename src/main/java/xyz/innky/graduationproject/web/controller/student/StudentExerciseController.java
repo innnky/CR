@@ -11,6 +11,7 @@ import xyz.innky.graduationproject.web.service.ExerciseService;
 import xyz.innky.graduationproject.web.vo.Result;
 
 import java.io.IOException;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/student/exercise")
@@ -23,15 +24,6 @@ public class StudentExerciseController {
     String serverAddress;
     @Value("${server.port}")
     String serverPort;
-//    @GetMapping("/")
-//    public Result getAllCourses(String courseName) {
-//        Integer studentId = AccountUtil.getStudentId();
-//        return Result.ok( courseService.getCourses(studentId, courseName));
-//    }
-//    @GetMapping("/{scid}/time")
-//    public Result getCourseTime(@PathVariable("scid") Integer scid) {
-//        return Result.ok(courseService.getCourseTime(scid));
-//    }
     @GetMapping("/")
     public Result getAllExercise() {
         Integer studentId = AccountUtil.getStudentId();
@@ -43,19 +35,15 @@ public class StudentExerciseController {
     }
 
     @PostMapping("/image")
-    public Result submitImage(@RequestParam("images") MultipartFile[] images) {
-//        System.out.println(1);
+    public Result submitImage(@RequestParam("file") MultipartFile file) {
 
-        for (MultipartFile file : images) {
-            String fileName = file.getOriginalFilename();
-            String filePath = fileRootPath + "imgs/" + fileName;
-            try {
-                file.transferTo(new java.io.File(filePath));
-                return Result.ok("");
+        String filePath = fileRootPath+"imgs/"+file.getOriginalFilename();
+        try {
+            file.transferTo(new java.io.File(filePath));
+            return Result.ok("");
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return Result.err("上传失败");
 
@@ -66,8 +54,11 @@ public class StudentExerciseController {
         Integer studentId = AccountUtil.getStudentId();
         content.setStudentId(studentId);
         content.setExerciseId(exerciseId);
+
+        content.setSubmitTime(new Date(System.currentTimeMillis()));
         return ResultUtil.returnResultByCondition(exerciseService.submitExercise(content),"提交作业");
     }
+
 
 
 

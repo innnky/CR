@@ -78,11 +78,8 @@
     <update id="updateSelective">
         update student_exercise_relation
         <set>
-            <if test="studentId != null">student_id=#{studentId,jdbcType=NUMERIC},</if>
-            <if test="exerciseId != null">exercise_id=#{exerciseId,jdbcType=NUMERIC},</if>
             <if test="submitTime != null">submit_time=#{submitTime,jdbcType=NUMERIC},</if>
             <if test="image != null">image=#{image,jdbcType=NUMERIC},</if>
-            <if test="score != null">score=#{score,jdbcType=NUMERIC},</if>
             <if test="resultsAnalysis != null">results_analysis=#{resultsAnalysis,jdbcType=VARCHAR},</if>
         </set>
         where student_id=#{studentId,jdbcType=NUMERIC} and exercise_id=#{exerciseId,jdbcType=NUMERIC}

@@ -5,15 +5,21 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
+import xyz.innky.graduationproject.common.utils.AccountUtil;
+import xyz.innky.graduationproject.common.utils.TimePeriod;
 import xyz.innky.graduationproject.openstack.api.DeviceApi;
 import xyz.innky.graduationproject.web.pojo.Device;
 import xyz.innky.graduationproject.web.pojo.Image;
+import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
 import xyz.innky.graduationproject.web.service.DeviceService;
 import xyz.innky.graduationproject.web.mapper.DeviceMapper;
 import org.springframework.stereotype.Service;
 import xyz.innky.graduationproject.web.service.ImageService;
+import xyz.innky.graduationproject.web.service.StudentDeviceRelationService;
 import xyz.innky.graduationproject.web.vo.DeviceVo;
+import xyz.innky.graduationproject.web.vo.StudentDeviceReservation;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +35,8 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
     ImageService imageService;
     @Autowired
     DeviceApi deviceApi;
+    @Autowired
+    StudentDeviceRelationService studentDeviceRelationService;
 
     @Override
     public Page<DeviceVo> getAllDeviceByConditionAndPage(String page, String pageSize, String deviceName, String imageType, String status, Integer deviceId) {
@@ -84,6 +92,24 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
     @Override
     public List<DeviceVo> getAllDevicesByScene(Integer sceneId) {
         return getBaseMapper().getAllDevicesByScene(sceneId);
+    }
+
+    @Override
+    public boolean addReservation(Integer deviceId, StudentDeviceReservation reservation) {
+        StudentDeviceRelation relation = new StudentDeviceRelation();
+        relation.setDeviceId(deviceId);
+        relation.setStudentId(AccountUtil.getStudentId());
+        TimePeriod period = TimePeriod.getInstance(reservation.getSequence());
+        Date start = new Date(reservation.getDate().getTime()+ period.getStart());
+        Date end = new Date(reservation.getDate().getTime()+ period.getEnd());
+        relation.setStartTime(start);
+        relation.setEndTime(end);
+        return studentDeviceRelationService.save(relation);
+    }
+
+    @Override
+    public List<StudentDeviceReservation> getAllDevicesByStudentId(Integer studentId) {
+        return studentDeviceRelationService.getAllDevicesByStudentId(studentId);
     }
 }
 

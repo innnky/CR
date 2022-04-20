@@ -6,13 +6,24 @@
 
     <resultMap id="BaseResultMap" type="xyz.innky.graduationproject.web.pojo.StudentDeviceRelation">
             <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
-            <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
-            <result property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
+            <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+            <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+            <result property="deviceId" column="device_id" jdbcType="INTEGER"/>
     </resultMap>
+
+
 
     <sql id="Base_Column_List">
         id,start_time,end_time,
-        s_course_id
+        student_id,device_id
     </sql>
+    <select id="getAllByStudentId" resultType="xyz.innky.graduationproject.web.vo.StudentDeviceReservation">
+        select
+            d.*,start_time
+        from student_device_relation left join device d on student_device_relation.device_id = d.device_id
+        where
+            student_id = #{studentId,jdbcType=NUMERIC}
+    </select>
+
 </mapper>
