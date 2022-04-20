@@ -43,14 +43,6 @@
                 <el-tag>第{{scope.row.weekday}}大节</el-tag>
               </template>
             </el-table-column>
-            <el-table-column
-                fixed="right"
-                label="操作" width="200">
-              <template slot-scope="scope">
-                <el-button type="info" size="small" @click="handleShowEdit(scope.row)">编辑</el-button>
-                <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
-              </template>
-            </el-table-column>
           </el-table>
 
         </el-tab-pane>
@@ -70,10 +62,6 @@
               style="width: 100%"
               height="400">
             <el-table-column
-                prop="exerciseId"
-                label="作业id">
-            </el-table-column>
-            <el-table-column
                 prop="content"
                 label="作业内容">
             </el-table-column>
@@ -88,6 +76,9 @@
             <el-table-column
                 prop="attachmentPath"
                 label="附件">
+              <template slot-scope="scope">
+                <el-link :href="scope.row.attachmentPath"> 下载</el-link>
+              </template>
             </el-table-column>
             <el-table-column
                 prop="sceneId"
@@ -95,7 +86,10 @@
             </el-table-column>
             <el-table-column
                 prop="scourseId"
-                label="课程">
+                label="操作">
+              <template slot-scope="scope">
+                <el-button type="primary" size="small" @click="handleComplete(scope.row)">去完成</el-button>
+              </template>
             </el-table-column>
           </el-table>
         </el-tab-pane>
@@ -112,10 +106,10 @@
               stripe
               style="width: 100%"
               height="400">
-            <el-table-column
-                prop="materialId"
-                label="资料id">
-            </el-table-column>
+<!--            <el-table-column-->
+<!--                prop="materialId"-->
+<!--                label="资料id">-->
+<!--            </el-table-column>-->
             <el-table-column
                 prop="materialName"
                 label="资料名称">
@@ -126,7 +120,10 @@
             </el-table-column>
             <el-table-column
                 prop="materialPath"
-                label="资料路径">
+                label="操作">
+              <template slot-scope="scope">
+                <el-link :href="scope.row.materialPath"> 下载</el-link>
+              </template>
             </el-table-column>
 
           </el-table>
@@ -185,6 +182,15 @@ export default {
       })
 
     },
+    handleComplete(row){
+      this.$router.push({
+        path: "/StudentExerciseDetail",
+        query: {
+          id: row.exerciseId,
+          complete: true
+        }
+      })
+    }
   },
 }
 </script>

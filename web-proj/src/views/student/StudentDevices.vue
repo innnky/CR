@@ -12,23 +12,17 @@
               style="width: 100%"
               max-height="360">
             <el-table-column
+                prop="deviceId"
+                label="设备名称">
+
+            </el-table-column>
+            <el-table-column
                 prop="date"
-                label="设备id">
-              <template slot-scope="scope">
-                <span @click="showExerciseDetail()" style="margin-left: 10px">{{ scope.row.name }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column
-                prop="name"
-                label="设备类型">
-            </el-table-column>
-            <el-table-column
-                prop="address"
                 label="预约时间">
             </el-table-column>
             <el-table-column
-                prop="date"
-                label="所属课程">
+                prop="sequence"
+                label="预约节次">
             </el-table-column>
             <el-table-column
                 prop="date"
@@ -37,6 +31,14 @@
                 <el-tag size="medium" :href="scope">正在使用</el-tag>
               </template>
             </el-table-column>
+            <el-table-column
+                prop="date"
+                label="操作">
+              <template slot-scope="scope">
+                <el-button size="small" type="primary" disabled :href="scope">远程连接</el-button>
+              </template>
+            </el-table-column>
+
             <el-table-column
                 prop="date"
                 label="操作">
@@ -55,39 +57,25 @@
 </template>
 
 <script>
+import {getRequest} from "@/api/data";
+
 export default {
   name: "StudentDevices",
   data() {
     return {
       activeName:"first",
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-]
+      tableData: []
     }
+  },
+  methods: {
+    initData() {
+      getRequest("/student/device/all").then(res => {
+        this.tableData = res;
+      })
+    }
+  },
+  mounted() {
+    this.initData();
   }
 }
 </script>

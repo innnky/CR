@@ -41,6 +41,11 @@ public class StudentDeviceRelation implements Serializable {
      */
     private Date date;
 
+    /**
+     * 
+     */
+    private Integer exerciseId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

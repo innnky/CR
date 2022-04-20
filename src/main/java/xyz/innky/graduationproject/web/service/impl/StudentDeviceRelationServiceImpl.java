@@ -31,8 +31,8 @@ public class StudentDeviceRelationServiceImpl extends ServiceImpl<StudentDeviceR
     }
 
     @Override
-    public StudentDeviceRelation getReservation(Integer deviceId, Integer studentId) {
-        return getBaseMapper().getOneByDeviceIdAndStudentId(deviceId, studentId);
+    public StudentDeviceRelation getReservation(Integer exerciseId, Integer studentId) {
+        return getBaseMapper().getOneByExerciseIdAndStudentId(exerciseId, studentId);
     }
 }
 

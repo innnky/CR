@@ -1,76 +1,117 @@
 <template>
 <div class="container h-100">
   <div class="row  align-items-center" style="height: 100%;">
-    <div class="col-12 bg-white mt-2 py-3" style="height: 20%">
-      <div class="row h-100 align-items-center px-3">
-        <div class="col-12"><h5>攻防训练任务1</h5></div>
-        <div class="col-12 px-4"><span>教师：xxxxx</span></div>
-        <div class="col-12 px-4"><span>简介：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></div>
-      </div>
-    </div>
-    <div class="col-12 bg-white py-3 px-5 mb-3" style="height: 70%">
+
+    <div class="col-12 bg-white py-3 px-5 mb-3" style="height: 90%">
+
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="任务内容" name="first">
-
-        <div class="row justify-content-center">
-          <div class="col-11 mt-3">{{dta.content}}</div>
-
-        </div>
+          <div class="row justify-content-between">
+            <div class="col-8">          <span class="ms-1" style="font-size: 20px"> {{dta.content}}</span>
+              </div>
+            <div class="col-3"><el-link class="ms-3" :ref="dta.attachmentPath">下载附件</el-link><el-button class="ms-3" type="primary" @click="handleComplete">去完成</el-button></div>
+          </div>
         </el-tab-pane>
-        <el-tab-pane label="任务附件" name="second">
+      </el-tabs>
+      <el-tabs  class="mt-3">
+        <el-tab-pane label="可用设备">
+
+          <div v-if="reservation">
+            <span class="ms-3">已预约:{{reservation.deviceName}}</span>
+            <el-date-picker
+                class="ms-3"
+              v-model="reservation.date"
+              type="date"
+              placeholder="选择日期"
+              disabled></el-date-picker>
+            <span class="ms-3">第{{reservation.sequence}}节</span>
+            <el-button type="primary" @click="handleDeleteReservation" class="ms-3">撤销</el-button>
+          </div>
           <el-table
+              class="mt-2"
               :data="tableData"
               style="width: 100%"
               max-height="300">
             <el-table-column
-                prop="date"
-                label="附件名称"
-                width="500">
-              <template slot-scope="scope">
-                <i class="el-icon-notebook-2"></i>
-                <span @click="showExerciseDetail()" style="margin-left: 10px;color: #7fb6ff;cursor: pointer">{{ scope.row.address }}</span>
-              </template>
-
-            </el-table-column>
-            <el-table-column
-                prop="name"
-                label="时间"
-                >
-            </el-table-column>
-
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="可用场景" name="third">
-          <el-table
-              :data="tableData"
-              style="width: 100%"
-              max-height="300">
-            <el-table-column
-                prop="date"
-                label="场景id"
+                prop="deviceName"
+                label="设备名称"
                 width="180">
             </el-table-column>
             <el-table-column
-                prop="name"
-                label="场景名称"
+                prop="role"
+                label="角色"
                 width="180">
             </el-table-column>
             <el-table-column
                 prop="address"
                 label="设备列表">
-              <template >
-                <span @click="showExerciseDetail()" style="margin-left: 10px;color: #7fb6ff;cursor: pointer">查看</span>
+              <template slot-scope="scope">
+                <el-button @click="handleReservation(scope.row)" :disabled="reservation!=null">预约</el-button>
               </template>
 
             </el-table-column>
           </el-table>
+
         </el-tab-pane>
       </el-tabs>
-
-
     </div>
+    <el-dialog title="预约" :visible.sync="dialogFormVisibleReservation" width="50%">
+      <el-form :model="inputData"  ref="form" label-width="80px">
+        <el-form-item label="设备名称" prop="deviceName">
+          <el-input v-model="form.deviceName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="角色" prop="role">
+          <el-input v-model="form.role" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="预约日期" prop="reservationTime">
+          <el-date-picker
+              v-model="inputData.date"
+              type="date"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="节次" prop="sequence">
+          <el-select v-model="inputData.sequence" placeholder="请选择节次">
+            <el-option
+                v-for="item in [0,1,2,3,4,5,6,7]"
+                :key="item"
+                :label="'第'+(item+1)+'节'"
+                :value="item">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibleReservation = false">取 消</el-button>
+        <el-button type="primary" @click="doReservation">确 定</el-button>
+      </div>
+    </el-dialog>
 
-
+    <el-dialog title="完成作业" :visible.sync="dialogFormVisibleComplete" width="50%">
+      <el-form :model="completeData"  ref="form" label-width="80px">
+        <el-form-item label="结果分析">
+          <el-input v-model="completeData.resultsAnalysis"></el-input>
+        </el-form-item>
+        <el-form-item label="远程连接">
+          <el-button type="primary" size="small" @click="handleConnect">连接</el-button>
+        </el-form-item>
+        <el-form-item label="结果截图">
+          <el-upload
+              class="upload-demo w-50"
+              action="http://localhost:8081/student/exercise/image"
+              :file-list="fileList"
+              :with-credentials='true'
+              ref="imageUpload"
+              :on-success="uploadSuccess">
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibleComplete = false">取 消</el-button>
+        <el-button type="primary" @click="doComplete">确 定</el-button>
+      </div>
+    </el-dialog>
 
   </div>
 
@@ -80,7 +121,7 @@
 </template>
 
 <script>
-import {getRequest} from "@/api/data";
+import {delRequest, getRequest, postRequest} from "@/api/data";
 
 export default {
   name: "StudentExerciseDetail",
@@ -90,18 +131,95 @@ export default {
       dta:"",
       tableData: [],
       exerciseId: "",
+      form: {
+
+      },
+      inputData:{
+        date: "",
+        sequence: "",
+        exerciseId: "",
+      },
+      dialogFormVisibleReservation: false,
+      reservation:{},
+      dialogFormVisibleComplete: false,
+      completeData:{
+        exerciseId: "",
+        resultsAnalysis: "",
+      },
+      complete:false,
+      fileList: [],
+
     }
   },
   methods:{
     initData() {
       getRequest("/student/exercise/"+this.exerciseId).then((res)=>{
         this.dta = res;
+        getRequest("/student/device/all/"+this.dta.sceneId).then((r2)=>{
+          this.tableData = r2;
+          getRequest("/student/device/reservation/"+this.exerciseId).then((res3)=>{
+            this.reservation = res3;
+            if (res3!=null){
+              this.tableData.forEach((item)=>{
+                if (item.deviceId === res3.deviceId){
+                  this.reservation.deviceName = item.deviceName;
+                }
+              })
+            }
+          })
+        })
       })
-    }
+
+    },
+    handleReservation(row){
+      this.form.deviceName = row.deviceName;
+      this.form.role = row.role;
+      this.form.deviceId = row.deviceId;
+      this.dialogFormVisibleReservation = true;
+    },
+    handleDeleteReservation(){
+      delRequest("/student/device/"+this.reservation.deviceId).then((res)=>{
+        res
+        this.reservation = null;
+        this.initData();
+      })
+    },
+    doReservation(){
+      this.inputData.exerciseId = this.exerciseId;
+      postRequest("/student/device/"+this.form.deviceId, this.inputData).then((res)=>{
+        res
+        this.dialogFormVisibleReservation = false;
+        this.initData();
+      })
+    },
+    handleComplete(){
+      this.completeData.exerciseId = this.exerciseId;
+      this.dialogFormVisibleComplete = true;
+    },
+    doComplete(){
+      //将fileList从["img1","img2"]转化为"img1,img2"并保存在this.completeData.image
+      console.log(this.fileList);
+      const baseUrl = "http://localhost:8081/imgs/"
+      this.completeData.image = this.fileList.map(item => baseUrl+item.name).join(",");
+
+      postRequest("/student/exercise/"+this.exerciseId, this.completeData).then((res)=>{
+        res
+        this.dialogFormVisibleComplete = false;
+        this.initData();
+      })
+    },
+    uploadSuccess(res, file, fileList){
+      this.fileList = fileList;
+    },
+
   },
   mounted() {
     //从query中取出exerciseId
     this.exerciseId = this.$route.query.id
+    this.complete = this.$route.query.complete
+    if(this.complete){
+      this.handleComplete()
+    }
     this.initData()
   }
 }

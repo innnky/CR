@@ -12,24 +12,26 @@
               style="width: 100%"
               max-height="360">
             <el-table-column
-                prop="date"
                 label="文件">
               <template slot-scope="scope">
                 <i class="el-icon-notebook-2"></i>
-                <span @click="showExerciseDetail()" style="margin-left: 10px;color: #7fb6ff;cursor: pointer">{{ scope.row.name }}</span>
+                <span  style="margin-left: 10px;color: #7fb6ff">{{ scope.row.materialName }}</span>
               </template>
             </el-table-column>
             <el-table-column
-                prop="name"
-                label="类别">
+                prop="updateTime"
+                label="上传时间">
             </el-table-column>
             <el-table-column
-                prop="address"
+                prop="scourseId"
                 label="所属课程">
             </el-table-column>
             <el-table-column
                 prop="date"
-                label="上传日期">
+                label="操作">
+              <template slot-scope="scope">
+                <el-link :href="scope.row.materialPath"> 下载</el-link>
+              </template>
             </el-table-column>
 
           </el-table>
@@ -41,39 +43,25 @@
 </template>
 
 <script>
+import {getRequest} from "@/api/data";
+
 export default {
   name: "StudentMaterial",
   data() {
     return {
       activeName:"first",
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀'
-        },
-      ]
+      tableData: []
     }
+  },
+  methods: {
+    initData() {
+      getRequest("/student/material/").then(res => {
+        this.tableData = res;
+      })
+    }
+  },
+  mounted() {
+    this.initData();
   }
 }
 </script>

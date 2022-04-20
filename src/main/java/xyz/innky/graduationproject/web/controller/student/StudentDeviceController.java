@@ -21,7 +21,7 @@ public class StudentDeviceController {
     }
 
     @PostMapping("/{deviceId}")
-    public Result getDeviceById(@PathVariable("deviceId") Integer deviceId, @RequestBody StudentDeviceRelation reservation) {
+    public Result doReservation(@PathVariable("deviceId") Integer deviceId, @RequestBody StudentDeviceRelation reservation) {
         reservation.setDeviceId(deviceId);
         reservation.setStudentId(AccountUtil.getStudentId());
         return ResultUtil.returnResultByCondition(deviceService.addReservation(reservation),"预约");
@@ -44,8 +44,8 @@ public class StudentDeviceController {
         return ResultUtil.returnResultByCondition(deviceService.deleteReservation(deviceId, AccountUtil.getStudentId()),"取消");
     }
 
-    @GetMapping("{deviceId}/reservation")
-    public Result getReservation(@PathVariable("deviceId") Integer deviceId) {
-        return Result.ok(deviceService.getReservation(deviceId, AccountUtil.getStudentId()));
+    @GetMapping("/reservation/{exerciseId}")
+    public Result getReservation(@PathVariable("exerciseId") Integer exerciseId) {
+        return Result.ok(deviceService.getReservation(exerciseId, AccountUtil.getStudentId()));
     }
 }

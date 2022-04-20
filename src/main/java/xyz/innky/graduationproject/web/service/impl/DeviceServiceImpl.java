@@ -117,8 +117,8 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
     }
 
     @Override
-    public StudentDeviceRelation getReservation(Integer deviceId, Integer studentId) {
-        return studentDeviceRelationService.getReservation(deviceId, studentId);
+    public StudentDeviceRelation getReservation(Integer exerciseId, Integer studentId) {
+        return studentDeviceRelationService.getReservation(exerciseId, studentId);
     }
 }
 
