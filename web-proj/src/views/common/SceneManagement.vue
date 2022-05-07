@@ -25,7 +25,7 @@
       <div class="col-12 bg-white py-2 mt-3" >
         <div class="row justify-content-between">
           <div class="col-3">      <i class="el-icon-data-analysis m-2"></i><span class="smalltitle">数据列表</span></div>
-          <div class="col-1 p-2"><a  href="http://192.168.50.53/dashboard/project/network_topology/">编辑拓扑</a>    <el-button  class="" size="small" @click="handelShowAdd">新增</el-button></div>
+          <div class="col-1 p-2"><el-link  href="http://192.168.50.53/dashboard/project/network_topology/">编辑拓扑</el-link>    <el-button  class="mt-2" size="small" @click="handelShowAdd">新增</el-button></div>
         </div>
         <div class="row px-3">
           <div class="container">
@@ -82,7 +82,19 @@
                 <el-input class="w-75" v-model="inputData.sceneName" placeholder="请输入场景名称"></el-input>
               </el-form-item>
             </div>
-            <el-transfer :titles="['可用设备', '已选择']" v-model="inputData.deviceIds" :data="availableData"></el-transfer>
+            <el-transfer @change="handleDeviceChange" :titles="['可用设备', '已选择']" v-model="inputData.deviceIds" :data="availableData"></el-transfer>
+            <el-table :data="rolesData" stripe>
+              <el-table-column
+                  label="设备">
+                  <template slot-scope="scope">
+                    <el-tag type="primary">{{getDeviceName(scope.row.deviceId)}}</el-tag>
+                  </template>
+              </el-table-column>
+              <el-table-column
+                  prop="roles"
+                  label="角色">
+              </el-table-column>
+            </el-table>
           </div>
         </div>
       </el-form>
@@ -91,6 +103,7 @@
         <el-button type="primary" @click="doAddOrUpdate">确 定</el-button>
       </div>
     </el-dialog>
+
   </div>
 
 </template>
@@ -111,10 +124,12 @@ export default {
       inputData: {
         sceneName: '',
         deviceIds: [],
+        roles: [],
       },
       dialogFormVisible: false,
       dialogFormTitle: '',
       availableData: [],
+      rolesData:[],
     }
   },
   mounted() {
@@ -166,11 +181,14 @@ export default {
     },
     handleShowEdit(row){
       this.getAvailableData()
+      this.getDevicesInSceneData(row)
       this.dialogFormTitle = '编辑';
       Object.assign(this.inputData, row);
       this.dialogFormVisible = true;
     },
     doAddOrUpdate(){
+      this.inputData.deviceIds = this.rolesData.map(item => item.deviceId)
+      this.inputData.roles = this.rolesData.map(item => item.roles)
       if(this.dialogFormTitle === '编辑'){
         putRequest("/common/scene/", this.inputData).then(() => {
           this.dialogFormVisible = false;
@@ -211,6 +229,57 @@ export default {
         })
       })
     },
+    getDevicesInSceneData(row){
+      getRequest("/common/scene/" + row.sceneId + "/devices").then(res => {
+        this.inputData.deviceIds = res.map(item => {
+          return item.deviceId;
+        })
+        this.rolesData = res.map(item => {
+          return {
+            deviceId: item.deviceId,
+            roles: item.role
+          }
+        })
+        var temp = res.map(item => {
+          return {
+            key: item.deviceId,
+            label: item.deviceName,
+          }
+        })
+        this.availableData.push(...temp);
+      })
+    },
+    handleDeviceChange(val, dirction, movedKeys){
+      console.log(movedKeys);
+      if (dirction === 'right') {
+        this.$prompt('填写角色', '角色', {
+          confirmButtonText: '确定',
+        }).then(({value}) => {
+          movedKeys.forEach(item => {
+            this.rolesData.push({
+              deviceId: item,
+              roles: value
+            })
+          })
+          console.log(this.rolesData);
+        });
+      }else if (dirction === 'left') {
+        movedKeys.forEach(item => {
+            //从this.rolesData中删除
+            this.rolesData = this.rolesData.filter(item2 => {
+              return item2.deviceId !== item;
+            })
+            console.log(this.rolesData);
+        })
+      }
+
+    },
+    getDeviceName(deviceId){
+      var device = this.availableData.find(item => {
+        return item.key === deviceId;
+      })
+      return device.label;
+    }
   }
 
 }

@@ -3,6 +3,7 @@ package xyz.innky.graduationproject.web.controller.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
+import xyz.innky.graduationproject.web.params.SceneParam;
 import xyz.innky.graduationproject.web.pojo.Scene;
 import xyz.innky.graduationproject.web.service.SceneService;
 import xyz.innky.graduationproject.web.vo.Result;
@@ -15,14 +16,14 @@ public class CommonSceneController {
     SceneService sceneService;
 
     @PostMapping("/")
-    public Result addScene(@RequestBody SceneVo scene) {
+    public Result addScene(@RequestBody SceneParam scene) {
         System.out.println(scene.getDeviceIds());
         return ResultUtil.returnResultByCondition(sceneService.addScene(scene),"添加场景");
     }
 
     @PutMapping("/")
-    public Result updateScene(@RequestBody Scene scene) {
-        return ResultUtil.returnResultByCondition(sceneService.updateById(scene),"更新场景");
+    public Result updateScene(@RequestBody SceneParam sceneParam) {
+        return ResultUtil.returnResultByCondition(sceneService.updateScene(sceneParam),"更新场景");
     }
 
     @DeleteMapping("/{id}")
@@ -35,5 +36,10 @@ public class CommonSceneController {
                               Integer sceneId, String sceneName){
         return Result.ok(sceneService.getAllByConditionAndPage(page, pageSize, sceneId, sceneName));
     }
+    @GetMapping("/{sceneId}/devices")
+    public Result getSceneDevice(@PathVariable("sceneId") Integer sceneId){
+        return Result.ok(sceneService.getSceneDevice(sceneId));
+    }
+
 
 }

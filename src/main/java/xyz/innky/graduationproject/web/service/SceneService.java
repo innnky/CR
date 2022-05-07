@@ -1,9 +1,14 @@
 package xyz.innky.graduationproject.web.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import xyz.innky.graduationproject.web.params.SceneParam;
+import xyz.innky.graduationproject.web.pojo.Device;
 import xyz.innky.graduationproject.web.pojo.Scene;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.innky.graduationproject.web.vo.DeviceVo;
 import xyz.innky.graduationproject.web.vo.SceneVo;
+
+import java.util.List;
 
 /**
 * @author xingyijin
@@ -14,5 +19,9 @@ public interface SceneService extends IService<Scene> {
 
     Page<Scene> getAllByConditionAndPage(Integer page, Integer pageSize, Integer sceneId, String sceneName);
 
-    boolean addScene(SceneVo scene);
+    boolean addScene(SceneParam scene);
+
+    List<DeviceVo> getSceneDevice(Integer sceneId);
+
+    boolean updateScene(SceneParam sceneParam);
 }

@@ -21,13 +21,15 @@ public class DeviceSceneRelationServiceImpl extends ServiceImpl<DeviceSceneRelat
     implements DeviceSceneRelationService{
 
     @Override
-    public boolean setRelation(List<Integer> deviceIds, Integer sceneId) {
+    public boolean setRelation(List<Integer> deviceIds, List<String> roles, Integer sceneId) {
+
+        // 先删除原有的关系
         getBaseMapper().delBySceneId(sceneId);
-        List<DeviceSceneRelation> collect = deviceIds.stream().map((i) -> {
-            return new DeviceSceneRelation(null, null, null, null, i, sceneId);
-        }).collect(Collectors.toList());
-        getBaseMapper().insertBatch(collect);
-        throw new RuntimeException();
+        // 再添加新的关系
+        for (int i = 0; i < deviceIds.size(); i++) {
+            getBaseMapper().insert(new DeviceSceneRelation(null, roles.get(i), null, null, deviceIds.get(i), sceneId));
+        }
+        return true;
     }
 }
 

@@ -6,12 +6,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import xyz.innky.graduationproject.web.params.SceneParam;
+import xyz.innky.graduationproject.web.pojo.Device;
 import xyz.innky.graduationproject.web.pojo.Scene;
 import xyz.innky.graduationproject.web.service.DeviceSceneRelationService;
+import xyz.innky.graduationproject.web.service.DeviceService;
 import xyz.innky.graduationproject.web.service.SceneService;
 import xyz.innky.graduationproject.web.mapper.SceneMapper;
 import org.springframework.stereotype.Service;
+import xyz.innky.graduationproject.web.vo.DeviceVo;
 import xyz.innky.graduationproject.web.vo.SceneVo;
+
+import java.util.List;
 
 /**
 * @author xingyijin
@@ -25,6 +31,8 @@ public class SceneServiceImpl extends ServiceImpl<SceneMapper, Scene>
 
     @Autowired
     DeviceSceneRelationService deviceSceneRelationService;
+    @Autowired
+    DeviceService deviceService;
 
     @Override
     public Page<Scene> getAllByConditionAndPage(Integer page, Integer pageSize, Integer sceneId, String sceneName) {
@@ -37,14 +45,27 @@ public class SceneServiceImpl extends ServiceImpl<SceneMapper, Scene>
     }
 
     @Override
-    public boolean addScene(SceneVo scene) {
+    public boolean addScene(SceneParam scene) {
         if (this.save(scene)) {
-            if (deviceSceneRelationService.setRelation(scene.getDeviceIds(), scene.getSceneId())){
+            if (deviceSceneRelationService.setRelation(scene.getDeviceIds(),scene.getRoles(), scene.getSceneId())){
                 return true;
             }
         }
         throw new RuntimeException();
 //        return false;
+    }
+
+    @Override
+    public List<DeviceVo> getSceneDevice(Integer sceneId) {
+        return deviceService.getAllDevicesByScene(sceneId);
+    }
+
+    @Override
+    public boolean updateScene(SceneParam sceneParam) {
+        if (deviceSceneRelationService.setRelation(sceneParam.getDeviceIds(), sceneParam.getRoles(), sceneParam.getSceneId())) {
+            return this.updateById(sceneParam);
+        }
+        return false;
     }
 
 

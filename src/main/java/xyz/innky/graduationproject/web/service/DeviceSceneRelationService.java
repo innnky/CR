@@ -12,5 +12,5 @@ import java.util.List;
 */
 public interface DeviceSceneRelationService extends IService<DeviceSceneRelation> {
 
-    boolean setRelation(List<Integer> deviceIds, Integer sceneId);
+    boolean setRelation(List<Integer> deviceIds, List<String> roles, Integer sceneId);
 }
