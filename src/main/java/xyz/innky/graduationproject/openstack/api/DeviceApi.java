@@ -145,4 +145,8 @@ public class DeviceApi {
         return routerId;
     }
 
+    public void deleteRouter(String uuid){
+        deleteRequest(api.getNetworkUrl()+"/v2.0/routers/"+uuid);
+    }
+
 }

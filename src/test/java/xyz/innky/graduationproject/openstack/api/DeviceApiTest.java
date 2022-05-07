@@ -3,6 +3,7 @@ package xyz.innky.graduationproject.openstack.api;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -51,5 +52,9 @@ class DeviceApiTest {
     @Test
     void createRouter() {
         deviceApi.createRouter("asdasd");
+    }
+    @Test
+    void deleteRouter() {
+        deviceApi.deleteRouter("c7897e15-edbe-48ec-87d6-52e8e1375f0a");
     }
 }

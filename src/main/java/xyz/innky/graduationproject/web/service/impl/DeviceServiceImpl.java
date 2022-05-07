@@ -18,10 +18,7 @@ import xyz.innky.graduationproject.web.service.ImageService;
 import xyz.innky.graduationproject.web.service.StudentDeviceRelationService;
 import xyz.innky.graduationproject.web.vo.DeviceVo;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
 * @author xingyijin
@@ -49,7 +46,7 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
         }
         List<Integer> imageIds = records.stream().map(Image::getImageId).collect(java.util.stream.Collectors.toList());
         LambdaQueryWrapper<Device> deviceLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        deviceLambdaQueryWrapper.in(Device::getImageId, imageIds);
+//        deviceLambdaQueryWrapper.in(Device::getImageId, imageIds);
         deviceLambdaQueryWrapper.eq(!ObjectUtils.isEmpty(deviceId), Device::getDeviceId, deviceId);
         deviceLambdaQueryWrapper.like(!ObjectUtils.isEmpty(deviceName), Device::getDeviceName, deviceName);
         deviceLambdaQueryWrapper.eq(!ObjectUtils.isEmpty(status), Device::getStatus, status);
@@ -63,15 +60,26 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
 
     @Override
     public boolean addDevice(Device device) {
-        String device1 = deviceApi.createDevice(imageService.getById(device.getImageId()).getUuid(), device.getDeviceName());
-        device.setUuid(device1);
+        if (Objects.equals(device.getType(), "server")) {
+            String device1 = deviceApi.createDevice(imageService.getById(device.getImageId()).getUuid(), device.getDeviceName());
+            device.setUuid(device1);
+        }
+        else if (Objects.equals(device.getType(), "router")) {
+            String uuid = deviceApi.createRouter(device.getDeviceName());
+            device.setUuid(uuid);
+        }
         return save(device);
     }
 
     @Override
     public boolean removeDevice(String id) {
         Device device = getById(id);
-        deviceApi.deleteDevice(device.getUuid());
+        if (Objects.equals(device.getType(), "server")) {
+            deviceApi.deleteDevice(device.getUuid());
+        }
+        else if (Objects.equals(device.getType(), "router")) {
+            deviceApi.deleteRouter(device.getUuid());
+        }
         return removeById(id);
     }
 

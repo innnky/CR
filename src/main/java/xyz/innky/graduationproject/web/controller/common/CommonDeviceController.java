@@ -27,10 +27,12 @@ public class CommonDeviceController {
     @PostMapping("/")
     public Result addDevice(@RequestBody Device device) {
         device.setStatus(1);
+
         return ResultUtil.returnResultByCondition(deviceService.addDevice(device), "添加设备");
     }
     @DeleteMapping("/{id}")
     public Result deleteDevice(@PathVariable("id") String id) {
+
         return ResultUtil.returnResultByCondition(deviceService.removeDevice(id), "删除设备");
     }
 

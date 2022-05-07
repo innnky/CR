@@ -18,11 +18,11 @@
             <el-input class="w-75" v-model="conditions.deviceName" placeholder="请输入设备名称"></el-input>
           </el-form-item>
         </div>
-        <div class="col-4">
-          <el-form-item label="镜像类型">
-            <el-input class="w-75" v-model="conditions.imageType" placeholder="请输入镜像类型"></el-input>
-          </el-form-item>
-        </div>
+<!--        <div class="col-4">-->
+<!--          <el-form-item label="镜像类型">-->
+<!--            <el-input class="w-75" v-model="conditions.imageType" placeholder="请输入镜像类型"></el-input>-->
+<!--          </el-form-item>-->
+<!--        </div>-->
         <div class="col-4">
           <el-form-item label="状态">
             <el-input class="w-75" v-model="conditions.status" placeholder="请输入状态"></el-input>
@@ -54,7 +54,7 @@
                 label="设备名称">
             </el-table-column>
             <el-table-column
-                prop="image.imageType"
+                prop="type"
                 label="设备类型">
             </el-table-column>
 <!--            uuid-->
@@ -81,7 +81,7 @@
               <template slot-scope="scope">
 
                 <el-button type="info" size="small" @click="handleShowEdit(scope.row)">编辑</el-button>
-                <el-dropdown @command="handleCommand">
+                <el-dropdown @command="handleCommand" v-if="scope.row.type === 'server'">
                   <el-button type="info" size="small" class="mx-2">
                     命令
                   </el-button>
@@ -121,7 +121,21 @@
               </el-form-item>
             </div>
             <div class="col-4">
-              <el-form-item label="镜像id">
+              <el-form-item label="设备类型">
+                <el-select class="w-75" v-model="inputData.type" placeholder="请选择设备类型" >
+                  <el-option
+                    label="虚拟机"
+                    value="server">
+                  </el-option>
+                  <el-option
+                      label="路由器"
+                      value="router">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+            <div class="col-4">
+              <el-form-item label="镜像id" v-if="inputData.type==='server'">
                 <el-input class="w-75" v-model="inputData.imageId" placeholder="请输入镜像id"></el-input>
               </el-form-item>
             </div>
@@ -215,7 +229,12 @@ export default {
       this.dialogFormVisible = true;
     },
     handleShowEdit(row){
-      window.open(this.openstackUrl+"dashboard/project/instances/"+row.uuid, '_blank');
+      if(row.type === 'server'){
+        window.open(this.openstackUrl+"dashboard/project/instances/"+row.uuid, '_blank');
+      }
+      else if(row.type === 'router'){
+        window.open(this.openstackUrl+"dashboard/project/routers/"+row.uuid, '_blank');
+      }
       // this.dialogFormTitle = '编辑';
       // Object.assign(this.inputData, row);
       // this.dialogFormVisible = true;
