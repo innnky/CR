@@ -28,6 +28,8 @@ public interface StudentMapper extends BaseMapper<Student> {
 
     int updateClassIdByStudentId(@Param("classId") Integer classId, @Param("studentId") Integer studentId);
 
+    Student getOneByStudentNameAndStudentNumber(@Param("studentName") String studentName, @Param("studentNumber") String studentNumber);
+
 }
 
 

@@ -125,6 +125,35 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         }
         return false;
     }
+
+    @Override
+    public boolean registerStudent(String username, String password, String studentNumber, String studentName) {
+        Student student = studentService.getByStudentNumberAndStudentName(studentNumber, studentName);
+        if (student != null) {
+            UserAccount userAccount = new UserAccount();
+            userAccount.setAccount(username);
+            userAccount.setPassword(passwordEncoder.encode(password));
+            userAccount.setRoleId(2);
+            userAccount.setStudentId(student.getStudentId());
+            return getBaseMapper().insert(userAccount) > 0;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean registerTeacher(String username, String password, String teacherNumber, String teacherName) {
+        Teacher teacher = teacherService.getByTeacherNumberAndTeacherName(teacherNumber, teacherName);
+        if (teacher != null) {
+            UserAccount userAccount = new UserAccount();
+            userAccount.setAccount(username);
+            userAccount.setPassword(passwordEncoder.encode(password));
+            userAccount.setRoleId(1);
+            userAccount.setTeacherId(teacher.getTeacherId());
+            return getBaseMapper().insert(userAccount) > 0;
+
+        }
+        return false;
+    }
 }
 
 

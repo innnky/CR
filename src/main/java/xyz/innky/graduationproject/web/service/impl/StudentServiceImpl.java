@@ -107,6 +107,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         throw new RuntimeException();
     }
 
+    @Override
+    public Student getByStudentNumberAndStudentName(String studentNumber, String studentName) {
+        return getBaseMapper().getOneByStudentNameAndStudentNumber(studentName, studentNumber);
+    }
+
 
 }
 

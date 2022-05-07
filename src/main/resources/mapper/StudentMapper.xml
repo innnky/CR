@@ -72,4 +72,12 @@
         set class_id = #{classId,jdbcType=NUMERIC}
         where student_id = #{studentId,jdbcType=NUMERIC}
     </update>
+    <select id="getOneByStudentNameAndStudentNumber" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where
+        student_name = #{studentName,jdbcType=VARCHAR}
+        AND student_number = #{studentNumber,jdbcType=VARCHAR}
+    </select>
 </mapper>

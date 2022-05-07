@@ -3,6 +3,7 @@ package xyz.innky.graduationproject.web.controller.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
+import xyz.innky.graduationproject.web.params.RegistrationParam;
 import xyz.innky.graduationproject.web.service.UserAccountService;
 import xyz.innky.graduationproject.web.vo.Result;
 
@@ -22,6 +23,17 @@ public class UserController {
         System.out.println("asdasdasdasdasd"+param.toString());
         return ResultUtil.returnResultByCondition(userService.changePassword(param.getOldPassword(), param.getNewPassword()),"修改密码");
     }
+
+    @PostMapping("/registerStudent")
+    public Result registerStudent(@RequestBody RegistrationParam param){
+//        return ResultUtil.returnResultByCondition(userService.registerStudent(username, password, studentNumber, studentName),"注册");
+        return ResultUtil.returnResultByConditionLambda(()->userService.registerStudent(param.getUsername(), param.getPassword(), param.getNumber(), param.getName()),"注册");
+    }
+    @PostMapping("/registerTeacher")
+    public Result registerTeacher(@RequestBody RegistrationParam param){
+        return ResultUtil.returnResultByConditionLambda(()->userService.registerTeacher(param.getUsername(), param.getPassword(), param.getNumber(), param.getName()),"注册");
+    }
+
     static class Param{
         private String oldPassword;
         private String newPassword;

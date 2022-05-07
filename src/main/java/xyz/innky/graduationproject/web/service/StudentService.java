@@ -28,4 +28,6 @@ public interface StudentService extends IService<Student> {
     boolean addStudent(Student student);
 
     boolean updateStudentClass(Student student);
+
+    Student getByStudentNumberAndStudentName(String studentNumber, String studentName);
 }

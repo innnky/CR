@@ -21,4 +21,6 @@ public interface TeacherService extends IService<Teacher> {
     Integer searchAllCountByDepartmentId(Integer departmentId);
 
     List<Teacher> getAllTeachersByName(String teacherName);
+
+    Teacher getByTeacherNumberAndTeacherName(String teacherNumber, String teacherName);
 }

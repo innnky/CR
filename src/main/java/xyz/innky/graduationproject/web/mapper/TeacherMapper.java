@@ -23,6 +23,8 @@ public interface TeacherMapper extends BaseMapper<Teacher> {
     Page<TeacherVo> selectPageVo(@Param("teacherVoPage") Page<TeacherVo> teacherVoPage, @Param("ew") Wrapper<TeacherVo> ew, @Param("departmentId") Integer departmentId);
 
     List<Teacher> getAllByTeacherName(@Param("teacherName") String teacherName);
+
+    Teacher getOneByTeacherNameAndTeacherNumber(@Param("teacherName") String teacherName, @Param("teacherNumber") String teacherNumber);
 }
 
 

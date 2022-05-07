@@ -24,9 +24,12 @@
       >
         <el-input type="password" v-model="form.password" auto-complete="off" placeholder="请输入密码"></el-input>
       </el-form-item>
-      <el-form-item class="login-submit">
+<!--      <el-form-item class="login-submit">-->
         <el-button type="primary" @click="login" class="login-submit">登录</el-button>
-      </el-form-item>
+<!--      </el-form-item>-->
+<!--      <el-form-item class="login-submit">-->
+        <el-button type="primary" @click="reg" class="login-submit">注册</el-button>
+<!--      </el-form-item>-->
     </el-form>
   </div>
 </template>
@@ -66,6 +69,9 @@ export default {
         this.$router.push("/AdminHomePage")
 
       })
+    },
+    reg() {
+      this.$router.push("/Registration")
     }
   }
 }
@@ -100,5 +106,6 @@ h3 {
 
 .login-submit {
   margin: 10px auto 0 auto;
+  width: 100%;
 }
 </style>

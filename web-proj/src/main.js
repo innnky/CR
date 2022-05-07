@@ -14,7 +14,7 @@ Vue.use(ElementUI)
 router.beforeEach((to, from, next)=>{
   store.commit('getToken')
   const token = store.state.user.token
-  if(!token && to.name !== "login"){
+  if(!token && (to.name !== "login" && to.name !== "Registration")){
     next('login');
   }else{
     next()

@@ -53,6 +53,11 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
     public List<Teacher> getAllTeachersByName(String teacherName) {
         return getBaseMapper().getAllByTeacherName(teacherName);
     }
+
+    @Override
+    public Teacher getByTeacherNumberAndTeacherName(String teacherNumber, String teacherName) {
+        return getBaseMapper().getOneByTeacherNameAndTeacherNumber(teacherName, teacherNumber.toString());
+    }
 }
 
 

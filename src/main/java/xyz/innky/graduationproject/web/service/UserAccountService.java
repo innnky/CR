@@ -28,4 +28,8 @@ public interface UserAccountService extends IService<UserAccount>, UserDetailsSe
     List<MenuVo> getMenu();
 
     boolean changePassword(String oldPassword, String newPassword);
+
+    boolean registerStudent(String username, String password, String studentNumber, String studentName);
+
+    boolean registerTeacher(String username, String password, String teacherNumber, String teacherName);
 }

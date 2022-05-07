@@ -32,6 +32,7 @@ import CourseManagement from "@/views/system/CourseManagement";
 import CourseTablePanel from "@/components/system/CourseTablePanel";
 import TeacherClasses from "@/views/teacher/TeacherClasses";
 import StudentClass from "@/views/student/StudentClass";
+import Registration from "@/views/common/Registration";
 Vue.use(VueRouter)
 const routes = [
     {
@@ -172,6 +173,11 @@ const routes = [
         path: '/login',
         name:'login',
         component: login
+    },
+    {
+        path: "/Registration",
+        name: 'Registration',
+        component: Registration
     }
 ]
 const router = new VueRouter({
