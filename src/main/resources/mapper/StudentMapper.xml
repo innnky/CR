@@ -13,13 +13,15 @@
             <result property="contact" column="contact" jdbcType="VARCHAR"/>
             <result property="studentNumber" column="student_number" jdbcType="CHAR"/>
     </resultMap>
+    <resultMap id="StudentVo" type="xyz.innky.graduationproject.web.vo.StudentVo" extends="BaseResultMap">
+    </resultMap>
 
     <sql id="Base_Column_List">
         student_id,student_name,class_id,
         admissionDate,gender,contact,
         student_number
     </sql>
-    <select id="selectByClassId" resultMap="BaseResultMap">
+    <select id="selectByClassId" resultMap="StudentVo">
         select
         <include refid="Base_Column_List"/>
         from student

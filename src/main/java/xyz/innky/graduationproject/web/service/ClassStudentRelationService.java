@@ -4,6 +4,7 @@ import xyz.innky.graduationproject.web.pojo.ClassStudentRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.innky.graduationproject.web.pojo.Student;
 import xyz.innky.graduationproject.web.vo.ClassStudentVo;
+import xyz.innky.graduationproject.web.vo.StudentVo;
 
 import java.util.List;
 

@@ -59,8 +59,7 @@
                     label="操作"
                     width="200">
                   <template slot-scope="scope">
-                    <el-button type="info" size="small" @click="handleShowEdit(scope.row)">编辑</el-button>
-                    <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
+                    <el-button type="primary" size="small" @click="doScore(scope.row)">评分</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -211,6 +210,13 @@ export default {
         this.initData();
       })
     },
+    doScore(row){
+      // console.log(row);
+
+      this.activeName = 'second'
+      this.scid = row.scourseId
+      this.initData()
+    }
   },
   mounted() {
     this.initData();

@@ -22,6 +22,7 @@ public class SCourseController {
     CourseTimeService courseTimeService;
 
     @PostMapping("/")
+
     public Result addSCourse(@RequestBody SCourseVo sCourse) {
         return ResultUtil.returnResultByCondition(sCourseService.addSCourse(sCourse), "添加课程安排");
     }

@@ -30,6 +30,8 @@ import StudentManagement from "@/views/system/StudentManagement";
 import TeacherManagement from "@/views/system/TeacherManagement";
 import CourseManagement from "@/views/system/CourseManagement";
 import CourseTablePanel from "@/components/system/CourseTablePanel";
+import TeacherClasses from "@/views/teacher/TeacherClasses";
+import StudentClass from "@/views/student/StudentClass";
 Vue.use(VueRouter)
 const routes = [
     {
@@ -153,6 +155,14 @@ const routes = [
             {
                 path: "/CourseTablePanel",
                 component: CourseTablePanel
+            },
+            {
+                path: "/TeacherClasses",
+                component: TeacherClasses
+            },
+            {
+                path: "/StudentClass",
+                component: StudentClass
             }
 
         ]

@@ -8,6 +8,7 @@ import xyz.innky.graduationproject.web.service.ClassStudentRelationService;
 import xyz.innky.graduationproject.web.mapper.ClassStudentRelationMapper;
 import org.springframework.stereotype.Service;
 import xyz.innky.graduationproject.web.vo.ClassStudentVo;
+import xyz.innky.graduationproject.web.vo.StudentVo;
 
 import java.util.Date;
 import java.util.List;

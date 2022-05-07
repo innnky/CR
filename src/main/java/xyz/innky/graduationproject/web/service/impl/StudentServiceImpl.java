@@ -73,7 +73,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
     }
 
     @Override
-    public List<Student> getStudentsByClass(Integer id) {
+    public List<StudentVo> getStudentsByClass(Integer id) {
         return getBaseMapper().selectByClassId(id);
     }
 

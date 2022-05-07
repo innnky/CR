@@ -12,6 +12,7 @@ import xyz.innky.graduationproject.common.utils.CopyUtil;
 import xyz.innky.graduationproject.web.mapper.StudentMapper;
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.Student;
+import xyz.innky.graduationproject.web.pojo.Teacher;
 import xyz.innky.graduationproject.web.service.ClassInfoService;
 import xyz.innky.graduationproject.web.mapper.ClassInfoMapper;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,11 @@ import xyz.innky.graduationproject.web.service.StudentService;
 import xyz.innky.graduationproject.web.service.TeacherService;
 import xyz.innky.graduationproject.web.vo.ClassInfoVo;
 import xyz.innky.graduationproject.web.vo.ClassStudentVo;
+import xyz.innky.graduationproject.web.vo.StudentVo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author xingyijin
@@ -38,6 +42,7 @@ public class ClassInfoServiceImpl extends ServiceImpl<ClassInfoMapper, ClassInfo
     TeacherService teacherService;
     @Autowired
     ClassStudentRelationService classStudentRelationService;
+
 
     @Override
     public IPage<ClassInfoVo> getAllClass(Integer page, Integer pageSize, String college, String major, String grade, String className) {
@@ -79,6 +84,43 @@ public class ClassInfoServiceImpl extends ServiceImpl<ClassInfoMapper, ClassInfo
     public List<ClassStudentVo> getStudentsByClass(Integer id) {
 //        return studentService.getStudentsByClass(id);
         return classStudentRelationService.getStudentsByClass(id);
+    }
+
+    @Override
+    public List<StudentVo> getStudentsByTeacher(Integer teacherId) {
+        List<ClassInfo> classInfos = getBaseMapper().selectAllByHeadTeacherId(teacherId);
+        //简化上述代码
+        List<StudentVo> students = classInfos.stream().
+                flatMap(classInfo -> {
+                    List<StudentVo> studentsByClass = studentService.getStudentsByClass(classInfo.getClassId());
+//                    studentsByClass.forEach(System.out::println);
+                    for (StudentVo byClass : studentsByClass) {
+                        byClass.setClassInfo(classInfo);
+                    }
+                    return studentsByClass.stream();
+                })
+                .collect(Collectors.toList());
+        return students;
+    }
+
+    @Override
+    public List<StudentVo> getStudentsByStudent(Integer studentId) {
+        Student student = studentService.getById(studentId);
+        ClassInfo classInfos = this.getById(student.getClassId());
+        List<StudentVo> studentsByClass = studentService.getStudentsByClass(classInfos.getClassId());
+        for (StudentVo byClass : studentsByClass) {
+            byClass.setClassInfo(classInfos);
+        }
+
+
+        return studentsByClass;
+    }
+
+    @Override
+    public Teacher getHeadMasterByStudent(Integer studentId) {
+        Student student = studentService.getById(studentId);
+        ClassInfo classInfo = this.getById(student.getClassId());
+        return teacherService.getById(classInfo.getHeadTeacherId());
     }
 }
 

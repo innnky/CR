@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.innky.graduationproject.web.pojo.Student;
+import xyz.innky.graduationproject.web.pojo.Teacher;
 import xyz.innky.graduationproject.web.vo.ClassInfoVo;
 import xyz.innky.graduationproject.web.vo.ClassStudentVo;
+import xyz.innky.graduationproject.web.vo.StudentVo;
 
 import java.util.List;
 
@@ -24,4 +26,10 @@ public interface ClassInfoService extends IService<ClassInfo> {
     IPage<ClassInfoVo> getAllClassWithoutTotal(int i, int i1, String college, String major, String grade, String className);
 
     List<ClassStudentVo> getStudentsByClass(Integer id);
+
+    List<StudentVo> getStudentsByTeacher(Integer teacherId);
+
+    List<StudentVo> getStudentsByStudent(Integer studentId);
+
+    Teacher getHeadMasterByStudent(Integer studentId);
 }

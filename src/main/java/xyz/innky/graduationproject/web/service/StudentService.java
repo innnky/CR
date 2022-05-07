@@ -19,7 +19,7 @@ public interface StudentService extends IService<Student> {
 
     Long selectCountByClassId(Integer classId);
 
-    List<Student> getStudentsByClass(Integer id);
+    List<StudentVo> getStudentsByClass(Integer id);
 
     List<Student> getAllStudentsByName(String studentName);
 

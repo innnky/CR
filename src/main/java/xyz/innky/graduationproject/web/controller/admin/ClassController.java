@@ -27,7 +27,7 @@ public class ClassController {
 
     @DeleteMapping("/{classId}")
     Result deleteClass(@PathVariable("classId") String classId){
-        return ResultUtil.returnResultByCondition(classInfoService.removeById(classId), "删除");
+        return ResultUtil.returnResultByConditionLambda(()->classInfoService.removeById(classId), "删除");
     }
     @PutMapping("/{classId}")
     Result updateClass(@PathVariable("classId") String classId, @RequestBody ClassInfo classInfo){

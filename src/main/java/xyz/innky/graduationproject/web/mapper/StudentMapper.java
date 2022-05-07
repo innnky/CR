@@ -16,7 +16,7 @@ import java.util.List;
 * @Entity xyz.innky.graduationproject.web.pojo.Student
 */
 public interface StudentMapper extends BaseMapper<Student> {
-    List<Student> selectByClassId(@Param("classId") Integer classId);
+    List<StudentVo> selectByClassId(@Param("classId") Integer classId);
 
     Long selectCountByClassId(Integer classId);
 

@@ -34,10 +34,27 @@
               </el-form-item>
             </div>
             <div class="col-4">
-              <el-form-item label="性别">
-                <el-input class="w-75" v-model="conditions.gender" placeholder="请输入性别"></el-input>
+              <el-form-item label="班级">
+<!--                <el-input class="w-75" v-model="conditions.className" placeholder="请输入班级"></el-input>-->
+                <el-select
+                    v-model="conditions.className"
+                    filterable
+                    remote
+                    reserve-keyword
+                    placeholder="请输入班级"
+                    :remote-method="searchClasses"
+                    :loading="loading">
+                  <el-option
+                      v-for="item in classes"
+                      :key="item.classId"
+                      :label="item.className"
+                      :value="item.className">
+                  </el-option>
+                </el-select>
               </el-form-item>
+
             </div>
+
 
           </div>
         </el-form>

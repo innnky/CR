@@ -42,6 +42,6 @@
             #{menuId,jdbcType=NUMERIC}
         </foreach>
         and m2.parent_id is null
-
+        order by m2.menu_id
     </select>
 </mapper>

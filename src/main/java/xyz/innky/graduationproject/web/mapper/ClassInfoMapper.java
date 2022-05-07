@@ -1,4 +1,5 @@
 package xyz.innky.graduationproject.web.mapper;
+import java.util.List;
 
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -17,6 +18,8 @@ public interface ClassInfoMapper extends BaseMapper<ClassInfo> {
     Page<ClassInfoVo> selectPageVo(@Param("infoPage") Page<ClassInfoVo> infoPage, @Param("ew") Wrapper<ClassInfoVo> ew);
 
     ClassInfo selectByClassId(@Param("classId") Integer classId);
+
+    List<ClassInfo> selectAllByHeadTeacherId(@Param("headTeacherId") Integer headTeacherId);
 
 }
 

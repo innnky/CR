@@ -24,7 +24,7 @@ public class StudentController {
 
     @DeleteMapping("/{id}")
     public Result deleteStudent(@PathVariable Integer id) {
-        return ResultUtil.returnResultByCondition(studentService.removeById(id),"删除学生");
+        return ResultUtil.returnResultByConditionLambda(()-> studentService.removeById(id),"删除学生");
     }
 
     @GetMapping("/")
