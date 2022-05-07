@@ -118,5 +118,31 @@ public class DeviceApi {
         postJson(api.getDeviceUrl() + "/servers/" + uuid + "/action", body);
     }
 
+    public String createRouter(String routerName){
+        //{
+        //    "router": {
+        //        "name": "myrouter",
+        //        "admin_state_up": true
+        //    }
+        //}
+        String bodyJson = "{\n" +
+                "    \"router\" : {\n" +
+                "        \"name\" : \""+routerName+"\",\n" +
+                "        \"admin_state_up\" : true\n" +
+                "    }\n" +
+                "}";
+        String res = postJson(api.getNetworkUrl()+"/v2.0/routers", bodyJson);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String routerId = null;
+        try {
+            Map resultMap = objectMapper.readValue(res, HashMap.class);
+            Object o = ((Map) resultMap.get("router")).get("id");
+             routerId = (String) o;
+        }
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return routerId;
+    }
 
 }

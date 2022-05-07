@@ -12,7 +12,7 @@ import java.util.List;
 /**
 * @author xingyijin
 * @description 针对表【device】的数据库操作Mapper
-* @createDate 2022-04-14 17:36:12
+* @createDate 2022-05-07 16:45:10
 * @Entity xyz.innky.graduationproject.web.pojo.Device
 */
 public interface DeviceMapper extends BaseMapper<Device> {

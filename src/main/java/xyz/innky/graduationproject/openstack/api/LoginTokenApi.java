@@ -20,6 +20,7 @@ public class LoginTokenApi {
     private String token;
     private String deviceUrl;
     private String imageUrl;
+    private String networkUrl;
 
     public LoginTokenApi() {
     }
@@ -58,7 +59,9 @@ public class LoginTokenApi {
         List list = (List) ((Map) resultMap.get("token")).get("catalog");
         this.deviceUrl = (String) ((Map)((List)((Map)list.get(3)).get("endpoints")).get(0)).get("url");
         this.imageUrl = (String) ((Map)((List)((Map)list.get(10)).get("endpoints")).get(0)).get("url");
-
+        this.networkUrl = (String) ((Map)((List)((Map)list.get(7)).get("endpoints")).get(0)).get("url");
+        System.out.println(this.networkUrl);
+//        System.out.println("endpoints");
 
     }
 
@@ -89,5 +92,9 @@ public class LoginTokenApi {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getNetworkUrl() {
+        return networkUrl;
     }
 }

@@ -48,4 +48,8 @@ class DeviceApiTest {
         deviceApi.stopServer("f0cde80c-18e2-432f-8aa7-2d8b1b08b037");
     }
 
+    @Test
+    void createRouter() {
+        deviceApi.createRouter("asdasd");
+    }
 }

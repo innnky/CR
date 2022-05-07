@@ -15,11 +15,11 @@ public class OpenStackApiConfig {
 
     @Bean
     public LoginTokenApi loginTokenApi(){
-//        try {
-//            return new LoginTokenApi(serverBaseUrl);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            return new LoginTokenApi(serverBaseUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new LoginTokenApi();
     }
 

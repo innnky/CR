@@ -1,21 +1,22 @@
 <template>
   <el-menu default-active="1-4-1" background-color="#334054" text-color="#D0D0D0FF" active-text-color="#4875ab" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
            :collapse="isCollapsed">
-    <el-menu-item  @click="clickMenu(item)"  v-for="item in noChildren" :index="item.vuePath" :key="item.vuePath">
-      <i :class="'el-icon-'+item.icon"></i>
-      <span slot="title">{{item.menuName}}</span>
-    </el-menu-item>
-
-
-    <el-submenu v-for="item in hasChildren" :index="item.vuePath" :key="item.vuePath">
-      <template slot="title">
+    <div  v-for="item in this.menu"  :key="item.vuePath">
+      <el-menu-item  @click="clickMenu(item)" :index="item.vuePath" v-if="item.children.length===0">
         <i :class="'el-icon-'+item.icon"></i>
         <span slot="title">{{item.menuName}}</span>
-      </template>
-      <el-menu-item-group>
-        <el-menu-item @click="clickMenu(j)" v-for="j in item.children" :index="j.vuePath" :key="j.vuePath">{{j.menuName}}</el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
+      </el-menu-item>
+      <el-submenu v-if="item.children.length>0" :index="item.vuePath">
+        <template slot="title">
+          <i :class="'el-icon-'+item.icon"></i>
+          <span slot="title">{{item.menuName}}</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item @click="clickMenu(j)" v-for="j in item.children" :index="j.vuePath" :key="j.vuePath">{{j.menuName}}</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+    </div>
+
 
   </el-menu>
 </template>
