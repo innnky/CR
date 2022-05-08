@@ -11,7 +11,9 @@
 
             </div>
             <div class="col-3"><el-link class="ms-3" :ref="dta.attachmentPath">下载附件</el-link>
-              <el-button class="ms-3" type="primary" @click="handleComplete" :disabled="dta.submitTime!=null">去完成</el-button></div>
+              <el-button class="ms-3" type="primary" @click="handleComplete" :disabled="dta.submitTime!=null">去完成</el-button>
+              <el-button class="ms-3" type="primary" @click="handleComplete" :disabled="dta.submitTime==null">查看</el-button>
+            </div>
           </div>
           <span class="ms-2">开始时间  {{dta.startTime}}</span><br>
           <span class="ms-2">截止时间  {{dta.endTime}}</span>
@@ -94,27 +96,33 @@
 
     <el-dialog title="完成作业" :visible.sync="dialogFormVisibleComplete" width="50%">
       <el-form :model="completeData"  ref="form" label-width="80px">
-        <el-form-item label="结果分析">
-          <el-input v-model="completeData.resultsAnalysis"></el-input>
+        <el-form-item label="结果分析" >
+          <el-input :disabled="this.dta.submitTime!=null" v-model="completeData.resultsAnalysis"></el-input>
         </el-form-item>
-        <el-form-item label="远程连接">
+        <el-form-item label="远程连接" v-if="this.dta.submitTime==null">
 
           <el-button type="primary" size="small" @click="handleConnect" v-if="vncStatus==='正在使用'">连接</el-button>
           <el-button type="danger" size="small"  v-else disabled>{{vncStatus}}</el-button>
         </el-form-item>
-        <el-form-item label="结果截图">
+        <el-form-item label="结果截图" v-if="this.dta.submitTime==null">
           <el-upload
               class="upload-demo w-50"
               action="http://localhost:8081/student/exercise/image"
               :file-list="fileList"
               :with-credentials='true'
               ref="imageUpload"
-              :on-success="uploadSuccess">
+              :on-success="uploadSuccess"
+              :on-remove="onRemove">
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>        </el-form-item>
+        <div v-if="this.dta.submitTime!=null">
+<!--        -->
+          <el-image class="w-25 mx-3"  v-for="img in this.dta.image.split(',')" :key="img" :src="img"></el-image>
+        </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisibleComplete = false">取 消</el-button>
+        <el-button type="primary" @click="doSave">保 存</el-button>
         <el-button type="primary" @click="doComplete">确 定</el-button>
       </div>
     </el-dialog>
@@ -161,8 +169,18 @@ export default {
   },
   methods:{
     initData() {
+      const baseUrl = "http://localhost:8081/imgs/"
+
       getRequest("/student/exercise/"+this.exerciseId).then((res)=>{
         this.dta = res;
+        this.fileList = this.dta.image.split(",").map(item=>{
+          //item删除前面的baseUrl
+          return {
+            name: item.replace(baseUrl, ""),
+            percent: 100,
+            status: 'success'
+          }
+        })
         getRequest("/student/device/all/"+this.dta.sceneId).then((r2)=>{
           this.tableData = r2;
           getRequest("/student/device/reservation/"+this.exerciseId).then((res3)=>{
@@ -205,12 +223,19 @@ export default {
       })
     },
     handleComplete(){
-      if(this.dta.submitTime!=null){
-        return
-      }
+      // if(this.dta.submitTime!=null){
+      //   this.$refs.analysis.disabled = true;
+      // }
       this.getVncAddress()
+      this.completeData.resultsAnalysis = this.dta.resultAnalysis;
       this.completeData.exerciseId = this.exerciseId;
       this.dialogFormVisibleComplete = true;
+      //将fileList从["img1","img2"]转化为"img1,img2"并保存在this.completeData.image
+      //逆向操作
+      //将dta.image转化为 ["img1","img2"] 并保存在fileList, 每一个元素删除前面的baseUrl
+
+      console.log(this.fileList);
+
     },
     doComplete(){
       //将fileList从["img1","img2"]转化为"img1,img2"并保存在this.completeData.image
@@ -224,7 +249,24 @@ export default {
         this.initData();
       })
     },
+    doSave(){
+      //将fileList从["img1","img2"]转化为"img1,img2"并保存在this.completeData.image
+      console.log(this.fileList);
+      const baseUrl = "http://localhost:8081/imgs/"
+      this.completeData.image = this.fileList.map(item => baseUrl+item.name).join(",");
+
+      postRequest("/student/exercise/"+this.exerciseId+"/save", this.completeData).then((res)=>{
+        res
+        this.dialogFormVisibleComplete = false;
+        this.initData();
+      })
+    },
     uploadSuccess(res, file, fileList){
+      // console.log(this.fileList);
+      this.fileList = fileList
+    },
+    onRemove(file, fileList){
+      console.log(this.fileList);
       this.fileList = fileList;
     },
     getVncAddress(){
@@ -235,7 +277,8 @@ export default {
     },
     handleConnect(){
       window.open(this.vncAddress);
-    }
+    },
+
 
   },
   mounted() {

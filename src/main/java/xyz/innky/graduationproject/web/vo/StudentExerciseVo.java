@@ -10,4 +10,7 @@ public class StudentExerciseVo extends Exercise {
     private Integer score;
 //    submit_time
     private Date submitTime;
+
+    private String image;
+    private String resultAnalysis;
 }

@@ -13,6 +13,21 @@
             <result property="score" column="score" jdbcType="INTEGER"/>
             <result property="resultsAnalysis" column="results_analysis" jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap id="BaseResultMap2" type="xyz.innky.graduationproject.web.pojo.Exercise">
+        <id property="exerciseId" column="exercise_id" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
+        <result property="attachmentPath" column="attachment_path" jdbcType="VARCHAR"/>
+        <result property="sceneId" column="scene_id" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="Vo" type="xyz.innky.graduationproject.web.vo.StudentExerciseVo" extends="BaseResultMap2">
+        <result property="score" column="score" jdbcType="INTEGER"/>
+        <result property="submitTime" column="submit_time" jdbcType="TIMESTAMP"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="resultAnalysis" column="results_analysis" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <sql id="Base_Column_List">
         id,student_id,exercise_id,
@@ -84,9 +99,9 @@
         </set>
         where student_id=#{studentId,jdbcType=NUMERIC} and exercise_id=#{exerciseId,jdbcType=NUMERIC}
     </update>
-    <select id="getOneByExerciseIdAndStudentId" resultType="xyz.innky.graduationproject.web.vo.StudentExerciseVo">
+    <select id="getOneByExerciseIdAndStudentId" resultMap="Vo">
         select
-        e.*, submit_time, score
+        e.*, submit_time, score, image, results_analysis
         from student_exercise_relation left join exercise e on student_exercise_relation.exercise_id = e.exercise_id
         where
             student_exercise_relation.exercise_id = #{exerciseId,jdbcType=NUMERIC}

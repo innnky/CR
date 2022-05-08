@@ -58,6 +58,15 @@ public class StudentExerciseController {
         content.setSubmitTime(new Date(System.currentTimeMillis()));
         return ResultUtil.returnResultByConditionLambda(()->exerciseService.submitExercise(content),"提交作业");
     }
+    @PostMapping("/{exerciseId}/save")
+    public Result saveExercise(@PathVariable("exerciseId") Integer exerciseId, @RequestBody StudentExerciseRelation content) {
+        Integer studentId = AccountUtil.getStudentId();
+        content.setStudentId(studentId);
+        content.setExerciseId(exerciseId);
+
+//        content.setSubmitTime(new Date(System.currentTimeMillis()));
+        return ResultUtil.returnResultByConditionLambda(()->exerciseService.submitExercise(content),"提交作业");
+    }
 
 
 

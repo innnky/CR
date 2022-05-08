@@ -6,6 +6,8 @@ import xyz.innky.graduationproject.web.pojo.SCourseClassRelation;
 import xyz.innky.graduationproject.web.service.SCourseClassRelationService;
 import xyz.innky.graduationproject.web.mapper.SCourseClassRelationMapper;
 import org.springframework.stereotype.Service;
+import xyz.innky.graduationproject.web.vo.SCVO;
+import xyz.innky.graduationproject.web.vo.SCourseVo;
 
 import java.util.List;
 
@@ -36,6 +38,22 @@ public class SCourseClassRelationServiceImpl extends ServiceImpl<SCourseClassRel
     @Override
     public List<SCourseClassRelation> getByClassId(Integer classId) {
         return getBaseMapper().getAllByClassId(classId);
+    }
+
+    @Override
+    public boolean hasRepeatSCourses(SCourseVo sCourse) {
+//        return getBaseMapper().hasRepeatSCourses(sCourse.getClassIds());
+        List<SCVO> scs = getBaseMapper().getSCVO();
+        for (SCVO sc : scs) {
+            if (sCourse.getCourseId().equals(sc.getCourseId())) {
+                for (Integer classId : sCourse.getClassIds()) {
+                    if (sc.getClassIds().contains(classId)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
 

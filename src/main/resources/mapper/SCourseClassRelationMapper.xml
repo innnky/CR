@@ -9,7 +9,18 @@
             <result property="sCourseId" column="s_course_id" jdbcType="INTEGER"/>
             <result property="classId" column="class_id" jdbcType="INTEGER"/>
     </resultMap>
-
+<!--    public class SCVO {
+    private Integer courseId;
+    private List<Integer> classIds;
+}
+-->
+    <resultMap id="SCVO" type="xyz.innky.graduationproject.web.vo.SCVO">
+        <result property="courseId" column="courseId" jdbcType="INTEGER"/>
+<!--    private List<Integer> classIds;    -->
+        <collection property="classIds" ofType="java.lang.Integer" javaType="java.util.List">
+            <result column="class_id" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
         id,s_course_id,class_id
     </sql>
@@ -34,6 +45,10 @@
         from s_course_class_relation
         where
         class_id = #{classId,jdbcType=NUMERIC}
+    </select>
+    <select id="getSCVO" resultMap="SCVO">
+        select s_course.courseId, sccr.class_id
+        from s_course join s_course_class_relation sccr on s_course.s_course_id = sccr.s_course_id
     </select>
 
 </mapper>

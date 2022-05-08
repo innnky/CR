@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.SCourseClassRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import xyz.innky.graduationproject.web.vo.SCVO;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public interface SCourseClassRelationMapper extends BaseMapper<SCourseClassRelat
     List<ClassInfo> getAllBySCourseId(@Param("sCourseId") Integer sCourseId);
 
     List<SCourseClassRelation> getAllByClassId(@Param("classId") Integer classId);
+
+    List<SCVO> getSCVO();
 }
 
 

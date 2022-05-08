@@ -3,6 +3,7 @@ package xyz.innky.graduationproject.web.service;
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.SCourseClassRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.innky.graduationproject.web.vo.SCourseVo;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface SCourseClassRelationService extends IService<SCourseClassRelati
     List<ClassInfo> getCourseClass(Integer id);
 
     List<SCourseClassRelation> getByClassId(Integer classId);
+
+    boolean hasRepeatSCourses(SCourseVo sCourse);
 }

@@ -31,6 +31,10 @@ public class SCourseServiceImpl extends ServiceImpl<SCourseMapper, SCourse>
 
     @Override
     public boolean addSCourse(SCourseVo sCourse) {
+
+        if(sCourseClassRelationService.hasRepeatSCourses(sCourse)){
+            return false;
+        }
         //添加scourse表
         if (getBaseMapper().insertSelective(sCourse)==1) {
             //添加scourse班级关联表
