@@ -31,11 +31,11 @@ public class ClassController {
     }
     @PutMapping("/{classId}")
     Result updateClass(@PathVariable("classId") String classId, @RequestBody ClassInfo classInfo){
-        return ResultUtil.returnResultByCondition(classInfoService.updateById(classInfo), "修改");
+        return ResultUtil.returnResultByConditionLambda(()->classInfoService.updateById(classInfo), "修改");
     }
     @PostMapping("/")
     Result addClass(@RequestBody ClassInfo classInfo){
-        return ResultUtil.returnResultByCondition(classInfoService.save(classInfo), "添加");
+        return ResultUtil.returnResultByConditionLambda(()->classInfoService.save(classInfo), "添加");
     }
 
 

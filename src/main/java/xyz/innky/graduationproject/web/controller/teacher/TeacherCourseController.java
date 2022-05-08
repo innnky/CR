@@ -47,14 +47,14 @@ public class TeacherCourseController {
 
 //        courseService.addCourseMaterial(scid, material);
 //        return Result.ok();
-        return ResultUtil.returnResultByCondition(courseService.addCourseMaterial(scid, file), "添加课程资料");
+        return ResultUtil.returnResultByConditionLambda(()->courseService.addCourseMaterial(scid, file), "添加课程资料");
     }
 
     @PostMapping("/{scid}/exercise")
     public Result addCourseExercise(@PathVariable("scid") Integer scid ,@RequestBody Exercise exercise) {
         exercise.setSCourseId(scid);
         exercise.setAttachmentPath("http://" + serverAddress + ":" + serverPort + "/exercise/" +exercise.getAttachmentPath());
-        return ResultUtil.returnResultByCondition(courseService.addCourseExercise(exercise), "添加课程作业");
+        return ResultUtil.returnResultByConditionLambda(()->courseService.addCourseExercise(exercise), "添加课程作业");
     }
 
 //    @PostMapping("/exercise/file")

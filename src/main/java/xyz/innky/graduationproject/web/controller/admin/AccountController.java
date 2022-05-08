@@ -15,15 +15,15 @@ public class AccountController {
 
     @PostMapping("/")
     public Result addAccount(@RequestBody UserAccount userAccount) {
-        return ResultUtil.returnResultByCondition(userAccountService.save(userAccount), "添加账户");
+        return ResultUtil.returnResultByConditionLambda(()->userAccountService.save(userAccount), "添加账户");
     }
     @PutMapping("/")
     public Result updateAccount(@RequestBody UserAccount userAccount) {
-        return ResultUtil.returnResultByCondition(userAccountService.updateById(userAccount), "更新账户");
+        return ResultUtil.returnResultByConditionLambda(()->userAccountService.updateById(userAccount), "更新账户");
     }
     @DeleteMapping("/{id}")
     public Result deleteAccount(@PathVariable("id") Long id) {
-        return ResultUtil.returnResultByCondition(userAccountService.removeById(id), "删除账户");
+        return ResultUtil.returnResultByConditionLambda(()->userAccountService.removeById(id), "删除账户");
     }
     @GetMapping("/student/")
     public Result getStudentAccounts(Integer page, Integer pageSize,

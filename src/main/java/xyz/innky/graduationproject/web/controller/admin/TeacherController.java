@@ -16,17 +16,17 @@ public class TeacherController {
     TeacherService teacherService;
     @PostMapping("/")
     Result addTeacher(@RequestBody Teacher teacher){
-        return ResultUtil.returnResultByCondition(teacherService.save(teacher), "新增教师");
+        return ResultUtil.returnResultByConditionLambda(()->teacherService.save(teacher), "新增教师");
     }
 
     @DeleteMapping("/{teacherId}")
     Result deleteTeacher(@PathVariable("teacherId") Integer teacherId){
-        return ResultUtil.returnResultByCondition(teacherService.removeById(teacherId), "删除教师");
+        return ResultUtil.returnResultByConditionLambda(()->teacherService.removeById(teacherId), "删除教师");
     }
 
     @PutMapping("/")
     Result updateTeacher(@RequestBody Teacher teacher){
-        return ResultUtil.returnResultByCondition(teacherService.updateById(teacher), "更新教师");
+        return ResultUtil.returnResultByConditionLambda(()->teacherService.updateById(teacher), "更新教师");
     }
 
     @GetMapping("/")

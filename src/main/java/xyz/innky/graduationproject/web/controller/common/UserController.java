@@ -21,12 +21,12 @@ public class UserController {
     @PostMapping("/changePassword")
     public Result changePassword(@RequestBody Param param){
         System.out.println("asdasdasdasdasd"+param.toString());
-        return ResultUtil.returnResultByCondition(userService.changePassword(param.getOldPassword(), param.getNewPassword()),"修改密码");
+        return ResultUtil.returnResultByConditionLambda(()->userService.changePassword(param.getOldPassword(), param.getNewPassword()),"修改密码");
     }
 
     @PostMapping("/registerStudent")
     public Result registerStudent(@RequestBody RegistrationParam param){
-//        return ResultUtil.returnResultByCondition(userService.registerStudent(username, password, studentNumber, studentName),"注册");
+//        return ResultUtil.returnResultByConditionLambda(()->userService.registerStudent(username, password, studentNumber, studentName),"注册");
         return ResultUtil.returnResultByConditionLambda(()->userService.registerStudent(param.getUsername(), param.getPassword(), param.getNumber(), param.getName()),"注册");
     }
     @PostMapping("/registerTeacher")

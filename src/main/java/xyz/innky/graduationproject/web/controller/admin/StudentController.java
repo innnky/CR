@@ -14,12 +14,12 @@ public class StudentController {
     private StudentService studentService;
      @PostMapping("/")
     public Result addStudent(@RequestBody Student student) {
-        return ResultUtil.returnResultByCondition(studentService.addStudent(student),"添加学生");
+        return ResultUtil.returnResultByConditionLambda(()->studentService.addStudent(student),"添加学生");
     }
 
     @PutMapping("/")
     public Result updateStudent(@RequestBody Student student) {
-        return ResultUtil.returnResultByCondition(studentService.updateById(student),"修改学生");
+        return ResultUtil.returnResultByConditionLambda(()->studentService.updateById(student),"修改学生");
     }
 
     @DeleteMapping("/{id}")
@@ -42,7 +42,7 @@ public class StudentController {
     @PutMapping("/{id}/class")
     public Result updateStudentClass(@PathVariable("id") Integer id,@RequestBody Student student){
          student.setStudentId(id);
-         return ResultUtil.returnResultByCondition(studentService.updateStudentClass(student),"修改学生班级");
+         return ResultUtil.returnResultByConditionLambda(()->studentService.updateStudentClass(student),"修改学生班级");
     }
 
 }

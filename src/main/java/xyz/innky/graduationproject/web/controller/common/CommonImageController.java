@@ -30,18 +30,18 @@ public class CommonImageController {
         File file1 = new File("/Users/xingyijin/IdeaProjects/graduationProject/src/main/resources/static/" + image.getFileName());
         String uuid = api.createImage(file1, image.getImageName());
         image.setUuid(uuid);
-        return ResultUtil.returnResultByCondition(imageService.save(image), "上传镜像");
+        return ResultUtil.returnResultByConditionLambda(()->imageService.save(image), "上传镜像");
     }
 
     @PutMapping("/")
     public Result updateImage(@RequestBody Image image) {
-        return ResultUtil.returnResultByCondition(imageService.updateById(image), "更新镜像");
+        return ResultUtil.returnResultByConditionLambda(()->imageService.updateById(image), "更新镜像");
     }
 
     @DeleteMapping("/{id}/{uuid}")
     public Result deleteImage(@PathVariable("id") Integer id,@PathVariable("uuid") String uuid) {
         api.deleteImage(uuid);
-        return ResultUtil.returnResultByCondition(imageService.removeById(id), "删除镜像");
+        return ResultUtil.returnResultByConditionLambda(()->imageService.removeById(id), "删除镜像");
     }
 
     @GetMapping("/")

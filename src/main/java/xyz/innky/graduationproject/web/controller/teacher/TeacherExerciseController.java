@@ -55,17 +55,17 @@ public class TeacherExerciseController {
 
     @PostMapping("/mark/{id}/{score}")
     public Result addMark(@PathVariable("id") Integer id, @PathVariable("score") Integer score) {
-        return ResultUtil.returnResultByCondition(exerciseService.doMark(id, score),"评分");
+        return ResultUtil.returnResultByConditionLambda(()->exerciseService.doMark(id, score),"评分");
     }
 
     @DeleteMapping("/{id}")
     public Result deleteExercise(@PathVariable("id") Integer id) {
-        return ResultUtil.returnResultByCondition(exerciseService.removeById(id),"删除");
+        return ResultUtil.returnResultByConditionLambda(()->exerciseService.removeById(id),"删除");
     }
 
     @PutMapping("/")
     public Result updateExercise(@RequestBody Exercise exercise) {
-        return ResultUtil.returnResultByCondition(exerciseService.updateById(exercise),"更新");
+        return ResultUtil.returnResultByConditionLambda(()->exerciseService.updateById(exercise),"更新");
     }
 
 

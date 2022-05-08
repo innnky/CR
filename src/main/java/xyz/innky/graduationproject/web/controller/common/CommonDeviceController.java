@@ -22,18 +22,18 @@ public class CommonDeviceController {
 
     @PutMapping("/")
     public Result updateDevice(@RequestBody Device device) {
-        return ResultUtil.returnResultByCondition(deviceService.updateById(device), "修改设备");
+        return ResultUtil.returnResultByConditionLambda(()->deviceService.updateById(device), "修改设备");
     }
     @PostMapping("/")
     public Result addDevice(@RequestBody Device device) {
         device.setStatus(1);
 
-        return ResultUtil.returnResultByCondition(deviceService.addDevice(device), "添加设备");
+        return ResultUtil.returnResultByConditionLambda(()->deviceService.addDevice(device), "添加设备");
     }
     @DeleteMapping("/{id}")
     public Result deleteDevice(@PathVariable("id") String id) {
 
-        return ResultUtil.returnResultByCondition(deviceService.removeDevice(id), "删除设备");
+        return ResultUtil.returnResultByConditionLambda(()->deviceService.removeDevice(id), "删除设备");
     }
 
     @GetMapping("/")

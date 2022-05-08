@@ -25,7 +25,7 @@ public class StudentDeviceController {
     public Result doReservation(@PathVariable("deviceId") Integer deviceId, @RequestBody StudentDeviceRelation reservation) {
         reservation.setDeviceId(deviceId);
         reservation.setStudentId(AccountUtil.getStudentId());
-        return ResultUtil.returnResultByCondition(deviceService.addReservation(reservation),"预约");
+        return ResultUtil.returnResultByConditionLambda(()->deviceService.addReservation(reservation),"预约");
     }
 
     @GetMapping("/all")
@@ -41,7 +41,7 @@ public class StudentDeviceController {
 
     @DeleteMapping("/{deviceId}/{exerciseId}")
     public Result deleteReservation(@PathVariable("deviceId") Integer deviceId, @PathVariable("exerciseId") Integer exerciseId) {
-        return ResultUtil.returnResultByCondition(deviceService.deleteReservation(deviceId,  AccountUtil.getStudentId(),exerciseId),"取消");
+        return ResultUtil.returnResultByConditionLambda(()->deviceService.deleteReservation(deviceId,  AccountUtil.getStudentId(),exerciseId),"取消");
     }
 
     @GetMapping("/reservation/{exerciseId}")

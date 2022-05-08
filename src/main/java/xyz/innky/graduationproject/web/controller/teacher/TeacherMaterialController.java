@@ -32,7 +32,7 @@ public class TeacherMaterialController {
     public Result addMaterial(Material material){
         material.setMaterialPath("http://"+serverAddress+":"+serverPort+"/"+material.getMaterialName());
         material.setUpdateTime(new Date(System.currentTimeMillis()));
-        return ResultUtil.returnResultByCondition(materialService.save(material),"添加材料");
+        return ResultUtil.returnResultByConditionLambda(()->materialService.save(material),"添加材料");
     }
 
 
@@ -61,7 +61,7 @@ public class TeacherMaterialController {
             material.setSCourseId(scid);
             material.setMaterialPath("http://"+serverAddress+":"+serverPort+"/material/"+file.getOriginalFilename());
             material.setUpdateTime(new Date(System.currentTimeMillis()));
-            return ResultUtil.returnResultByCondition(materialService.save(material),"添加材料");
+            return ResultUtil.returnResultByConditionLambda(()->materialService.save(material),"添加材料");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +70,7 @@ public class TeacherMaterialController {
 
     @DeleteMapping("/{mid}")
     public Result deleteMaterial(@PathVariable("mid") Integer mid){
-        return ResultUtil.returnResultByCondition(materialService.removeById(mid),"删除材料");
+        return ResultUtil.returnResultByConditionLambda(()->materialService.removeById(mid),"删除材料");
     }
 
 

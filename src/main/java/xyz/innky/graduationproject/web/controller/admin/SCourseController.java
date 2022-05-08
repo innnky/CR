@@ -24,17 +24,17 @@ public class SCourseController {
     @PostMapping("/")
 
     public Result addSCourse(@RequestBody SCourseVo sCourse) {
-        return ResultUtil.returnResultByCondition(sCourseService.addSCourse(sCourse), "添加课程安排");
+        return ResultUtil.returnResultByConditionLambda(()->sCourseService.addSCourse(sCourse), "添加课程安排");
     }
 
     @DeleteMapping("/{id}")
     public Result delSCourse(@PathVariable Integer id){
-        return ResultUtil.returnResultByCondition(sCourseService.removeSCourse(id), "删除课程安排");
+        return ResultUtil.returnResultByConditionLambda(()->sCourseService.removeSCourse(id), "删除课程安排");
     }
 
     @PutMapping("/")
     public Result updateSCourse(@RequestBody SCourseVo sCourse){
-        return ResultUtil.returnResultByCondition(sCourseService.updateSCourse(sCourse), "更新课程安排");
+        return ResultUtil.returnResultByConditionLambda(()->sCourseService.updateSCourse(sCourse), "更新课程安排");
     }
 
     @GetMapping("/")
@@ -58,18 +58,18 @@ public class SCourseController {
     @PostMapping("/{id}/time")
     public Result addCourseTime(@RequestBody CourseTime courseTime, @PathVariable("id") Integer id){
         courseTime.setSCourseId(id);
-        return ResultUtil.returnResultByCondition(courseTimeService.save(courseTime), "添加课程时间");
+        return ResultUtil.returnResultByConditionLambda(()->courseTimeService.save(courseTime), "添加课程时间");
     }
 
     @DeleteMapping("/{id}/time/{timeId}")
     public Result delCourseTime(@PathVariable("id") Integer id, @PathVariable("timeId") Integer timeId){
-        return ResultUtil.returnResultByCondition(courseTimeService.removeById(timeId), "删除课程时间");
+        return ResultUtil.returnResultByConditionLambda(()->courseTimeService.removeById(timeId), "删除课程时间");
     }
 
     @PutMapping("/{id}/time")
     public Result updateCourseTime(@RequestBody CourseTime courseTime, @PathVariable("id") Integer id){
         courseTime.setSCourseId(id);
-        return ResultUtil.returnResultByCondition(courseTimeService.updateById(courseTime), "更新课程时间");
+        return ResultUtil.returnResultByConditionLambda(()->courseTimeService.updateById(courseTime), "更新课程时间");
     }
 
 

@@ -18,17 +18,17 @@ public class CommonSceneController {
     @PostMapping("/")
     public Result addScene(@RequestBody SceneParam scene) {
         System.out.println(scene.getDeviceIds());
-        return ResultUtil.returnResultByCondition(sceneService.addScene(scene),"添加场景");
+        return ResultUtil.returnResultByConditionLambda(()->sceneService.addScene(scene),"添加场景");
     }
 
     @PutMapping("/")
     public Result updateScene(@RequestBody SceneParam sceneParam) {
-        return ResultUtil.returnResultByCondition(sceneService.updateScene(sceneParam),"更新场景");
+        return ResultUtil.returnResultByConditionLambda(()->sceneService.updateScene(sceneParam),"更新场景");
     }
 
     @DeleteMapping("/{id}")
     public Result deleteScene(@PathVariable("id") Integer id) {
-        return ResultUtil.returnResultByCondition(sceneService.removeById(id),"删除场景");
+        return ResultUtil.returnResultByConditionLambda(()->sceneService.removeById(id),"删除场景");
     }
 
     @GetMapping("/")

@@ -16,17 +16,17 @@ public class DepartmentController {
 
     @PostMapping("/")
     Result addDepartment(@RequestBody Department department){
-        return ResultUtil.returnResultByCondition(departmentService.save(department),"添加部门");
+        return ResultUtil.returnResultByConditionLambda(()->departmentService.save(department),"添加部门");
     }
 
     @DeleteMapping("/{depId}")
     Result deleteDepartment(@PathVariable("depId") Integer depId){
-        return ResultUtil.returnResultByCondition(departmentService.removeById(depId), "删除部门");
+        return ResultUtil.returnResultByConditionLambda(()->departmentService.removeById(depId), "删除部门");
     }
 
     @PutMapping("/")
     Result updateDepartment(@RequestBody Department department){
-        return ResultUtil.returnResultByCondition(departmentService.updateById(department),"修改部门");
+        return ResultUtil.returnResultByConditionLambda(()->departmentService.updateById(department),"修改部门");
     }
 
     @GetMapping("/")
