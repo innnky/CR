@@ -122,13 +122,13 @@
                     prop="classInfo.major" width="150"
                     label="专业">
                 </el-table-column>
-                <el-table-column
-                    prop="date" width="150"
-                    label="班级职务">
-                  <template>
-                    <el-button type="text" size="small">查看</el-button>
-                  </template>
-                </el-table-column>
+<!--                <el-table-column-->
+<!--                    prop="date" width="150"-->
+<!--                    label="班级职务">-->
+<!--                  <template>-->
+<!--                    <el-button type="text" size="small">查看</el-button>-->
+<!--                  </template>-->
+<!--                </el-table-column>-->
                 <el-table-column
                     prop="admissiondate" width="150"
                     label="入学时间">
@@ -293,7 +293,7 @@ export default {
       getRequest("/admin/student/", {
         page: this.pageInfo.page,
         pageSize: this.pageInfo.pageSize,
-        ...this.conditions
+        conditions:this.conditions
       }).then(res => {
         this.tableData = res.records;
         this.pageInfo.total = res.total;

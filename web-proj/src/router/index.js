@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from 'vue-router'
 import Main from "@/components/Main";
-import login from "@/views/login";
+// import login from "@/views/login";
 import CourseDetail from "@/views/CourseDetail";
 import DepartmentManagement from "@/views/system/DepartmentManagement";
 import MyCourses from "@/views/MyCourses";
@@ -33,6 +33,7 @@ import CourseTablePanel from "@/components/system/CourseTablePanel";
 import TeacherClasses from "@/views/teacher/TeacherClasses";
 import StudentClass from "@/views/student/StudentClass";
 import Registration from "@/views/common/Registration";
+import Login from "@/views/common/Login";
 Vue.use(VueRouter)
 const routes = [
     {
@@ -172,7 +173,7 @@ const routes = [
     {
         path: '/login',
         name:'login',
-        component: login
+        component: Login
     },
     {
         path: "/Registration",

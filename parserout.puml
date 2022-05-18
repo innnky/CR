@@ -1,0 +1,77 @@
+@startuml
+class xyz.innky.graduationproject.web.pojo.ClassStudentRelation {
+- Integer id
+- Integer studentId
+- Integer classId
+- Date startTime
+- Date endTime
+- {static} long serialVersionUID
+}
+
+class xyz.innky.graduationproject.web.vo.ClassStudentVo {
+- String studentName
+- String className
+- Student student
+}
+
+class xyz.innky.graduationproject.web.pojo.ClassInfo {
+- Integer classId
+- String className
+- String grade
+- String major
+- String college
+- Integer headTeacherId
+- String classNumber
+- {static} long serialVersionUID
+}
+
+interface xyz.innky.graduationproject.web.service.ClassInfoService {
+~ IPage<ClassInfoVo> getAllClass(Integer,Integer,String,String,String,String)
+~ ClassInfo selectByClassId(Integer)
+~ IPage<ClassInfoVo> getAllClassWithoutTotal(int,int,String,String,String,String)
+~ List<ClassStudentVo> getStudentsByClass(Integer)
+~ List<StudentVo> getStudentsByTeacher(Integer)
+~ List<StudentVo> getStudentsByStudent(Integer)
+~ Teacher getHeadMasterByStudent(Integer)
+}
+
+class xyz.innky.graduationproject.web.controller.admin.ClassController {
+~ ClassInfoService classInfoService
+~ Result getAllClass(Integer,Integer,String,String,String,String)
+~ Result getClassById(Integer)
+~ Result deleteClass(String)
+~ Result updateClass(String,ClassInfo)
+~ Result addClass(ClassInfo)
+}
+
+class xyz.innky.graduationproject.web.vo.ClassInfoVo {
+- String teacherName
+- Integer studentCount
+}
+
+class xyz.innky.graduationproject.common.utils.ResultUtil {
++ {static} Result returnResultByCondition(boolean,String)
++ {static} Result returnResultByConditionLambda(Supplier<Boolean>,String)
+}
+
+class xyz.innky.graduationproject.web.vo.Result {
+~ Integer code
+~ String message
+~ Object data
++ {static} Result ok(String)
++ {static} Result err(String)
++ {static} Result ok(Object)
+}
+
+xyz.innky.graduationproject.web.pojo.ClassStudentRelation <|-- xyz.innky.graduationproject.web.vo.ClassStudentVo
+xyz.innky.graduationproject.web.vo.Result <.. xyz.innky.graduationproject.common.utils.ResultUtil
+xyz.innky.graduationproject.web.pojo.ClassInfo <.. xyz.innky.graduationproject.web.service.ClassInfoService
+xyz.innky.graduationproject.common.utils.ResultUtil <.. xyz.innky.graduationproject.web.controller.admin.ClassController
+xyz.innky.graduationproject.web.vo.ClassStudentVo <.. xyz.innky.graduationproject.web.service.ClassInfoService
+xyz.innky.graduationproject.web.pojo.ClassInfo <.. xyz.innky.graduationproject.web.controller.admin.ClassController
+xyz.innky.graduationproject.web.service.ClassInfoService <--* xyz.innky.graduationproject.web.controller.admin.ClassController
+xyz.innky.graduationproject.web.service.ClassInfoService <.. xyz.innky.graduationproject.web.controller.admin.ClassController
+xyz.innky.graduationproject.web.vo.ClassInfoVo <.. xyz.innky.graduationproject.web.service.ClassInfoService
+xyz.innky.graduationproject.web.pojo.ClassInfo <|-- xyz.innky.graduationproject.web.vo.ClassInfoVo
+xyz.innky.graduationproject.web.vo.Result <.. xyz.innky.graduationproject.web.controller.admin.ClassController
+@enduml

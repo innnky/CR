@@ -2,15 +2,12 @@ package xyz.innky.graduationproject;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import xyz.innky.graduationproject.openstack.api.ImageApi;
+import xyz.innky.graduationproject.common.utils.api.ImageApi;
 import xyz.innky.graduationproject.web.mapper.MenuMapper;
 import xyz.innky.graduationproject.web.mapper.UserAccountMapper;
-import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.Scene;
 import xyz.innky.graduationproject.web.pojo.Teacher;
 import xyz.innky.graduationproject.web.service.CourseService;
@@ -22,15 +19,9 @@ import xyz.innky.graduationproject.web.vo.SCourseVo;
 import xyz.innky.graduationproject.web.vo.TeacherVo;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 @SpringBootTest
 class GraduationProjectApplicationTests {

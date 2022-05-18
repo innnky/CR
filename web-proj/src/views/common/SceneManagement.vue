@@ -140,7 +140,7 @@ export default {
       getRequest("/common/scene/", {
         page: this.pageInfo.page,
         pageSize: this.pageInfo.pageSize,
-        ...this.conditions
+        conditions:this.conditions
       }).then(res => {
         this.tableData = res.records;
         this.pageInfo.total = res.total;

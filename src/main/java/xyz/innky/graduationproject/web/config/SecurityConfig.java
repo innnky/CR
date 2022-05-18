@@ -43,18 +43,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .successHandler((req, res, auth) -> {
                     res.setContentType("application/json;charset=UTF-8");
-                    res.getWriter().write("{\"code\":0,\"msg\":\"登录成功\"}");
+                    res.getWriter().write("{\"code\":200,\"message\":\"登录成功\", \"data\":{\"token\":\"" + auth.getName() + "\"}}");
                 })
                 .failureHandler((req, res, exp) -> {
                     res.setContentType("application/json;charset=UTF-8");
-                    res.getWriter().write("{\"code\":1,\"msg\":\"登录失败\"}");
+                    res.getWriter().write("{\"code\":500,\"message\":\"登录失败\", \"data\":\"" + exp.getMessage() + "\"}");
                 })
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessHandler((request, response, authentication) -> {
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().write("{\"code\":0,\"msg\":\"退出成功\"}");
+                    response.getWriter().write("{\"code\":200,\"message\":\"注销成功\"}");
                 })
                 .and()
                 .csrf().disable()
@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
                     PrintWriter writer = httpServletResponse.getWriter();
-                    writer.write("{\"code\":0,\"msg\":\"未登录\"}");
+                    writer.write("{\"code\":500,\"message\":\"未登录\"}");
                 });
     }
     @Bean

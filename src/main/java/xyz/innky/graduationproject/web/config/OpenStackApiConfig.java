@@ -1,11 +1,10 @@
 package xyz.innky.graduationproject.web.config;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import xyz.innky.graduationproject.openstack.api.LoginTokenApi;
+import xyz.innky.graduationproject.common.utils.api.LoginTokenApi;
 
 @Configuration
 public class OpenStackApiConfig {

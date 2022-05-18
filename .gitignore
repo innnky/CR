@@ -31,3 +31,6 @@ build/
 .vscode/
 
 src/main/resources/static/
+
+python-export
+/python-export/pngs/

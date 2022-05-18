@@ -173,14 +173,8 @@ export default {
 
       getRequest("/student/exercise/"+this.exerciseId).then((res)=>{
         this.dta = res;
-        this.fileList = this.dta.image.split(",").map(item=>{
-          //item删除前面的baseUrl
-          return {
-            name: item.replace(baseUrl, ""),
-            percent: 100,
-            status: 'success'
-          }
-        })
+
+        // alert(this.dta.sceneId)
         getRequest("/student/device/all/"+this.dta.sceneId).then((r2)=>{
           this.tableData = r2;
           getRequest("/student/device/reservation/"+this.exerciseId).then((res3)=>{
@@ -198,6 +192,15 @@ export default {
             }
           })
         })
+        this.fileList = this.dta.image.split(",").map(item=>{
+          //item删除前面的baseUrl
+          return {
+            name: item.replace(baseUrl, ""),
+            percent: 100,
+            status: 'success'
+          }
+        })
+
       })
 
     },

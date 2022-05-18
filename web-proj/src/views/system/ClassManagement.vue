@@ -82,12 +82,12 @@
 
               </template>
             </el-table-column>
-            <el-table-column
-                label="班级干部" width="100">
-              <template>
-                <el-button type="text" size="small">查看</el-button>
-              </template>
-            </el-table-column>
+<!--            <el-table-column-->
+<!--                label="班级干部" width="100">-->
+<!--              <template>-->
+<!--                <el-button type="text" size="small">查看</el-button>-->
+<!--              </template>-->
+<!--            </el-table-column>-->
             <el-table-column
                 prop="date"
                 fixed="right"
