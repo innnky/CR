@@ -3,7 +3,7 @@ package xyz.innky.graduationproject.web.controller.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
-import xyz.innky.graduationproject.common.utils.api.DeviceApi;
+import xyz.innky.graduationproject.openstack.api.DeviceApi;
 import xyz.innky.graduationproject.web.pojo.Device;
 import xyz.innky.graduationproject.web.service.DeviceService;
 import xyz.innky.graduationproject.web.vo.Result;

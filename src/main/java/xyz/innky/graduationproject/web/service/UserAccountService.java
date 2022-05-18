@@ -32,4 +32,6 @@ public interface UserAccountService extends IService<UserAccount>, UserDetailsSe
     boolean registerStudent(String username, String password, String studentNumber, String studentName);
 
     boolean registerTeacher(String username, String password, String teacherNumber, String teacherName);
+
+    UserAccount getAccountByStudentId(Integer studentId);
 }

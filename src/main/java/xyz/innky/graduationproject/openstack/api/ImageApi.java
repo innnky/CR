@@ -1,4 +1,4 @@
-package xyz.innky.graduationproject.common.utils.api;
+package xyz.innky.graduationproject.openstack.api;
 
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;

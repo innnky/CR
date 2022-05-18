@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.innky.graduationproject.common.utils.MailUtil;
 import xyz.innky.graduationproject.web.pojo.*;
 //import xyz.innky.graduationproject.web.pojo.TeacherCourseClassRelation;
 import xyz.innky.graduationproject.web.service.*;
@@ -50,6 +51,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     ExerciseService exerciseService;
     @Autowired
     MaterialService materialService;
+    @Autowired
+    UserAccountService userAccountService;
 //    static.path
     @Value("${static.path}")
     private String staticPath;
@@ -169,12 +172,15 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             });
             //将学生关系添加进student_exercise_relation表
             Stream<StudentExerciseRelation> studentExerciseRelationStream = students.stream().map(student -> {
+                UserAccount account = userAccountService.getAccountByStudentId(student.getStudentId());
+                if (account != null) {
+                    MailUtil.sendMail(account.getAccount(), "您有一个新的练习题", "您有一个新的练习题，请登录系统查看");
+                }
                 StudentExerciseRelation studentExerciseRelation = new StudentExerciseRelation();
                 studentExerciseRelation.setExerciseId(exercise.getExerciseId());
                 studentExerciseRelation.setStudentId(student.getStudentId());
                 return studentExerciseRelation;
             });
-
             studentExerciseRelationService.saveBatch(studentExerciseRelationStream.collect(Collectors.toList()));
             return true;
         }

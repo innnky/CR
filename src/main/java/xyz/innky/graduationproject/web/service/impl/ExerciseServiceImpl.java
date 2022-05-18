@@ -3,14 +3,13 @@ package xyz.innky.graduationproject.web.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.innky.graduationproject.common.utils.CopyUtil;
+import xyz.innky.graduationproject.common.utils.MailUtil;
 import xyz.innky.graduationproject.web.pojo.Exercise;
 import xyz.innky.graduationproject.web.pojo.StudentExerciseRelation;
-import xyz.innky.graduationproject.web.service.CourseService;
-import xyz.innky.graduationproject.web.service.ExerciseService;
+import xyz.innky.graduationproject.web.pojo.UserAccount;
+import xyz.innky.graduationproject.web.service.*;
 import xyz.innky.graduationproject.web.mapper.ExerciseMapper;
 import org.springframework.stereotype.Service;
-import xyz.innky.graduationproject.web.service.SCourseService;
-import xyz.innky.graduationproject.web.service.StudentExerciseRelationService;
 import xyz.innky.graduationproject.web.vo.CourseVo;
 import xyz.innky.graduationproject.web.vo.ExerciseMarkVo;
 import xyz.innky.graduationproject.web.vo.ExerciseVo;
@@ -34,7 +33,8 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
     SCourseService sCourseService;
     @Autowired
     StudentExerciseRelationService studentExerciseRelationService;
-
+    @Autowired
+    UserAccountService userAccountService;
     @Override
     public List<Exercise> getExerciseBySCid(Integer scid) {
         return getBaseMapper().getAllBySCourseId(scid);
@@ -84,6 +84,10 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
 
     @Override
     public boolean doMark(Integer id, Integer score) {
+        UserAccount accountByStudentId = userAccountService.getAccountByStudentId(id);
+        if(accountByStudentId != null){
+            MailUtil.sendMail(accountByStudentId.getAccount(), "您的作业已被评分", "您的作业已被评分，评分为" + score + "分");
+        }
         return studentExerciseRelationService.doMark(id, score);
     }
 

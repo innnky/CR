@@ -42,4 +42,18 @@
             ${ew.sqlSegment}
         </where>
     </select>
+    <select id="getOneByAccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_account
+        where
+        account = #{account,jdbcType=VARCHAR}
+    </select>
+    <select id="getOneByStudentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_account
+        where
+        student_id = #{studentId,jdbcType=NUMERIC}
+    </select>
 </mapper>

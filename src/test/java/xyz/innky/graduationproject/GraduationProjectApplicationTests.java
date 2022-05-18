@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import xyz.innky.graduationproject.common.utils.api.ImageApi;
+import xyz.innky.graduationproject.openstack.api.ImageApi;
 import xyz.innky.graduationproject.web.mapper.MenuMapper;
 import xyz.innky.graduationproject.web.mapper.UserAccountMapper;
 import xyz.innky.graduationproject.web.pojo.Scene;

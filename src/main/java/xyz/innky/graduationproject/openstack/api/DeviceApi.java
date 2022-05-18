@@ -1,4 +1,4 @@
-package xyz.innky.graduationproject.common.utils.api;
+package xyz.innky.graduationproject.openstack.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

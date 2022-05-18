@@ -8,13 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import xyz.innky.graduationproject.web.mapper.ClassInfoMapper;
-import xyz.innky.graduationproject.web.mapper.DutyMapper;
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
-import xyz.innky.graduationproject.web.pojo.Duty;
 import xyz.innky.graduationproject.web.pojo.Student;
 import xyz.innky.graduationproject.web.service.ClassInfoService;
 import xyz.innky.graduationproject.web.service.ClassStudentRelationService;
-import xyz.innky.graduationproject.web.service.DutyService;
 import xyz.innky.graduationproject.web.service.StudentService;
 import xyz.innky.graduationproject.web.mapper.StudentMapper;
 import org.springframework.stereotype.Service;
@@ -34,8 +31,6 @@ import java.util.List;
 @Transactional
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
     implements StudentService{
-    @Autowired
-    DutyService dutyService;
     @Autowired
     ClassInfoService classInfoService;
     @Autowired
@@ -61,8 +56,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         for (StudentVo record : studentVoPage.getRecords()) {
             ClassInfo classInfos1 = classInfoService.selectByClassId(record.getClassId());
             record.setClassInfo(classInfos1);
-            List<Duty> duties = dutyService.searchAllByStudentId(record.getStudentId());
-            record.setDuties(duties);
         }
         return studentVoPage;
     }

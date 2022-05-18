@@ -154,6 +154,11 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         }
         return false;
     }
+
+    @Override
+    public UserAccount getAccountByStudentId(Integer studentId) {
+        return getBaseMapper().getOneByStudentId(studentId);
+    }
 }
 
 

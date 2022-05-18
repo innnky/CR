@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.innky.graduationproject.common.utils.ResultUtil;
-import xyz.innky.graduationproject.common.utils.api.ImageApi;
+import xyz.innky.graduationproject.openstack.api.ImageApi;
 import xyz.innky.graduationproject.web.pojo.Image;
 import xyz.innky.graduationproject.web.service.ImageService;
 import xyz.innky.graduationproject.web.vo.ImageVo;

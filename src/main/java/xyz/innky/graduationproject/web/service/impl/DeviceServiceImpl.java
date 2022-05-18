@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import xyz.innky.graduationproject.common.utils.AccountUtil;
 import xyz.innky.graduationproject.common.utils.TimePeriod;
-import xyz.innky.graduationproject.common.utils.api.DeviceApi;
+import xyz.innky.graduationproject.openstack.api.DeviceApi;
 import xyz.innky.graduationproject.web.pojo.Device;
 import xyz.innky.graduationproject.web.pojo.Image;
 import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
