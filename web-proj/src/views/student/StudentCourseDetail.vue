@@ -3,9 +3,8 @@
   <div class="row  align-items-center" style="height: 100%;">
     <div class="col-12 bg-white mt-2 py-3" style="height: 20%">
       <div class="row h-100 align-items-center px-3">
-        <div class="col-12"><h5>计算机网络</h5></div>
-        <div class="col-12 px-4"><span>教师：xxxxx</span></div>
-        <div class="col-12 px-4"><span>简介：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></div>
+        <div class="col-12"><h5>{{courseInfo.courseName}}</h5></div>
+        <div class="col-12 px-4"><span>{{courseInfo.courseDescription}}</span></div>
       </div>
     </div>
     <div class="col-12 bg-white py-3 px-5 mb-3" style="height: 70%">
@@ -154,12 +153,15 @@ export default {
       tableData: [],
       exerciseData: [],
       materialData: [],
-      scourseId: ''
+      scourseId: '',
+      courseInfo: {},
     }
   },
   mounted() {
     this.scourseId = this.$route.query.scourseId;
-
+    getRequest("/student/course/"+this.scourseId).then(res=>{
+      this.courseInfo = res;
+    })
     this.initTime()
     this.initExercise()
     this.initMaterial()
@@ -181,13 +183,13 @@ export default {
         this.materialData = res;
       })
 
+
     },
     handleComplete(row){
       this.$router.push({
         path: "/StudentExerciseDetail",
         query: {
           id: row.exerciseId,
-          complete: true
         }
       })
     }

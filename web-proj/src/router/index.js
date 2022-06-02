@@ -2,13 +2,8 @@ import Vue from "vue";
 import VueRouter from 'vue-router'
 import Main from "@/components/Main";
 // import login from "@/views/login";
-import CourseDetail from "@/views/CourseDetail";
 import DepartmentManagement from "@/views/system/DepartmentManagement";
-import MyCourses from "@/views/MyCourses";
-import MyDevices from "@/views/MyDevices";
 import AccountManagement from "@/views/system/AccountManagement";
-import HomePage from "@/views/HomePage";
-import StudentHomePage from "@/views/student/StudentHomePage";
 import StudentCourses from "@/views/student/StudentCourses";
 import StudentCourseDetail from "@/views/student/StudentCourseDetail";
 import StudentExercise from "@/views/student/StudentExercise";
@@ -16,14 +11,12 @@ import StudentExerciseDetail from "@/views/student/StudentExerciseDetail";
 import StudentDevices from "@/views/student/StudentDevices";
 import StudentMaterial from "@/views/student/StudentMaterial";
 import StudentAccount from "@/views/student/StudentAccount";
-import TeacherHomePage from "@/views/teacher/TeacherHomePage";
 import TeacherCourses from "@/views/teacher/TeacherCourses";
 import TeacherCourseDetail from "@/views/teacher/TeacherCourseDetail";
 import TeacherExercise from "@/views/teacher/TeacherExercise";
 import DeviceManagement from "@/views/common/DeviceManagement";
 import SceneManagement from "@/views/common/SceneManagement";
 import TeacherAccount from "@/views/teacher/TeacherAccount";
-import AdminHomePage from "@/views/system/AdminHomePage";
 import ClassManagement from "@/views/system/ClassManagement";
 import ImageManagement from "@/views/common/ImageManagement";
 import StudentManagement from "@/views/system/StudentManagement";
@@ -43,33 +36,12 @@ const routes = [
         redirect:'/homePage',
         children:[
             {
-                path: '/courseDetail',
-                component: CourseDetail
-            },
-            {
                 path: '/departmentManagement',
                 component: DepartmentManagement
             },
             {
-                path: "/myCourses",
-                component: MyCourses
-            },
-            {
-                path: '/myDevices',
-                component: MyDevices
-            },
-            {
                 path: '/accountManagement',
                 component: AccountManagement
-            },
-            {
-                path: '/homePage',
-                component: HomePage
-            },
-            {
-                path: "/StudentHomePage",
-                component: StudentHomePage,
-                name: '学生首页'
             },
             {
                 path: "/StudentCourses",
@@ -100,10 +72,6 @@ const routes = [
                 component: StudentAccount
             },
             {
-                path: '/TeacherHomePage',
-                component: TeacherHomePage
-            },
-            {
                 path: '/TeacherCourses',
                 component: TeacherCourses
             },
@@ -129,9 +97,6 @@ const routes = [
             {
                 path: '/TeacherAccount',
                 component: TeacherAccount
-            },{
-                path: '/AdminHomePage',
-                component: AdminHomePage
             },
             {
                 path: "/ClassManagement",

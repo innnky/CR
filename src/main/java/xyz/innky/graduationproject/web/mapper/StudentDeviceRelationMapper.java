@@ -1,4 +1,5 @@
 package xyz.innky.graduationproject.web.mapper;
+import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 import xyz.innky.graduationproject.web.pojo.StudentDeviceRelation;
@@ -24,6 +25,8 @@ public interface StudentDeviceRelationMapper extends BaseMapper<StudentDeviceRel
 
 
     StudentDeviceRelation getOneByExerciseIdAndStudentId(@Param("exerciseId") Integer exerciseId, @Param("studentId") Integer studentId);
+
+    List<StudentDeviceRelation> searchAllBySequenceAndDate(@Param("sequence") Integer sequence, @Param("date") Date date);
 }
 
 

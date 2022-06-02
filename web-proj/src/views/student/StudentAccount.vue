@@ -8,16 +8,16 @@
         <div class="row px-4  py-2">
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="修改密码" name="first">
-<!--              <div class="w-100 my-2"><span class="m-3">旧密码</span><el-input v-model="formData.oldPassword" class="w-25"></el-input></div>-->
-<!--              <div class="w-100 my-2"><span class="m-3">新密码</span><el-input class="w-25"></el-input></div>-->
-<!--              <div class="w-100 my-2"><span class="m-3">新密码确认</span><el-input class="w-25"></el-input></div>-->
-<!--              <el-button class="m-2 ms-1">提交修改</el-button>-->
+              <!--              <div class="w-100 my-2"><span class="m-3">旧密码</span><el-input v-model="formData.oldPassword" class="w-25"></el-input></div>-->
+              <!--              <div class="w-100 my-2"><span class="m-3">新密码</span><el-input class="w-25"></el-input></div>-->
+              <!--              <div class="w-100 my-2"><span class="m-3">新密码确认</span><el-input class="w-25"></el-input></div>-->
+              <!--              <el-button class="m-2 ms-1">提交修改</el-button>-->
               <el-form
-                :model="formData"
-                :rules="rules"
-                ref="form"
-                label-width="100px"
-                class="demo-ruleForm">
+                  :model="formData"
+                  :rules="rules"
+                  ref="form"
+                  label-width="100px"
+                  class="demo-ruleForm">
                 <el-form-item label="旧密码" prop="oldPassword">
                   <el-input v-model="formData.oldPassword" type="password"></el-input>
                 </el-form-item>
@@ -31,6 +31,19 @@
                   <el-button type="primary" @click="handleSubmit('form')">提交</el-button>
                 </el-form-item>
               </el-form>
+            </el-tab-pane>
+            <el-tab-pane label="修改头像" name="second">
+              <div class="myelupload">
+              <el-upload
+                  class="avatar-uploader"
+                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+              </div>
             </el-tab-pane>
           </el-tabs>
 
@@ -66,6 +79,7 @@ export default {
           { validator: this.comparePasswords, trigger: 'blur' },
         ],
       },
+      imageUrl: '',
     }
   },
   methods:{
@@ -93,10 +107,48 @@ export default {
         }
       });
     },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    }
+
   },
 }
 </script>
 
-<style scoped>
-
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>

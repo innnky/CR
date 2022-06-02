@@ -34,7 +34,9 @@ public class CourseController {
                                String courseId, String courseName){
         return Result.ok(courseService.getAllCourse(page, pageSize, courseId, courseName));
     }
-
-
+    @GetMapping("/list")
+    public Result listAll(){
+        return Result.ok(courseService.list());
+    }
 
 }

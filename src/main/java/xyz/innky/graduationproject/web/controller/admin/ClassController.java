@@ -35,9 +35,12 @@ public class ClassController {
     }
     @PostMapping("/")
     Result addClass(@RequestBody ClassInfo classInfo){
-        return ResultUtil.returnResultByConditionLambda(()->classInfoService.save(classInfo), "添加");
+        return ResultUtil.returnResultByConditionLambda(()->classInfoService.addClass(classInfo), "添加");
     }
 
-
+    @GetMapping("/list")
+    Result listAll(){
+        return Result.ok(classInfoService.list());
+    }
 
 }

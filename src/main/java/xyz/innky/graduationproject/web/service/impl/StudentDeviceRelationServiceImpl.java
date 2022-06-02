@@ -33,6 +33,14 @@ public class StudentDeviceRelationServiceImpl extends ServiceImpl<StudentDeviceR
     public StudentDeviceRelation getReservation(Integer exerciseId, Integer studentId) {
         return getBaseMapper().getOneByExerciseIdAndStudentId(exerciseId, studentId);
     }
+
+    @Override
+    public boolean addReservation(StudentDeviceRelation reservation) {
+        if (getBaseMapper().searchAllBySequenceAndDate(reservation.getSequence(), reservation.getDate()).size() > 0) {
+            return false;
+        }
+        return getBaseMapper().insert(reservation) > 0;
+    }
 }
 
 

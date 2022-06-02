@@ -20,4 +20,7 @@
             ${ew.sqlSegment}
         </where>
     </select>
+    <select id="selectMaxDepartmentNumber" resultType="java.lang.String">
+        select max(department_number) from department
+    </select>
 </mapper>

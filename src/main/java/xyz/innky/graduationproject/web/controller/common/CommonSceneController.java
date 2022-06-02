@@ -28,7 +28,7 @@ public class CommonSceneController {
 
     @DeleteMapping("/{id}")
     public Result deleteScene(@PathVariable("id") Integer id) {
-        return ResultUtil.returnResultByConditionLambda(()->sceneService.removeById(id),"删除场景");
+        return ResultUtil.returnResultByConditionLambda(()->sceneService.deleteScene(id),"删除场景");
     }
 
     @GetMapping("/")
@@ -39,6 +39,11 @@ public class CommonSceneController {
     @GetMapping("/{sceneId}/devices")
     public Result getSceneDevice(@PathVariable("sceneId") Integer sceneId){
         return Result.ok(sceneService.getSceneDevice(sceneId));
+    }
+
+    @GetMapping("/list")
+    public Result getAllScene(){
+        return Result.ok(sceneService.list());
     }
 
 

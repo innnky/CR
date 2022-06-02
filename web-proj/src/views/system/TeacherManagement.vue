@@ -102,8 +102,16 @@
               </el-form-item>
             </div>
             <div class="col-4">
-              <el-form-item label="单位id">
-                <el-input class="w-75" v-model="inputData.departmentId" placeholder="请输入单位id"></el-input>
+              <el-form-item label="单位">
+<!--                <el-input class="w-75" v-model="inputData.departmentId" placeholder="请输入单位id"></el-input>-->
+                <el-select v-model="inputData.departmentId" placeholder="请选择单位">
+                  <el-option
+                      v-for="item in departmentList"
+                      :key="item.departmentId"
+                      :label="item.departmentName"
+                      :value="item.departmentId">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </div>
             <div class="col-4">
@@ -151,7 +159,7 @@ export default {
       },
       dialogFormVisible: false,
       dialogFormTitle: '',
-
+      departmentList:[]
     }
   },
   mounted() {
@@ -166,6 +174,9 @@ export default {
       }).then(res => {
         this.tableData = res.records;
         this.pageInfo.total = res.total;
+      })
+      getRequest("/admin/department/list").then(res => {
+        this.departmentList = res;
       })
     },
     handleCurrentChange(val) {

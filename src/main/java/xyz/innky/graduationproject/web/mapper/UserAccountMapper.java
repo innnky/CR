@@ -25,6 +25,8 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
     Page<UserAccountTeacherVo> selectTeacherPageVo(@Param("userAccountPage") Page<UserAccountTeacherVo> userAccountPage, @Param("ew") Wrapper<UserAccountTeacherVo> ew);
 
     UserAccount getOneByStudentId(@Param("studentId") Integer studentId);
+
+    int insertSelective(UserAccount userAccount);
 }
 
 

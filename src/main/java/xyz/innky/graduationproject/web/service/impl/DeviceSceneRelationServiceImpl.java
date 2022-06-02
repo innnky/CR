@@ -31,6 +31,11 @@ public class DeviceSceneRelationServiceImpl extends ServiceImpl<DeviceSceneRelat
         }
         return true;
     }
+
+    @Override
+    public void deleteRelationBySceneId(Integer id) {
+        getBaseMapper().delBySceneId(id);
+    }
 }
 
 

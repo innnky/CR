@@ -66,4 +66,11 @@
         teacher_name = #{teacherName,jdbcType=VARCHAR}
         AND teacher_number = #{teacherNumber,jdbcType=VARCHAR}
     </select>
+    <select id="getMaxTeacherNumberByDepartmentId" resultType="java.lang.String">
+        select
+        max(teacher_number)
+        from teacher
+        where
+        department_id = #{departmentId,jdbcType=NUMERIC}
+    </select>
 </mapper>

@@ -16,7 +16,7 @@ public class TeacherController {
     TeacherService teacherService;
     @PostMapping("/")
     Result addTeacher(@RequestBody Teacher teacher){
-        return ResultUtil.returnResultByConditionLambda(()->teacherService.save(teacher), "新增教师");
+        return ResultUtil.returnResultByConditionLambda(()->teacherService.addTeacher(teacher), "新增教师");
     }
 
     @DeleteMapping("/{teacherId}")
@@ -34,6 +34,8 @@ public class TeacherController {
         return Result.ok(teacherService.getAllTeacher(page,pageSize,teacherName,teacherId, gender, departmentId));
     }
 
-
-
+    @GetMapping("/list")
+    Result listAll(){
+        return Result.ok(teacherService.list());
+    }
 }

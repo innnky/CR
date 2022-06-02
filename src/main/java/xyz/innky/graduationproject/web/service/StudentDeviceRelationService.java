@@ -17,4 +17,6 @@ public interface StudentDeviceRelationService extends IService<StudentDeviceRela
     public boolean deleteReservation(Integer deviceId, Integer studentId, Integer exerciseId);
 
     StudentDeviceRelation getReservation(Integer exerciseId, Integer studentId);
+
+    boolean addReservation(StudentDeviceRelation reservation);
 }

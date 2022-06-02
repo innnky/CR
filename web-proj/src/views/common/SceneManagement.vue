@@ -176,6 +176,7 @@ export default {
         sceneName: '',
         deviceIds: [],
       };
+      this.rolesData = [];
       this.dialogFormTitle = '添加';
       this.dialogFormVisible = true;
     },

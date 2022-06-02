@@ -1,0 +1,1095 @@
+@startuml
+class xyz.innky.graduationproject.web.controller.admin.TeacherController {
+~ TeacherService teacherService
+~ Result addTeacher(Teacher)
+~ Result deleteTeacher(Integer)
+~ Result updateTeacher(Teacher)
+~ Result getTeacher(Integer,Integer,String,Integer,String,Integer)
+}
+class xyz.innky.graduationproject.common.utils.MailUtil {
++ {static} void sendMail(String,String,String)
+}
+interface xyz.innky.graduationproject.web.mapper.UserAccountMapper {
+~ List<UserAccount> selectAllByAccount(String)
+~ Page<UserAccountStuVo> selectStuPageVo(Page<UserAccountStuVo>,Wrapper<UserAccountStuVo>)
+~ Page<UserAccountTeacherVo> selectTeacherPageVo(Page<UserAccountTeacherVo>,Wrapper<UserAccountTeacherVo>)
+~ UserAccount getOneByStudentId(Integer)
+}
+class xyz.innky.graduationproject.web.vo.TeacherVo {
+- String departmentName
+}
+interface xyz.innky.graduationproject.web.service.MaterialService {
+~ List<Material> getMaterialBySCid(Integer)
+~ List<Material> getMaterial(Integer)
+}
+class xyz.innky.graduationproject.web.controller.teacher.TeacherExerciseController {
+- ExerciseService exerciseService
+- String staticPath
++ Result getAllExercise()
++ Result getMaterial(Integer)
++ Result getMark(Integer)
++ Result addExerciseFile(MultipartFile)
++ Result addMark(Integer,Integer)
++ Result deleteExercise(Integer)
++ Result updateExercise(Exercise)
+}
+class xyz.innky.graduationproject.web.controller.student.StudentClassController {
+~ ClassInfoService classInfoService
++ Result getClassStudents()
++ Result getClassHeadMaster()
+}
+class xyz.innky.graduationproject.web.config.SecurityConfig {
+~ UserDetailsService userDetailsService
+# void configure(AuthenticationManagerBuilder)
+# void configure(HttpSecurity)
+~ PasswordEncoder passwordEncoder()
++ CorsFilter corsFilter()
+}
+class xyz.innky.graduationproject.web.service.impl.UserAccountServiceImpl {
+~ StudentService studentService
+~ TeacherService teacherService
+~ RoleMenuRelationService roleMenuRelationService
+~ MenuService menuService
+~ PasswordEncoder passwordEncoder
++ UserDetails loadUserByUsername(String)
++ Page<UserAccount> getAdminAccounts(Integer,Integer,String)
++ Page<UserAccountStuVo> getStudentAccounts(Integer,Integer,String,Integer,String)
++ Page<UserAccountTeacherVo> getTeacherAccounts(Integer,Integer,String,Integer,String)
++ List<MenuVo> getMenu()
++ boolean changePassword(String,String)
++ boolean registerStudent(String,String,String,String)
++ boolean registerTeacher(String,String,String,String)
++ UserAccount getAccountByStudentId(Integer)
+}
+class xyz.innky.graduationproject.web.vo.ExerciseMarkVo {
+- String studentName
+- String courseName
+- String content
+- String className
+}
+class xyz.innky.graduationproject.web.params.ChangePasswordParam {
+- String oldPassword
+- String newPassword
++ String getOldPassword()
++ void setOldPassword(String)
++ String getNewPassword()
++ void setNewPassword(String)
++ String toString()
+}
+interface xyz.innky.graduationproject.web.mapper.StudentMapper {
+~ List<StudentVo> selectByClassId(Integer)
+~ Long selectCountByClassId(Integer)
+~ Page<StudentVo> selectPageVo(Page<StudentVo>,Wrapper<StudentVo>)
+~ List<Student> selectByStudentName(String)
+~ int insertSelective(Student)
+~ int updateClassIdByStudentId(Integer,Integer)
+~ Student getOneByStudentNameAndStudentNumber(String,String)
+}
+class xyz.innky.graduationproject.web.controller.common.CommonImageController {
+- ImageService imageService
+- ImageApi api
+~ String fileRootPath
++ Result uploadImage(ImageVo)
++ Result updateImage(Image)
++ Result deleteImage(Integer,String)
++ Result getImage(Integer,Integer,String,String,Integer)
++ Result uploadFile(MultipartFile)
+}
+class xyz.innky.graduationproject.web.service.impl.ImageServiceImpl {
++ Page<Image> getAllImagesOnConditionAndPage(Integer,Integer,String,String,Integer)
++ boolean removeById(Serializable)
+}
+class xyz.innky.graduationproject.web.vo.ClassInfoVo {
+- String teacherName
+- Integer studentCount
+}
+class xyz.innky.graduationproject.web.pojo.Role {
+- Integer roleId
+- String roleName
+- String roleNameZh
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.vo.ImageVo {
+- String fileName
+}
+interface xyz.innky.graduationproject.web.service.DepartmentService {
+~ Page<DepartmentVo> getAllDepartment(Integer,Integer,Integer,String)
+}
+class xyz.innky.graduationproject.web.pojo.DeviceSceneRelation {
+- Integer id
+- String role
+- String startTime
+- String endTime
+- Integer deviceId
+- Integer sceneId
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.pojo.Course {
+- Integer courseId
+- String courseDescription
+- String courseName
+- String courseImg
+- {static} long serialVersionUID
+}
+interface xyz.innky.graduationproject.web.mapper.ClassStudentRelationMapper {
+~ List<ClassStudentVo> getAllByClassId(Integer)
+~ List<ClassStudentVo> getAllByStudentId(Integer)
+~ int insertSelective(ClassStudentRelation)
+~ int updateEndTimeByStudentId(Date,Integer)
+}
+class xyz.innky.graduationproject.web.pojo.StudentExerciseRelation {
+- Integer id
+- Integer studentId
+- Integer exerciseId
+- Date submitTime
+- String image
+- Integer score
+- String resultsAnalysis
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.service.impl.ClassInfoServiceImpl {
+~ StudentService studentService
+~ TeacherService teacherService
+~ ClassStudentRelationService classStudentRelationService
++ IPage<ClassInfoVo> getAllClass(Integer,Integer,String,String,String,String)
++ ClassInfo selectByClassId(Integer)
++ IPage<ClassInfoVo> getAllClassWithoutTotal(int,int,String,String,String,String)
++ List<ClassStudentVo> getStudentsByClass(Integer)
++ List<StudentVo> getStudentsByTeacher(Integer)
++ List<StudentVo> getStudentsByStudent(Integer)
++ Teacher getHeadMasterByStudent(Integer)
+}
+interface xyz.innky.graduationproject.web.mapper.TeacherMapper {
+~ List<Teacher> searchAllByDepartmentId(Integer)
+~ Integer searchAllCountByDepartmentId(Integer)
+~ Page<TeacherVo> selectPageVo(Page<TeacherVo>,Wrapper<TeacherVo>,Integer)
+~ List<Teacher> getAllByTeacherName(String)
+~ Teacher getOneByTeacherNameAndTeacherNumber(String,String)
+}
+class xyz.innky.graduationproject.web.vo.CourseVo {
+- Integer sCourseId
+}
+interface xyz.innky.graduationproject.web.service.ImageService {
+~ Page<Image> getAllImagesOnConditionAndPage(Integer,Integer,String,String,Integer)
+~ boolean removeById(Serializable)
+}
+class xyz.innky.graduationproject.web.controller.student.StudentMaterialController {
+- MaterialService materialService
++ Result getAllMaterial()
+}
+interface xyz.innky.graduationproject.web.mapper.ImageMapper {
+}
+class xyz.innky.graduationproject.common.utils.ResultUtil {
++ {static} Result returnResultByCondition(boolean,String)
++ {static} Result returnResultByConditionLambda(Supplier<Boolean>,String)
+}
+class xyz.innky.graduationproject.web.params.RegistrationParam {
+- String username
+- String password
+- String name
+- String number
+}
+class xyz.innky.graduationproject.web.service.impl.MaterialServiceImpl {
+~ CourseService courseService
++ List<Material> getMaterialBySCid(Integer)
++ List<Material> getMaterial(Integer)
+}
+class xyz.innky.graduationproject.web.config.OpenStackApiConfig {
+~ String serverBaseUrl
++ LoginTokenApi loginTokenApi()
+}
+class xyz.innky.graduationproject.web.controller.common.UserController {
+- UserAccountService userService
++ Result getMenu()
++ Result changePassword(Param)
++ Result registerStudent(RegistrationParam)
++ Result registerTeacher(RegistrationParam)
+}
+class xyz.innky.graduationproject.web.controller.common.UserController.Param {
+- String oldPassword
+- String newPassword
++ String getOldPassword()
++ void setOldPassword(String)
++ String getNewPassword()
++ void setNewPassword(String)
++ String toString()
+}
+class xyz.innky.graduationproject.web.pojo.Department {
+- Integer departmentId
+- String departmentName
+- String departmentNumber
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.controller.admin.DepartmentController {
+~ DepartmentService departmentService
+~ Result addDepartment(Department)
+~ Result deleteDepartment(Integer)
+~ Result updateDepartment(Department)
+~ Result getAllDepartment(Integer,Integer,Integer,String)
+}
+interface xyz.innky.graduationproject.web.service.SCourseService {
+~ boolean addSCourse(SCourseVo)
+~ boolean removeSCourse(Integer)
+~ boolean updateSCourse(SCourseVo)
+~ Page<SCourseVo> getAllSCourse(Integer,Integer,String,String,String)
+~ List<ClassInfo> getCourseClass(Integer)
+~ Course getCourseBySid(Integer)
+}
+interface xyz.innky.graduationproject.web.service.TeacherService {
+~ Page<TeacherVo> getAllTeacher(Integer,Integer,String,Integer,String,Integer)
+~ List<Teacher> searchAllByDepartmentId(Integer)
+~ Integer searchAllCountByDepartmentId(Integer)
+~ List<Teacher> getAllTeachersByName(String)
+~ Teacher getByTeacherNumberAndTeacherName(String,String)
+}
+class xyz.innky.graduationproject.web.vo.StudentExerciseVo {
+- Integer score
+- Date submitTime
+- String image
+- String resultAnalysis
+}
+class xyz.innky.graduationproject.web.pojo.Menu {
+- Integer menuId
+- String vuePath
+- String menuName
+- Integer parentId
+- String icon
+- {static} long serialVersionUID
+}
+interface xyz.innky.graduationproject.web.mapper.MenuMapper {
+~ Menu getOneByMenuId(Integer)
+~ List<MenuVo> getListByMenuIds(List<Integer>)
+}
+interface xyz.innky.graduationproject.web.mapper.CourseMapper {
+~ Page<CourseTime> getAllByCourseId(Page<CourseTime>,Integer)
+~ List<CourseVo> getAllByTeacherId(Integer)
+}
+class xyz.innky.graduationproject.web.config.SwaggerConfig {
+}
+class xyz.innky.graduationproject.web.pojo.RoleMenuRelation {
+- Integer id
+- Integer roleId
+- Integer menuId
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.pojo.StudentDeviceRelation {
+- Integer id
+- Integer studentId
+- Integer deviceId
+- Integer sequence
+- Date date
+- Integer exerciseId
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.vo.UserAccountTeacherVo {
+- String teacherName
+- String teacherNumber
+}
+interface xyz.innky.graduationproject.web.service.MenuService {
+~ List<MenuVo> getMenusByMenuIds(List<Integer>)
+}
+class xyz.innky.graduationproject.web.service.impl.SceneServiceImpl {
+~ DeviceSceneRelationService deviceSceneRelationService
+~ DeviceService deviceService
++ Page<Scene> getAllByConditionAndPage(Integer,Integer,Integer,String)
++ boolean addScene(SceneParam)
++ List<DeviceVo> getSceneDevice(Integer)
++ boolean updateScene(SceneParam)
+}
+class xyz.innky.graduationproject.web.pojo.SCourseClassRelation {
+- Integer id
+- Integer sCourseId
+- Integer classId
+- {static} long serialVersionUID
+}
+interface xyz.innky.graduationproject.web.service.DeviceSceneRelationService {
+~ boolean setRelation(List<Integer>,List<String>,Integer)
+}
+class xyz.innky.graduationproject.web.vo.ClassStudentVo {
+- String studentName
+- String className
+- Student student
+}
+interface xyz.innky.graduationproject.web.service.StudentDeviceRelationService {
+~ List<StudentDeviceRelation> getAllDevicesByStudentId(Integer)
++ boolean deleteReservation(Integer,Integer,Integer)
+~ StudentDeviceRelation getReservation(Integer,Integer)
+}
+class xyz.innky.graduationproject.web.controller.admin.StudentController {
+- StudentService studentService
++ Result addStudent(Student)
++ Result updateStudent(Student)
++ Result deleteStudent(Integer)
++ Result getAllStudent(Integer,Integer,String,Integer,String,String,String,String,String)
++ Result getHistoryClass(Integer)
++ Result updateStudentClass(Integer,Student)
+}
+interface xyz.innky.graduationproject.web.service.CourseTimeService {
+~ Page<CourseTime> getAllByCourseId(Page<CourseTime>,Integer)
+~ List<CourseTime> getBySCid(Integer)
+}
+class xyz.innky.graduationproject.web.pojo.Scene {
+- Integer sceneId
+- String sceneName
+- {static} long serialVersionUID
+}
+interface xyz.innky.graduationproject.web.mapper.SceneMapper {
+}
+class xyz.innky.graduationproject.web.pojo.SCourse {
+- Integer sCourseId
+- Integer teacherId
+- Integer courseId
+- String term
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.controller.common.CommonDeviceController {
+- DeviceApi deviceApi
+- DeviceService deviceService
++ Result updateDevice(Device)
++ Result addDevice(Device)
++ Result deleteDevice(String)
++ Result getAllDeviceByConditionAndPage(String,String,String,String,String,Integer)
++ Result startDevice(String)
++ Result stopDevice(String)
++ Result getVnc(String)
++ Result getUnusedDevice()
+}
+interface xyz.innky.graduationproject.web.service.RoleService {
+}
+class xyz.innky.graduationproject.common.utils.CopyUtil {
++ {static} E copy(Object,Class<E>)
+}
+class xyz.innky.graduationproject.web.params.SceneParam {
+~ List<Integer> deviceIds
+~ List<String> roles
+}
+class xyz.innky.graduationproject.web.pojo.Teacher {
+- Integer teacherId
+- Integer departmentId
+- String contact
+- String gender
+- String teacherName
+- String teacherNumber
+- {static} long serialVersionUID
+}
+interface xyz.innky.graduationproject.web.service.RoleMenuRelationService {
+~ List<RoleMenuRelation> getListByRoleId(Integer)
+}
+class xyz.innky.graduationproject.web.vo.SCVO {
+- Integer courseId
+- List<Integer> classIds
+}
+class xyz.innky.graduationproject.web.service.impl.CourseServiceImpl {
+~ StudentService studentService
+~ CourseService courseService
+~ CourseTimeService courseTimeService
+~ SCourseClassRelationService sCourseClassRelationService
+~ StudentExerciseRelationService studentExerciseRelationService
+~ SCourseService sCourseService
+~ ExerciseService exerciseService
+~ MaterialService materialService
+~ UserAccountService userAccountService
+- String staticPath
+- String serverAddress
+- String serverPort
++ List<Course> getAllCoursesByStuid(Integer)
++ Page<Course> getAllCourse(Integer,Integer,String,String)
++ List<CourseVo> getCourses(Integer,String)
++ List<CourseTime> getCourseTime(Integer)
++ List<Exercise> getCourseExercise(Integer)
++ List<Material> getCourseMaterial(Integer)
++ List<CourseVo> getTeacherCourses(Integer)
++ boolean addCourseMaterial(Integer,MultipartFile)
++ boolean addCourseExercise(Exercise)
+}
+class xyz.innky.graduationproject.common.utils.TimePeriod {
+- long start
+- long end
+- {static} List<TimePeriod> timePeriods
++ {static} long gett(int,int)
++ {static} TimePeriod getInstance(int)
++ long getStart()
++ void setStart(long)
++ long getEnd()
++ void setEnd(long)
+}
+class xyz.innky.graduationproject.web.service.impl.MenuServiceImpl {
++ List<MenuVo> getMenusByMenuIds(List<Integer>)
+}
+class xyz.innky.graduationproject.web.config.MybatisPlusConfig {
++ MybatisPlusInterceptor mybatisPlusInterceptor()
+}
+class xyz.innky.graduationproject.web.pojo.Material {
+- Integer materialId
+- String materialName
+- Integer sCourseId
+- Date updateTime
+- String materialPath
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.vo.SCourseVo {
+~ List<ClassInfo> classInfos
+~ String teacherName
+~ String courseName
+~ List<Integer> classIds
+}
+interface xyz.innky.graduationproject.web.mapper.DepartmentMapper {
+~ Page<DepartmentVo> selectPageVo(Page<DepartmentVo>,Wrapper<DepartmentVo>)
+}
+class xyz.innky.graduationproject.web.pojo.Exercise {
+- Integer exerciseId
+- String content
+- Date startTime
+- Date endTime
+- Integer sCourseId
+- String attachmentPath
+- Integer sceneId
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.controller.teacher.TeacherMaterialController {
+~ MaterialService materialService
+~ String fileRootPath
+~ String serverAddress
+~ String serverPort
++ Result addMaterial(Material)
++ Result addFile(MultipartFile,Integer)
++ Result deleteMaterial(Integer)
+}
+interface xyz.innky.graduationproject.web.mapper.ClassInfoMapper {
+~ Page<ClassInfoVo> selectPageVo(Page<ClassInfoVo>,Wrapper<ClassInfoVo>)
+~ ClassInfo selectByClassId(Integer)
+~ List<ClassInfo> selectAllByHeadTeacherId(Integer)
+}
+interface xyz.innky.graduationproject.web.service.DeviceService {
+~ Page<DeviceVo> getAllDeviceByConditionAndPage(String,String,String,String,String,Integer)
+~ boolean addDevice(Device)
+~ boolean removeDevice(String)
+~ void stopDevice(String)
+~ void startDevice(String)
+~ List<Device> getUnusedDevice()
+~ List<DeviceVo> getAllDevicesByScene(Integer)
+~ boolean addReservation(StudentDeviceRelation)
+~ List<StudentDeviceRelation> getAllDevicesByStudentId(Integer)
+~ String getVncUrl(Integer)
+~ boolean deleteReservation(Integer,Integer,Integer)
+~ StudentDeviceRelation getReservation(Integer,Integer)
+~ Object getStudentVncUrl(Integer)
+}
+class xyz.innky.graduationproject.web.controller.admin.CourseController {
+- CourseService courseService
++ Result addCourse(Course)
++ Result updateCourse(Course)
++ Result deleteCourse(Integer)
++ Result getAllCourse(Integer,Integer,String,String)
+}
+class xyz.innky.graduationproject.web.service.impl.SCourseClassRelationServiceImpl {
++ void addSCourseClassRelation(Integer,List<Integer>)
++ void removeSCourseClassRelation(Integer)
++ List<ClassInfo> getCourseClass(Integer)
++ List<SCourseClassRelation> getByClassId(Integer)
++ boolean hasRepeatSCourses(SCourseVo)
+}
+interface xyz.innky.graduationproject.web.service.StudentExerciseRelationService {
+~ Integer getSubmittedCount(Integer)
+~ Integer getStudentCount(Integer)
+~ Integer getMarkedCount(Integer)
+~ List<ExerciseMarkVo> getMark(List<Integer>)
+~ boolean doMark(Integer,Integer)
+~ boolean submitExercise(StudentExerciseRelation)
+~ StudentExerciseVo getByIdAndStudentId(Integer,Integer)
+}
+interface xyz.innky.graduationproject.web.mapper.CourseTimeMapper {
+~ Page<CourseTime> getAllByCourseId(Page<CourseTime>,Integer)
+}
+interface xyz.innky.graduationproject.web.mapper.RoleMapper {
+}
+class xyz.innky.graduationproject.web.pojo.Student {
+- Integer studentId
+- String studentName
+- Integer classId
+- Date admissiondate
+- String gender
+- String contact
+- String studentNumber
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.service.impl.DepartmentServiceImpl {
+~ TeacherService teacherService
++ Page<DepartmentVo> getAllDepartment(Integer,Integer,Integer,String)
+}
+class xyz.innky.graduationproject.common.utils.AccountUtil {
++ {static} Integer getUserId()
++ {static} Integer getStudentId()
++ {static} Integer getTeacherId()
++ {static} UserAccountDetail getUserAccountDetail()
+}
+class xyz.innky.graduationproject.web.pojo.Device {
+- Integer deviceId
+- Integer status
+- String deviceName
+- String imageId
+- String uuid
+- String type
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.pojo.CourseTime {
+- Integer timeId
+- Integer sCourseId
+- Integer weekday
+- Integer week
+- Integer classSequence
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.pojo.ClassStudentRelation {
+- Integer id
+- Integer studentId
+- Integer classId
+- Date startTime
+- Date endTime
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.vo.StudentVo {
+- ClassInfo classInfo
+}
+class xyz.innky.graduationproject.web.service.impl.RoleServiceImpl {
+}
+interface xyz.innky.graduationproject.web.service.SCourseClassRelationService {
+~ void addSCourseClassRelation(Integer,List<Integer>)
+~ void removeSCourseClassRelation(Integer)
+~ List<ClassInfo> getCourseClass(Integer)
+~ List<SCourseClassRelation> getByClassId(Integer)
+~ boolean hasRepeatSCourses(SCourseVo)
+}
+class xyz.innky.graduationproject.web.controller.student.StudentExerciseController {
+- ExerciseService exerciseService
+~ String fileRootPath
+~ String serverAddress
+~ String serverPort
++ Result getAllExercise()
++ Result getMaterial(Integer)
++ Result submitImage(MultipartFile)
++ Result submitExercise(Integer,StudentExerciseRelation)
++ Result saveExercise(Integer,StudentExerciseRelation)
+}
+interface xyz.innky.graduationproject.web.mapper.StudentDeviceRelationMapper {
+~ List<StudentDeviceRelation> getAllByStudentId(Integer)
+~ int deleteByDeviceIdAndStudentId(Integer,Integer)
+~ int deleteByDeviceIdAndStudentIdAndExerciseId(Integer,Integer,Integer)
+~ StudentDeviceRelation getOneByDeviceIdAndStudentId(Integer,Integer)
+~ StudentDeviceRelation getOneByExerciseIdAndStudentId(Integer,Integer)
+}
+interface xyz.innky.graduationproject.web.service.ClassInfoService {
+~ IPage<ClassInfoVo> getAllClass(Integer,Integer,String,String,String,String)
+~ ClassInfo selectByClassId(Integer)
+~ IPage<ClassInfoVo> getAllClassWithoutTotal(int,int,String,String,String,String)
+~ List<ClassStudentVo> getStudentsByClass(Integer)
+~ List<StudentVo> getStudentsByTeacher(Integer)
+~ List<StudentVo> getStudentsByStudent(Integer)
+~ Teacher getHeadMasterByStudent(Integer)
+}
+class xyz.innky.graduationproject.web.vo.Result {
+~ Integer code
+~ String message
+~ Object data
++ {static} Result ok(String)
++ {static} Result err(String)
++ {static} Result ok(Object)
+}
+class xyz.innky.graduationproject.web.pojo.ClassInfo {
+- Integer classId
+- String className
+- String grade
+- String major
+- String college
+- Integer headTeacherId
+- String classNumber
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.vo.DeviceVo {
+- Image image
+- String role
+}
+interface xyz.innky.graduationproject.web.mapper.ExerciseMapper {
+~ List<Exercise> getAllBySCourseId(Integer)
+~ List<Exercise> getAllBySCourseIdIn(Collection<Integer>)
+~ List<StudentExerciseVo> getAllByStudentId(Integer)
+~ int insertSelective(Exercise)
+}
+class xyz.innky.graduationproject.web.controller.student.StudentDeviceController {
+~ DeviceService deviceService
++ Result getAllDevicesByScene(Integer)
++ Result doReservation(Integer,StudentDeviceRelation)
++ Result getAllDevices()
++ Result getVncUrl(Integer)
++ Result deleteReservation(Integer,Integer)
++ Result getReservation(Integer)
+}
+class xyz.innky.graduationproject.web.controller.admin.SCourseController {
+- SCourseService sCourseService
+~ CourseTimeService courseTimeService
++ Result addSCourse(SCourseVo)
++ Result delSCourse(Integer)
++ Result updateSCourse(SCourseVo)
++ Result getAllSCourse(Integer,Integer,String,String,String)
++ Result getCourseClass(Integer)
++ Result getCourseTimeByCourse(Integer,Integer,Integer)
++ Result addCourseTime(CourseTime,Integer)
++ Result delCourseTime(Integer,Integer)
++ Result updateCourseTime(CourseTime,Integer)
+}
+interface xyz.innky.graduationproject.web.service.ExerciseService {
+~ List<Exercise> getExerciseBySCid(Integer)
+~ List<StudentExerciseVo> getStudentExercise(Integer)
+~ List<ExerciseVo> getTeacherExercise(Integer)
+~ boolean saveExercise(Exercise)
+~ List<ExerciseMarkVo> getMark(Integer,Integer)
+~ boolean doMark(Integer,Integer)
+~ boolean submitExercise(StudentExerciseRelation)
+~ StudentExerciseVo getByIdAndStudentId(Integer,Integer)
+}
+class xyz.innky.graduationproject.web.service.impl.SCourseServiceImpl {
+- SCourseClassRelationService sCourseClassRelationService
++ boolean addSCourse(SCourseVo)
++ boolean removeSCourse(Integer)
++ boolean updateSCourse(SCourseVo)
++ Page<SCourseVo> getAllSCourse(Integer,Integer,String,String,String)
++ List<ClassInfo> getCourseClass(Integer)
++ Course getCourseBySid(Integer)
+}
+class xyz.innky.graduationproject.web.controller.admin.AccountController {
+- UserAccountService userAccountService
++ Result addAccount(UserAccount)
++ Result updateAccount(UserAccount)
++ Result deleteAccount(Long)
++ Result getStudentAccounts(Integer,Integer,String,Integer,String)
++ Result getTeacherAccounts(Integer,Integer,String,Integer,String)
++ Result getAccounts(Integer,Integer,String)
+}
+class xyz.innky.graduationproject.common.utils.DateFormatUtil {
+~ {static} DateFormat dateFormat
+~ {static} DateFormat dateTimeFormat
++ {static} String date2string(Date)
++ {static} Date string2date(String)
++ {static} String datetime2string(Date)
++ {static} Date string2datetime(String)
+}
+class xyz.innky.graduationproject.web.vo.MenuVo {
+- List<MenuVo> children
++ String toString()
+}
+class xyz.innky.graduationproject.web.vo.ExerciseVo {
+- Course course
+- List<ClassInfo> classInfoList
+- Integer submittedCount
+- Integer markedCount
+- Integer studentCount
+}
+interface xyz.innky.graduationproject.web.mapper.MaterialMapper {
+~ List<Material> getAllBySCourseId(Integer)
+~ List<Material> getAllBySCourseIdIn(Collection<Integer>)
+}
+class xyz.innky.graduationproject.web.vo.UserAccountStuVo {
+- String studentName
+- String studentNumber
+}
+class xyz.innky.graduationproject.web.controller.teacher.TeacherCourseController {
+- CourseService courseService
+- String serverAddress
+- String serverPort
++ Result getTeacherCourses()
++ Result getCourseTime(Integer)
++ Result getCourseExercise(Integer)
++ Result getCourseMaterial(Integer)
++ Result addCourseMaterial(Integer,MultipartFile)
++ Result addCourseExercise(Integer,Exercise)
+}
+class xyz.innky.graduationproject.web.controller.student.StudentCourseController {
+- CourseService courseService
++ Result getAllCourses(String)
++ Result getCourseTime(Integer)
++ Result getCourseExercise(Integer)
++ Result getCourseMaterial(Integer)
+}
+interface xyz.innky.graduationproject.web.mapper.SCourseMapper {
+~ int insertSelective(SCourseVo)
+~ int deleteBySCourseId(Integer)
+~ int updateSelective(SCourse)
+~ List<SCourseVo> getAllSCourse(String,String,String)
+~ Course getCourseBySid(Integer)
+}
+class xyz.innky.graduationproject.web.vo.DepartmentVo {
+~ List<Teacher> teachers
+~ Integer counts
+}
+interface xyz.innky.graduationproject.web.mapper.StudentExerciseRelationMapper {
+~ int countByExerciseIdAndSubmitTimeNotNull(Integer)
+~ int countByExerciseId(Integer)
+~ int countByExerciseIdAndScoreNotNull(Integer)
+~ List<ExerciseMarkVo> getAllByExerciseIdIn(Collection<Integer>)
+~ int updateScoreById(Integer,Integer)
+~ int updateSelective(StudentExerciseRelation)
+~ StudentExerciseVo getOneByExerciseIdAndStudentId(Integer,Integer)
+}
+interface xyz.innky.graduationproject.web.mapper.SCourseClassRelationMapper {
+~ void addSCourseClassRelation(Integer,List<Integer>)
+~ int deleteBySCourseId(Integer)
+~ List<ClassInfo> getAllBySCourseId(Integer)
+~ List<SCourseClassRelation> getAllByClassId(Integer)
+~ List<SCVO> getSCVO()
+}
+class xyz.innky.graduationproject.web.controller.teacher.TeacherClassController {
+~ ClassInfoService classInfoService
++ Result getClassStudents()
+}
+interface xyz.innky.graduationproject.web.mapper.RoleMenuRelationMapper {
+~ List<RoleMenuRelation> getAllByRoleId(Integer)
+}
+class xyz.innky.graduationproject.web.pojo.UserAccount {
+- Integer uid
+- String account
+- String password
+- String avatarUrl
+- Integer studentId
+- Integer teacherId
+- Integer roleId
+- {static} long serialVersionUID
+}
+class xyz.innky.graduationproject.web.service.impl.ClassStudentRelationServiceImpl {
++ List<ClassStudentVo> getStudentsByClass(Integer)
++ List<ClassStudentVo> getHistoryClass(Integer)
++ boolean addStudent(Student)
++ boolean changeStudentClass(Student)
+}
+class xyz.innky.graduationproject.web.service.impl.DeviceServiceImpl {
+~ ImageService imageService
+~ DeviceApi deviceApi
+~ StudentDeviceRelationService studentDeviceRelationService
++ Page<DeviceVo> getAllDeviceByConditionAndPage(String,String,String,String,String,Integer)
++ boolean addDevice(Device)
++ boolean removeDevice(String)
++ void stopDevice(String)
++ void startDevice(String)
++ List<Device> getUnusedDevice()
++ List<DeviceVo> getAllDevicesByScene(Integer)
++ boolean addReservation(StudentDeviceRelation)
++ List<StudentDeviceRelation> getAllDevicesByStudentId(Integer)
++ String getVncUrl(Integer)
++ boolean deleteReservation(Integer,Integer,Integer)
++ StudentDeviceRelation getReservation(Integer,Integer)
++ Object getStudentVncUrl(Integer)
+}
+interface xyz.innky.graduationproject.web.service.ClassStudentRelationService {
+~ List<ClassStudentVo> getStudentsByClass(Integer)
+~ List<ClassStudentVo> getHistoryClass(Integer)
+~ boolean addStudent(Student)
+~ boolean changeStudentClass(Student)
+}
+class xyz.innky.graduationproject.openstack.api.DeviceApi {
+- LoginTokenApi api
++ {static} MediaType JSON
+~ OkHttpClient client
+~ String postJson(String,String)
+~ String deleteRequest(String)
++ String createDevice(String,String)
++ void deleteDevice(String)
++ String getVncAddress(String)
++ void startServer(String)
++ void stopServer(String)
++ String createRouter(String)
++ void deleteRouter(String)
+}
+interface xyz.innky.graduationproject.web.service.UserAccountService {
+~ Page<UserAccount> getAdminAccounts(Integer,Integer,String)
+~ Page<UserAccountStuVo> getStudentAccounts(Integer,Integer,String,Integer,String)
+~ Page<UserAccountTeacherVo> getTeacherAccounts(Integer,Integer,String,Integer,String)
+~ List<MenuVo> getMenu()
+~ boolean changePassword(String,String)
+~ boolean registerStudent(String,String,String,String)
+~ boolean registerTeacher(String,String,String,String)
+~ UserAccount getAccountByStudentId(Integer)
+}
+class xyz.innky.graduationproject.openstack.api.ImageApi {
+~ LoginTokenApi api
++ {static} MediaType JSON
+~ OkHttpClient client
+~ String postJson(String,String)
+~ String putFile(String,File)
+~ String deleteRequest(String)
++ String createImage(File,String)
++ void deleteImage(String)
+}
+class xyz.innky.graduationproject.web.service.impl.ExerciseServiceImpl {
+~ CourseService courseService
+~ SCourseService sCourseService
+~ StudentExerciseRelationService studentExerciseRelationService
+~ UserAccountService userAccountService
++ List<Exercise> getExerciseBySCid(Integer)
++ List<StudentExerciseVo> getStudentExercise(Integer)
++ List<ExerciseVo> getTeacherExercise(Integer)
++ boolean saveExercise(Exercise)
++ List<ExerciseMarkVo> getMark(Integer,Integer)
++ boolean doMark(Integer,Integer)
++ boolean submitExercise(StudentExerciseRelation)
++ StudentExerciseVo getByIdAndStudentId(Integer,Integer)
+}
+interface xyz.innky.graduationproject.web.service.StudentService {
+~ Page<StudentVo> getAllStudents(Integer,Integer,String,Integer,String,String,String,String,String)
+~ Long selectCountByClassId(Integer)
+~ List<StudentVo> getStudentsByClass(Integer)
+~ List<Student> getAllStudentsByName(String)
+~ List<ClassStudentVo> getHistoryClass(Integer)
+~ boolean addStudent(Student)
+~ boolean updateStudentClass(Student)
+~ Student getByStudentNumberAndStudentName(String,String)
+}
+class xyz.innky.graduationproject.web.controller.common.CommonSceneController {
+~ SceneService sceneService
++ Result addScene(SceneParam)
++ Result updateScene(SceneParam)
++ Result deleteScene(Integer)
++ Result getAllScene(Integer,Integer,Integer,String)
++ Result getSceneDevice(Integer)
+}
+interface xyz.innky.graduationproject.web.service.CourseService {
+~ List<Course> getAllCoursesByStuid(Integer)
+~ Page<Course> getAllCourse(Integer,Integer,String,String)
+~ List<CourseVo> getCourses(Integer,String)
+~ List<CourseTime> getCourseTime(Integer)
+~ List<Exercise> getCourseExercise(Integer)
+~ List<Material> getCourseMaterial(Integer)
+~ List<CourseVo> getTeacherCourses(Integer)
+~ boolean addCourseMaterial(Integer,MultipartFile)
+~ boolean addCourseExercise(Exercise)
+}
+class xyz.innky.graduationproject.web.service.impl.TeacherServiceImpl {
++ Page<TeacherVo> getAllTeacher(Integer,Integer,String,Integer,String,Integer)
++ List<Teacher> searchAllByDepartmentId(Integer)
++ Integer searchAllCountByDepartmentId(Integer)
++ List<Teacher> getAllTeachersByName(String)
++ Teacher getByTeacherNumberAndTeacherName(String,String)
+}
+class xyz.innky.graduationproject.web.service.impl.RoleMenuRelationServiceImpl {
++ List<RoleMenuRelation> getListByRoleId(Integer)
+}
+class xyz.innky.graduationproject.GraduationProjectApplication {
++ {static} void main(String[])
+}
+class xyz.innky.graduationproject.web.controller.admin.ClassController {
+~ ClassInfoService classInfoService
+~ Result getAllClass(Integer,Integer,String,String,String,String)
+~ Result getClassById(Integer)
+~ Result deleteClass(String)
+~ Result updateClass(String,ClassInfo)
+~ Result addClass(ClassInfo)
+}
+class xyz.innky.graduationproject.web.service.impl.StudentExerciseRelationServiceImpl {
++ Integer getSubmittedCount(Integer)
++ Integer getStudentCount(Integer)
++ Integer getMarkedCount(Integer)
++ List<ExerciseMarkVo> getMark(List<Integer>)
++ boolean doMark(Integer,Integer)
++ boolean submitExercise(StudentExerciseRelation)
++ StudentExerciseVo getByIdAndStudentId(Integer,Integer)
+}
+interface xyz.innky.graduationproject.web.service.SceneService {
+~ Page<Scene> getAllByConditionAndPage(Integer,Integer,Integer,String)
+~ boolean addScene(SceneParam)
+~ List<DeviceVo> getSceneDevice(Integer)
+~ boolean updateScene(SceneParam)
+}
+class xyz.innky.graduationproject.web.service.impl.CourseTimeServiceImpl {
++ Page<CourseTime> getAllByCourseId(Page<CourseTime>,Integer)
++ List<CourseTime> getBySCid(Integer)
+}
+interface xyz.innky.graduationproject.web.mapper.DeviceSceneRelationMapper {
+~ int delBySceneId(Integer)
+~ int insertBatch(Collection<DeviceSceneRelation>)
+}
+class xyz.innky.graduationproject.web.vo.UserAccountDetail {
+~ UserAccount userAccount
++ Collection<? extends GrantedAuthority> getAuthorities()
++ String getPassword()
++ String getUsername()
++ boolean isAccountNonExpired()
++ boolean isAccountNonLocked()
++ boolean isCredentialsNonExpired()
++ boolean isEnabled()
+}
+class xyz.innky.graduationproject.web.service.impl.StudentDeviceRelationServiceImpl {
++ List<StudentDeviceRelation> getAllDevicesByStudentId(Integer)
++ boolean deleteReservation(Integer,Integer,Integer)
++ StudentDeviceRelation getReservation(Integer,Integer)
+}
+class xyz.innky.graduationproject.web.service.impl.DeviceSceneRelationServiceImpl {
++ boolean setRelation(List<Integer>,List<String>,Integer)
+}
+class xyz.innky.graduationproject.web.pojo.Image {
+- Integer imageId
+- String imageName
+- String imageType
+- String uuid
+- {static} long serialVersionUID
+}
+interface xyz.innky.graduationproject.web.mapper.DeviceMapper {
+~ Page<DeviceVo> selectPageVo(Page<DeviceVo>,LambdaQueryWrapper<Device>)
+~ int updateStatusByUuid(Integer,String)
+~ List<Device> getUnusedDevice()
+~ List<DeviceVo> getAllDevicesByScene(Integer)
+}
+class xyz.innky.graduationproject.web.vo.SceneVo {
+- List<Integer> deviceIds
+}
+class xyz.innky.graduationproject.openstack.api.LoginTokenApi {
++ {static} MediaType JSON
+~ OkHttpClient client
+- String token
+- String deviceUrl
+- String imageUrl
+- String networkUrl
+~ String post(String,String)
++ String getToken()
++ String getDeviceUrl()
++ String getImageUrl()
++ String getNetworkUrl()
+}
+class xyz.innky.graduationproject.web.service.impl.StudentServiceImpl {
+~ ClassInfoService classInfoService
+~ ClassStudentRelationService classStudentRelationService
++ Page<StudentVo> getAllStudents(Integer,Integer,String,Integer,String,String,String,String,String)
++ Long selectCountByClassId(Integer)
++ List<StudentVo> getStudentsByClass(Integer)
++ List<Student> getAllStudentsByName(String)
++ List<ClassStudentVo> getHistoryClass(Integer)
++ boolean addStudent(Student)
++ boolean updateStudentClass(Student)
++ Student getByStudentNumberAndStudentName(String,String)
+}
+
+
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.UserAccountMapper
+xyz.innky.graduationproject.web.pojo.Teacher <|-- xyz.innky.graduationproject.web.vo.TeacherVo
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.MaterialService
+org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter <|-- xyz.innky.graduationproject.web.config.SecurityConfig
+xyz.innky.graduationproject.web.service.impl.UserAccountService <|.. xyz.innky.graduationproject.web.service.impl.UserAccountServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.UserAccountServiceImpl
+xyz.innky.graduationproject.web.pojo.StudentExerciseRelation <|-- xyz.innky.graduationproject.web.vo.ExerciseMarkVo
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.StudentMapper
+xyz.innky.graduationproject.web.service.ImageService <|.. xyz.innky.graduationproject.web.service.impl.ImageServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.ImageServiceImpl
+xyz.innky.graduationproject.web.pojo.ClassInfo <|-- xyz.innky.graduationproject.web.vo.ClassInfoVo
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Role
+xyz.innky.graduationproject.web.pojo.Image <|-- xyz.innky.graduationproject.web.vo.ImageVo
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.DepartmentService
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.DeviceSceneRelation
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Course
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.ClassStudentRelationMapper
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.StudentExerciseRelation
+xyz.innky.graduationproject.web.service.ClassInfoService <|.. xyz.innky.graduationproject.web.service.impl.ClassInfoServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.ClassInfoServiceImpl
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.TeacherMapper
+xyz.innky.graduationproject.web.pojo.Course <|-- xyz.innky.graduationproject.web.vo.CourseVo
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.ImageService
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.ImageMapper
+xyz.innky.graduationproject.web.service.MaterialService <|.. xyz.innky.graduationproject.web.service.impl.MaterialServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.MaterialServiceImpl
+xyz.innky.graduationproject.web.controller.common.UserController +.. xyz.innky.graduationproject.web.controller.common.UserController.Param
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Department
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.SCourseService
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.TeacherService
+xyz.innky.graduationproject.web.pojo.Exercise <|-- xyz.innky.graduationproject.web.vo.StudentExerciseVo
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Menu
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.MenuMapper
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.CourseMapper
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.RoleMenuRelation
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.StudentDeviceRelation
+xyz.innky.graduationproject.web.pojo.UserAccount <|-- xyz.innky.graduationproject.web.vo.UserAccountTeacherVo
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.MenuService
+xyz.innky.graduationproject.web.service.SceneService <|.. xyz.innky.graduationproject.web.service.impl.SceneServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.SceneServiceImpl
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.SCourseClassRelation
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.DeviceSceneRelationService
+xyz.innky.graduationproject.web.pojo.ClassStudentRelation <|-- xyz.innky.graduationproject.web.vo.ClassStudentVo
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.StudentDeviceRelationService
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.CourseTimeService
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Scene
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.SceneMapper
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.SCourse
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.RoleService
+xyz.innky.graduationproject.web.pojo.Scene <|-- xyz.innky.graduationproject.web.params.SceneParam
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Teacher
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.RoleMenuRelationService
+xyz.innky.graduationproject.web.service.impl.CourseService <|.. xyz.innky.graduationproject.web.service.impl.CourseServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.CourseServiceImpl
+xyz.innky.graduationproject.web.service.MenuService <|.. xyz.innky.graduationproject.web.service.impl.MenuServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.MenuServiceImpl
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Material
+xyz.innky.graduationproject.web.pojo.SCourse <|-- xyz.innky.graduationproject.web.vo.SCourseVo
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.DepartmentMapper
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Exercise
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.ClassInfoMapper
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.DeviceService
+xyz.innky.graduationproject.web.service.SCourseClassRelationService <|.. xyz.innky.graduationproject.web.service.impl.SCourseClassRelationServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.SCourseClassRelationServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.StudentExerciseRelationService
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.CourseTimeMapper
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.RoleMapper
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Student
+xyz.innky.graduationproject.web.service.DepartmentService <|.. xyz.innky.graduationproject.web.service.impl.DepartmentServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.DepartmentServiceImpl
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Device
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.CourseTime
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.ClassStudentRelation
+xyz.innky.graduationproject.web.pojo.Student <|-- xyz.innky.graduationproject.web.vo.StudentVo
+xyz.innky.graduationproject.web.service.RoleService <|.. xyz.innky.graduationproject.web.service.impl.RoleServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.RoleServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.SCourseClassRelationService
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.StudentDeviceRelationMapper
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.ClassInfoService
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.ClassInfo
+xyz.innky.graduationproject.web.pojo.Device <|-- xyz.innky.graduationproject.web.vo.DeviceVo
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.ExerciseMapper
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.ExerciseService
+xyz.innky.graduationproject.web.service.SCourseService <|.. xyz.innky.graduationproject.web.service.impl.SCourseServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.SCourseServiceImpl
+xyz.innky.graduationproject.web.pojo.Menu <|-- xyz.innky.graduationproject.web.vo.MenuVo
+xyz.innky.graduationproject.web.pojo.Exercise <|-- xyz.innky.graduationproject.web.vo.ExerciseVo
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.MaterialMapper
+xyz.innky.graduationproject.web.pojo.UserAccount <|-- xyz.innky.graduationproject.web.vo.UserAccountStuVo
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.SCourseMapper
+xyz.innky.graduationproject.web.pojo.Department <|-- xyz.innky.graduationproject.web.vo.DepartmentVo
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.StudentExerciseRelationMapper
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.SCourseClassRelationMapper
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.RoleMenuRelationMapper
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.UserAccount
+xyz.innky.graduationproject.web.service.ClassStudentRelationService <|.. xyz.innky.graduationproject.web.service.impl.ClassStudentRelationServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.ClassStudentRelationServiceImpl
+xyz.innky.graduationproject.web.service.DeviceService <|.. xyz.innky.graduationproject.web.service.impl.DeviceServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.DeviceServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.ClassStudentRelationService
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.UserAccountService
+org.springframework.security.core.userdetails.UserDetailsService <|-- xyz.innky.graduationproject.web.service.UserAccountService
+xyz.innky.graduationproject.web.service.impl.ExerciseService <|.. xyz.innky.graduationproject.web.service.impl.ExerciseServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.ExerciseServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.StudentService
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.CourseService
+xyz.innky.graduationproject.web.service.TeacherService <|.. xyz.innky.graduationproject.web.service.impl.TeacherServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.TeacherServiceImpl
+xyz.innky.graduationproject.web.service.RoleMenuRelationService <|.. xyz.innky.graduationproject.web.service.impl.RoleMenuRelationServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.RoleMenuRelationServiceImpl
+xyz.innky.graduationproject.web.service.StudentExerciseRelationService <|.. xyz.innky.graduationproject.web.service.impl.StudentExerciseRelationServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.StudentExerciseRelationServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- xyz.innky.graduationproject.web.service.SceneService
+xyz.innky.graduationproject.web.service.CourseTimeService <|.. xyz.innky.graduationproject.web.service.impl.CourseTimeServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.CourseTimeServiceImpl
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.DeviceSceneRelationMapper
+org.springframework.security.core.userdetails.UserDetails <|.. xyz.innky.graduationproject.web.vo.UserAccountDetail
+xyz.innky.graduationproject.web.service.StudentDeviceRelationService <|.. xyz.innky.graduationproject.web.service.impl.StudentDeviceRelationServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.StudentDeviceRelationServiceImpl
+xyz.innky.graduationproject.web.service.DeviceSceneRelationService <|.. xyz.innky.graduationproject.web.service.impl.DeviceSceneRelationServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.DeviceSceneRelationServiceImpl
+java.io.Serializable <|.. xyz.innky.graduationproject.web.pojo.Image
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- xyz.innky.graduationproject.web.mapper.DeviceMapper
+xyz.innky.graduationproject.web.pojo.Scene <|-- xyz.innky.graduationproject.web.vo.SceneVo
+xyz.innky.graduationproject.web.service.StudentService <|.. xyz.innky.graduationproject.web.service.impl.StudentServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- xyz.innky.graduationproject.web.service.impl.StudentServiceImpl
+@enduml

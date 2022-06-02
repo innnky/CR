@@ -24,4 +24,6 @@ public interface SceneService extends IService<Scene> {
     List<DeviceVo> getSceneDevice(Integer sceneId);
 
     boolean updateScene(SceneParam sceneParam);
+
+    Boolean deleteScene(Integer id);
 }

@@ -16,6 +16,8 @@ import xyz.innky.graduationproject.web.vo.DepartmentVo;
 public interface DepartmentMapper extends BaseMapper<Department> {
     Page<DepartmentVo> selectPageVo(@Param("departmentVoPage") Page<DepartmentVo> departmentVoPage, @Param("ew") Wrapper<DepartmentVo> ew);
 
+    String selectMaxDepartmentNumber();
+
 }
 
 

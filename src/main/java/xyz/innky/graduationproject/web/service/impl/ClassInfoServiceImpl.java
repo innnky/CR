@@ -1,7 +1,6 @@
 package xyz.innky.graduationproject.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,7 +8,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import xyz.innky.graduationproject.common.utils.CopyUtil;
-import xyz.innky.graduationproject.web.mapper.StudentMapper;
 import xyz.innky.graduationproject.web.pojo.ClassInfo;
 import xyz.innky.graduationproject.web.pojo.Student;
 import xyz.innky.graduationproject.web.pojo.Teacher;
@@ -23,8 +21,9 @@ import xyz.innky.graduationproject.web.vo.ClassInfoVo;
 import xyz.innky.graduationproject.web.vo.ClassStudentVo;
 import xyz.innky.graduationproject.web.vo.StudentVo;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +34,18 @@ import java.util.stream.Collectors;
 @Service
 public class ClassInfoServiceImpl extends ServiceImpl<ClassInfoMapper, ClassInfo>
     implements ClassInfoService{
+    private static Map<String, String> classDepartmentCodeMap = null;
+    static {
+        classDepartmentCodeMap = new HashMap<>();
+        classDepartmentCodeMap.put("电子与信息工程学院,计算机科学与技术","0101");
+        classDepartmentCodeMap.put("电子与信息工程学院,自动化科学与技术","0102");
+        classDepartmentCodeMap.put("电子与信息工程学院,通信工程","0103");
+        classDepartmentCodeMap.put("电子与信息工程学院,电子信息工程","0104");
+        classDepartmentCodeMap.put("软件学院,软件工程","0201");
+        classDepartmentCodeMap.put("软件学院,网络工程","0202");
+        classDepartmentCodeMap.put("软件学院,物联网工程","0203");
+    }
+
 
     @Autowired
     StudentService studentService;
@@ -121,6 +132,22 @@ public class ClassInfoServiceImpl extends ServiceImpl<ClassInfoMapper, ClassInfo
         Student student = studentService.getById(studentId);
         ClassInfo classInfo = this.getById(student.getClassId());
         return teacherService.getById(classInfo.getHeadTeacherId());
+    }
+
+    @Override
+    public Boolean addClass(ClassInfo classInfo) {
+        String classDepartmentCode = classDepartmentCodeMap.get(classInfo.getCollege()+","+classInfo.getMajor());
+        if(ObjectUtils.isEmpty(classDepartmentCode)){
+            return false;
+        }
+        //计算18-10
+        String year = classInfo.getClassName().substring(2, 4);
+        String s = classInfo.getClassName().split("-")[1];
+        //s格式化 不足两位补0
+        String format = String.format("%02d", Integer.parseInt(s));
+        String classCode = year+classDepartmentCode+ format;
+        classInfo.setClassNumber(classCode);
+        return this.save(classInfo);
     }
 }
 

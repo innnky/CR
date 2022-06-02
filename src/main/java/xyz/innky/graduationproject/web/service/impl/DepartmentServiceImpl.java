@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import xyz.innky.graduationproject.web.service.TeacherService;
 import xyz.innky.graduationproject.web.vo.DepartmentVo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
 * @author xingyijin
 * @description 针对表【department】的数据库操作Service实现
@@ -41,6 +44,14 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
             record.setCounts(record.getTeachers().size());
         }
         return departmentVoPage;
+    }
+
+    @Override
+    public Boolean addDeptartment(Department department) {
+        String maxNumber = getBaseMapper().selectMaxDepartmentNumber();
+        String departmentNumber = String.format("%02d", Integer.parseInt(maxNumber)+1);
+        department.setDepartmentNumber(departmentNumber);
+        return save(department);
     }
 }
 

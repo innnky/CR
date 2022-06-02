@@ -35,9 +35,9 @@ public class TeacherExerciseController {
     }
 
     @GetMapping("/mark")
-    public Result getMark(Integer scid) {
+    public Result getMark(Integer exerciseId) {
         Integer teacherId = AccountUtil.getTeacherId();
-        return Result.ok(exerciseService.getMark(teacherId, scid));
+        return Result.ok(exerciseService.getMark(teacherId, exerciseId));
     }
 
     @PostMapping("/file")
@@ -60,7 +60,7 @@ public class TeacherExerciseController {
 
     @DeleteMapping("/{id}")
     public Result deleteExercise(@PathVariable("id") Integer id) {
-        return ResultUtil.returnResultByConditionLambda(()->exerciseService.removeById(id),"删除");
+        return ResultUtil.returnResultByConditionLambda(()->exerciseService.removeExercise(id),"删除");
     }
 
     @PutMapping("/")

@@ -1,5 +1,6 @@
 package xyz.innky.graduationproject;
 
+import cn.hutool.extra.mail.MailUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

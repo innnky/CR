@@ -13,4 +13,6 @@ import java.util.List;
 public interface DeviceSceneRelationService extends IService<DeviceSceneRelation> {
 
     boolean setRelation(List<Integer> deviceIds, List<String> roles, Integer sceneId);
+
+    void deleteRelationBySceneId(Integer id);
 }

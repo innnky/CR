@@ -3,9 +3,8 @@
     <div class="row  align-items-center" style="height: 100%;">
       <div class="col-12 bg-white mt-2 py-3" style="height: 20%">
         <div class="row h-100 align-items-center px-3">
-          <div class="col-12"><h5>计算机网络</h5></div>
-          <div class="col-12 px-4"><span>教师：xxxxx</span></div>
-          <div class="col-12 px-4"><span>简介：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></div>
+          <div class="col-12"><h5>{{courseInfo.courseName}}</h5></div>
+          <div class="col-12 px-4"><span>{{courseInfo.courseDescription}}</span></div>
         </div>
       </div>
       <div class="col-12 bg-white py-3 px-5 mb-3" style="height: 70%">
@@ -207,8 +206,16 @@
               </el-date-picker>
             </div>
             <div class="col-4">
-              <el-form-item label="场景id">
-                <el-input v-model="inputData.sceneId" class="w-75"></el-input>
+              <el-form-item label="场景">
+<!--                <el-input v-model="inputData.sceneId" class="w-75"></el-input>-->
+                <el-select v-model="inputData.sceneId" placeholder="请选择场景" class="w-75">
+                  <el-option
+                      v-for="item in sceneList"
+                      :key="item.sceneId"
+                      :label="item.sceneName"
+                      :value="item.sceneId">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </div>
             <div class="col-4">
@@ -259,12 +266,15 @@ export default {
       dialogFormVisible: false,
       fileList: [],
       fileList2: [],
-
+      sceneList: [],
+      courseInfo: {},
     }
   },
   mounted() {
     this.scourseId = this.$route.query.scourseId;
-
+    getRequest('/teacher/course/' + this.scourseId).then(response => {
+      this.courseInfo = response;
+    });
     this.initTime()
     this.initExercise()
     this.initMaterial()
@@ -278,6 +288,9 @@ export default {
     initExercise(){
       getRequest("/teacher/course/"+this.scourseId+"/exercise").then(res=>{
         this.exerciseData = res;
+      })
+      getRequest("/common/scene/list").then(res=>{
+        this.sceneList = res;
       })
 
     },

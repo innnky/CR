@@ -37,8 +37,8 @@ public class StudentExerciseRelationServiceImpl extends ServiceImpl<StudentExerc
     }
 
     @Override
-    public List<ExerciseMarkVo> getMark(List<Integer> exercises) {
-        return getBaseMapper().getAllByExerciseIdIn(exercises);
+    public List<ExerciseMarkVo> getMark(Integer exerciseId) {
+        return getBaseMapper().getAllByExerciseId(exerciseId);
     }
 
     @Override
@@ -54,6 +54,11 @@ public class StudentExerciseRelationServiceImpl extends ServiceImpl<StudentExerc
     @Override
     public StudentExerciseVo getByIdAndStudentId(Integer exerciseId, Integer studentId) {
         return getBaseMapper().getOneByExerciseIdAndStudentId(exerciseId, studentId);
+    }
+
+    @Override
+    public void removeByExerciseId(Integer id) {
+        getBaseMapper().deleteByExerciseId(id);
     }
 }
 

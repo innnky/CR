@@ -61,4 +61,9 @@ public class CommonImageController {
             return Result.err("上传失败");
         }
     }
+
+    @GetMapping("/list")
+    public Result getImageList(){
+        return Result.ok(imageService.list());
+    }
 }

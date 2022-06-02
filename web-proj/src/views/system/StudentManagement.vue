@@ -68,6 +68,7 @@
         <div class="row px-3">
           <div class="col-12">
             <div class="container">
+
               <el-table
                   :data="tableData"
                   stripe
@@ -195,9 +196,22 @@
               </el-form-item>
             </div>
             <div class="col-4">
-              <el-form-item label="班级id">
-                <el-input class="w-75" v-model="inputData.classId" placeholder="请输入班级id"></el-input>
+              <el-form-item label="班级">
+
+<!--                <el-input class="w-75" v-model="inputData.classId" placeholder="请输入班级id"></el-input>-->
+<!--                <el-select v-model="inputData.classId" placeholder="请选择班级">-->
+
+<!--                </el-select>-->
+                <el-select v-model="inputData.classId" placeholder="请选择班级">
+                  <el-option
+                      v-for="item in classListListList"
+                      :key="item.classId"
+                      :label="item.className"
+                      :value="item.classId">
+                  </el-option>
+                </el-select>
               </el-form-item>
+
             </div>
             <div class="col-4">
               <el-form-item label="姓名">
@@ -282,7 +296,7 @@ export default {
       classValue: '',
       loading: false,
       changeClassVisible: false,
-
+      classListListList: []
     }
   },
   mounted() {
@@ -297,6 +311,9 @@ export default {
       }).then(res => {
         this.tableData = res.records;
         this.pageInfo.total = res.total;
+      })
+      getRequest("/admin/class/list").then(res => {
+        this.classListListList = res;
       })
     },
     handleCurrentChange(val) {
@@ -378,7 +395,8 @@ export default {
         this.classes = [];
       }
 
-    }
+    },
+
   }
 
 }

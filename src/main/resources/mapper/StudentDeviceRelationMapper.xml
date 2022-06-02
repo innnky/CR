@@ -54,4 +54,12 @@
           AND student_id = #{studentId,jdbcType=NUMERIC}
           AND exercise_id = #{exerciseId,jdbcType=NUMERIC}
     </delete>
+    <select id="searchAllBySequenceAndDate" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student_device_relation
+        where
+        sequence = #{sequence,jdbcType=NUMERIC}
+        AND date = #{date}
+    </select>
 </mapper>

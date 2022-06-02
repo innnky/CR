@@ -14,7 +14,6 @@
         <img :src="userImg">
       </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人中心</el-dropdown-item>
           <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -24,12 +23,13 @@
 
 <script>
 import {mapState} from 'vuex'
+import {getRequest} from "@/api/data";
 
 export default {
   name: "CommonHeader",
   data() {
     return {
-      userImg: require("../assets/images/User.jpg")
+      userImg: '',
     }
   },
   methods: {
@@ -38,20 +38,18 @@ export default {
       this.$store.commit('collapseMenu')
     }
     ,logout(){
-      this.$confirm('确定要退出登录?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$store.commit('clearToken')
-        this.$router.push('/login')
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消'
-        });
-      });
+      this.$store.commit('clearToken')
+      this.$router.push('/login')
+    },
+    getAvatar(){
+      getRequest('/user/avatar').then(res=>{
+        this.userImg = res
+
+      })
     }
+  },
+  mounted() {
+    this.getAvatar()
   },
   computed: {
     ...mapState({

@@ -65,7 +65,7 @@ public class StudentExerciseController {
         content.setExerciseId(exerciseId);
 
 //        content.setSubmitTime(new Date(System.currentTimeMillis()));
-        return ResultUtil.returnResultByConditionLambda(()->exerciseService.submitExercise(content),"提交作业");
+        return ResultUtil.returnResultByConditionLambda(()->exerciseService.submitExercise(content),"保存作业");
     }
 
 

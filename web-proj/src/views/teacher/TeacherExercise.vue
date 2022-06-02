@@ -66,11 +66,11 @@
             </el-tab-pane>
             <el-tab-pane label="作业评分" name="second">
 
-              <el-form :model="scid">
+              <el-form :model="exerciseId">
                 <div class="row px-3">
                   <div class="col-4">
-                    <el-form-item label="课程安排">
-                      <el-input placeholder="请输入" class="w-75" v-model="scid"></el-input>
+                    <el-form-item label="作业">
+                      <el-input placeholder="请输入" class="w-75" v-model="exerciseId"></el-input>
                     </el-form-item>
                   </div>
 
@@ -178,7 +178,7 @@ export default {
       activeName:"first",
       tableAll: [],
       tableMark: [],
-      scid:'',
+      exerciseId:'',
       dialogVisible: false,
       form:{},
       score:'',
@@ -190,7 +190,7 @@ export default {
         this.tableAll = res;
       })
       getRequest("/teacher/exercise/mark",{
-        scid:this.scid
+        exerciseId: this.exerciseId
       }).then(res=>{
         this.tableMark = res;
         for(let i=0;i<this.tableMark.length;i++){
@@ -214,7 +214,7 @@ export default {
       // console.log(row);
 
       this.activeName = 'second'
-      this.scid = row.scourseId
+      this.exerciseId = row.exerciseId;
       this.initData()
     }
   },

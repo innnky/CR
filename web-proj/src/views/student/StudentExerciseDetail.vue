@@ -122,8 +122,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisibleComplete = false">取 消</el-button>
-        <el-button type="primary" @click="doSave">保 存</el-button>
-        <el-button type="primary" @click="doComplete">确 定</el-button>
+        <el-button type="primary" @click="doSave" v-if="this.dta.submitTime===null">保 存</el-button>
+        <el-button type="primary" @click="doComplete" v-if="this.dta.submitTime===null">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -287,7 +287,7 @@ export default {
   mounted() {
     //从query中取出exerciseId
     this.exerciseId = this.$route.query.id
-    this.complete = this.$route.query.complete
+    this.complete = false
 
     this.initData()
   }

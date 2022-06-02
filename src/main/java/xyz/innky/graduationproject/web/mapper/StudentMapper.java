@@ -30,6 +30,7 @@ public interface StudentMapper extends BaseMapper<Student> {
 
     Student getOneByStudentNameAndStudentNumber(@Param("studentName") String studentName, @Param("studentNumber") String studentNumber);
 
+    String selectMaxStudentNumberByClassCode(@Param("classCode") String classCode);
 }
 
 

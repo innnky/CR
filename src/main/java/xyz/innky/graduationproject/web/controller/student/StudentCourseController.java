@@ -39,4 +39,9 @@ public class StudentCourseController {
         return Result.ok(courseService.getCourseMaterial(scid));
     }
 
+    @GetMapping("/{scid}")
+    public Result getCourse(@PathVariable("scid") Integer scid) {
+        return Result.ok(courseService.getCourseInfoByScid(scid));
+    }
+
 }

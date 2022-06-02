@@ -125,7 +125,7 @@ export default {
       getRequest("/admin/course/", {
         page: this.pageInfo.page,
         pageSize: this.pageInfo.pageSize,
-        ...this.conditions
+        conditions:this.conditions
       }).then(res => {
         this.tableData = res.records;
         this.pageInfo.total = res.total;

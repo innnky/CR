@@ -21,6 +21,10 @@ public interface ClassInfoMapper extends BaseMapper<ClassInfo> {
 
     List<ClassInfo> selectAllByHeadTeacherId(@Param("headTeacherId") Integer headTeacherId);
 
+    ClassInfo selectOneByCollege(@Param("college") String college);
+
+    ClassInfo selectOneByCollegeAndMajor(@Param("college") String college, @Param("major") String major);
+
 }
 
 

@@ -40,6 +40,9 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     MenuService menuService;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    RoleService roleService;
+
 
 
     @Override
@@ -48,6 +51,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         if (userAccounts.size() == 1) {
             UserAccountDetail userAccountDetail = new UserAccountDetail();
             userAccountDetail.setUserAccount(userAccounts.get(0));
+            userAccountDetail.setRole(roleService.getById(userAccounts.get(0).getRoleId()).getRoleName());
             return userAccountDetail;
         }
         return null;
@@ -135,7 +139,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
             userAccount.setPassword(passwordEncoder.encode(password));
             userAccount.setRoleId(2);
             userAccount.setStudentId(student.getStudentId());
-            return getBaseMapper().insert(userAccount) > 0;
+            return getBaseMapper().insertSelective(userAccount) > 0;
         }
         return false;
     }
@@ -158,6 +162,12 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     @Override
     public UserAccount getAccountByStudentId(Integer studentId) {
         return getBaseMapper().getOneByStudentId(studentId);
+    }
+
+    @Override
+    public String getAvatar() {
+
+        return AccountUtil.getUserAccountDetail().getAvatar();
     }
 }
 

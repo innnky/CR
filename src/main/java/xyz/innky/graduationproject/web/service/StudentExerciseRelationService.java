@@ -20,11 +20,13 @@ public interface StudentExerciseRelationService extends IService<StudentExercise
 
     Integer getMarkedCount(Integer exerciseId);
 
-    List<ExerciseMarkVo> getMark(List<Integer> exercises);
+    List<ExerciseMarkVo> getMark(Integer exerciseId);
 
     boolean doMark(Integer id, Integer score);
 
     boolean submitExercise(StudentExerciseRelation content);
 
     StudentExerciseVo getByIdAndStudentId(Integer exerciseId, Integer studentId);
+
+    void removeByExerciseId(Integer id);
 }

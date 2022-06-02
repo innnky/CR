@@ -107,4 +107,19 @@
             student_exercise_relation.exercise_id = #{exerciseId,jdbcType=NUMERIC}
         AND student_id = #{studentId,jdbcType=NUMERIC}
     </select>
+    <delete id="deleteByExerciseId">
+        delete
+        from student_exercise_relation
+        where exercise_id = #{exerciseId,jdbcType=NUMERIC}
+    </delete>
+    <select id="getAllByExerciseId" resultType="xyz.innky.graduationproject.web.vo.ExerciseMarkVo">
+        select student_exercise_relation.*, student_name,course_name, content, class_name
+        from student_exercise_relation left join exercise e on student_exercise_relation.exercise_id = e.exercise_id
+        left join s_course sc on e.s_course_id = sc.s_course_id
+        left join course c on sc.courseId = c.course_id
+        left join student s on student_exercise_relation.student_id = s.student_id
+        left join class_info ci on s.class_id = ci.class_id
+        where
+        student_exercise_relation.exercise_id = #{exerciseId,jdbcType=NUMERIC}
+    </select>
 </mapper>

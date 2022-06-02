@@ -20,7 +20,6 @@ public class UserController {
 
     @PostMapping("/changePassword")
     public Result changePassword(@RequestBody Param param){
-        System.out.println("asdasdasdasdasd"+param.toString());
         return ResultUtil.returnResultByConditionLambda(()->userService.changePassword(param.getOldPassword(), param.getNewPassword()),"修改密码");
     }
 
@@ -32,6 +31,10 @@ public class UserController {
     @PostMapping("/registerTeacher")
     public Result registerTeacher(@RequestBody RegistrationParam param){
         return ResultUtil.returnResultByConditionLambda(()->userService.registerTeacher(param.getUsername(), param.getPassword(), param.getNumber(), param.getName()),"注册");
+    }
+    @GetMapping("/avatar")
+    public Result getAvatar(){
+        return Result.ok((Object) userService.getAvatar());
     }
 
     static class Param{
@@ -61,5 +64,6 @@ public class UserController {
                     ", newPassword='" + newPassword + '\'' +
                     '}';
         }
+
     }
 }

@@ -33,4 +33,6 @@ public interface CourseService extends IService<Course> {
     boolean addCourseMaterial(Integer scid, MultipartFile material);
 
     boolean addCourseExercise(Exercise exercise);
+
+    Course getCourseInfoByScid(Integer scid);
 }

@@ -105,7 +105,7 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
 
     @Override
     public boolean addReservation(StudentDeviceRelation reservation) {
-        return studentDeviceRelationService.saveOrUpdate(reservation);
+        return studentDeviceRelationService.addReservation(reservation);
     }
 
     @Override
@@ -142,10 +142,15 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, Device>
         long startTick = reservation.getDate().getTime() + TimePeriod.getInstance(reservation.getSequence()).getStart();
         long endTick = reservation.getDate().getTime() + TimePeriod.getInstance(reservation.getSequence()).getEnd();
         long now = System.currentTimeMillis();
-        if(now > startTick && now < endTick){
+//        now > startTick && now < endTick
+        if(true){
             map.put("status","正在使用");
             map.put("vncUrl", getVncUrl(reservation.getDeviceId()));
         }
+//        if(true){
+//            map.put("status","正在使用");
+//            map.put("vncUrl", "http://192.168.50.53:6080/vnc_auto.html?path=%3Ftoken%3D5fc9bac8-d783-499b-b631-f881544a9fd1&title=%E6%B5%8B%E8%AF%952(178e0f33-8954-489a-b8ae-11a0d2d0d1c3)");
+//        }
         else if(now > endTick){
             map.put("status","已过期");
         }

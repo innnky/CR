@@ -80,4 +80,8 @@
         student_name = #{studentName,jdbcType=VARCHAR}
         AND student_number = #{studentNumber,jdbcType=VARCHAR}
     </select>
+    <select id="selectMaxStudentNumberByClassCode" resultType="java.lang.String">
+        select max(student_number) from student where
+        student_number like concat(#{classCode,jdbcType=VARCHAR},'%')
+    </select>
 </mapper>

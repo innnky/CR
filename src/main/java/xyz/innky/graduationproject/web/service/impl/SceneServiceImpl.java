@@ -68,6 +68,12 @@ public class SceneServiceImpl extends ServiceImpl<SceneMapper, Scene>
         return false;
     }
 
+    @Override
+    public Boolean deleteScene(Integer id) {
+        deviceSceneRelationService.deleteRelationBySceneId(id);
+        return removeById(id);
+    }
+
 
 }
 

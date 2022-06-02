@@ -135,8 +135,16 @@
               </el-form-item>
             </div>
             <div class="col-4">
-              <el-form-item label="镜像id" v-if="inputData.type==='server'">
-                <el-input class="w-75" v-model="inputData.imageId" placeholder="请输入镜像id"></el-input>
+              <el-form-item label="镜像" v-if="inputData.type==='server'">
+<!--                <el-input class="w-75" v-model="inputData.imageId" placeholder="请输入镜像id"></el-input>-->
+                <el-select class="w-75" v-model="inputData.imageId" placeholder="请选择镜像" >
+                  <el-option
+                    v-for="item in imageList"
+                    :key="item.imageId"
+                    :label="item.imageName"
+                    :value="item.imageId">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </div>
           </div>
@@ -174,8 +182,8 @@ export default {
       },
       dialogFormVisible: false,
       dialogFormTitle: '',
-      openstackUrl: config.openstackUrl
-
+      openstackUrl: config.openstackUrl,
+      imageList: [],
     }
   },
   mounted() {
@@ -193,6 +201,9 @@ export default {
       }).then(res => {
         this.tableData = res.records;
         this.pageInfo.total = res.total;
+      })
+      getRequest("/common/image/list").then(res => {
+        this.imageList = res
       })
     },
     handleCurrentChange(val) {

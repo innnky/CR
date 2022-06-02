@@ -2,17 +2,21 @@ package xyz.innky.graduationproject.web.vo;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import xyz.innky.graduationproject.web.pojo.UserAccount;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 @Data
 public class UserAccountDetail implements UserDetails {
     UserAccount userAccount;
+    String role;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_"+role));
     }
 
     @Override
@@ -43,5 +47,9 @@ public class UserAccountDetail implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getAvatar(){
+        return userAccount.getAvatarUrl();
     }
 }

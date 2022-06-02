@@ -10,7 +10,7 @@
     >
       <h4>网络靶场管理系统登录</h4>
       <br>      <el-form-item
-        label="用户名"
+        label="邮箱账号"
         label-width="80px"
         prop="username"
         class="username"
@@ -18,7 +18,7 @@
       <el-input type="input" v-model="form.username" auto-complete="off" placeholder="请输入账号"></el-input>
     </el-form-item>
       <el-form-item
-          label="用户名"
+          label="密码"
           label-width="80px"
           prop="password"
       >
@@ -68,7 +68,7 @@ export default {
         if(res.token!== undefined){
           this.$store.commit("setToken", res.token)
 
-          this.$router.push("/AdminHomePage")
+          this.$router.push("/StudentAccount")
         }
 
       })

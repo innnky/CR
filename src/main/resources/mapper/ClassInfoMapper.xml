@@ -40,4 +40,19 @@
         where
         head_teacher_id = #{headTeacherId,jdbcType=NUMERIC}
     </select>
+    <select id="selectOneByCollege" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from class_info
+        where
+        college = #{college,jdbcType=VARCHAR}
+    </select>
+    <select id="selectOneByCollegeAndMajor" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from class_info
+        where
+        college = #{college,jdbcType=VARCHAR}
+        AND major = #{major,jdbcType=VARCHAR}
+    </select>
 </mapper>

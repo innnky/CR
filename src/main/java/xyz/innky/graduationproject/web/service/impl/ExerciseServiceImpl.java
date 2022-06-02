@@ -3,7 +3,7 @@ package xyz.innky.graduationproject.web.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.innky.graduationproject.common.utils.CopyUtil;
-import xyz.innky.graduationproject.common.utils.MailUtil;
+import xyz.innky.graduationproject.common.utils.MyMailUtil;
 import xyz.innky.graduationproject.web.pojo.Exercise;
 import xyz.innky.graduationproject.web.pojo.StudentExerciseRelation;
 import xyz.innky.graduationproject.web.pojo.UserAccount;
@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
     implements ExerciseService{
 
+    @Autowired
+    private MyMailUtil myMailUtil;
     @Autowired
     CourseService courseService;
     @Autowired
@@ -68,25 +70,19 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
     }
 
     @Override
-    public List<ExerciseMarkVo> getMark(Integer teacherId, Integer scid) {
+    public List<ExerciseMarkVo> getMark(Integer teacherId, Integer exerciseId) {
         List<CourseVo> courses = courseService.getTeacherCourses(teacherId);
-        List<Integer> exercises = getBaseMapper().getAllBySCourseIdIn(courses.stream().map(CourseVo::getSCourseId).filter(i->{
-            if(scid == null){
-                return true;
-            }
-            else {
-                return i.equals(scid);
-            }}).collect(Collectors.toList()))
-                        .stream().map(Exercise::getExerciseId).collect(Collectors.toList());
-        return studentExerciseRelationService.getMark(exercises);
+        return studentExerciseRelationService.getMark(exerciseId);
 //        List<ExerciseMarkVo> collect = allBySCourseIdIn.stream().map(e->{
     }
 
     @Override
     public boolean doMark(Integer id, Integer score) {
-        UserAccount accountByStudentId = userAccountService.getAccountByStudentId(id);
+        StudentExerciseRelation relation = studentExerciseRelationService.getById(id);
+        UserAccount accountByStudentId = userAccountService.getAccountByStudentId(relation.getStudentId());
+
         if(accountByStudentId != null){
-            MailUtil.sendMail(accountByStudentId.getAccount(), "您的作业已被评分", "您的作业已被评分，评分为" + score + "分");
+            myMailUtil.sendMail(accountByStudentId.getAccount(), "您的作业已被评分", "您的作业已被评分，评分为" + score + "分");
         }
         return studentExerciseRelationService.doMark(id, score);
     }
@@ -101,7 +97,11 @@ public class ExerciseServiceImpl extends ServiceImpl<ExerciseMapper, Exercise>
         return studentExerciseRelationService.getByIdAndStudentId(exerciseId, studentId);
     }
 
-
+    @Override
+    public Boolean removeExercise(Integer id) {
+        studentExerciseRelationService.removeByExerciseId(id);
+        return removeById(id);
+    }
 }
 
 

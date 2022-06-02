@@ -21,6 +21,7 @@ public interface CourseMapper extends BaseMapper<Course> {
     List<CourseVo> getAllByTeacherId(@Param("teacherId") Integer teacherId);
 
 
+    Course getCourseInfoByScid(Integer scid);
 }
 
 

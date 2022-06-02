@@ -25,6 +25,8 @@ public interface TeacherMapper extends BaseMapper<Teacher> {
     List<Teacher> getAllByTeacherName(@Param("teacherName") String teacherName);
 
     Teacher getOneByTeacherNameAndTeacherNumber(@Param("teacherName") String teacherName, @Param("teacherNumber") String teacherNumber);
+
+    String getMaxTeacherNumberByDepartmentId(@Param("departmentId") Integer departmentId);
 }
 
 

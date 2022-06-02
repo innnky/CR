@@ -10,7 +10,7 @@
     >
       <h3>注册账号</h3>
       <el-form-item
-          label="用户名"
+          label="邮箱账号"
           label-width="80px"
           prop="username"
           class="username"

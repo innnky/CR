@@ -30,6 +30,9 @@ public interface StudentExerciseRelationMapper extends BaseMapper<StudentExercis
 
     StudentExerciseVo getOneByExerciseIdAndStudentId(@Param("exerciseId") Integer exerciseId, @Param("studentId") Integer studentId);
 
+    int deleteByExerciseId(@Param("exerciseId") Integer exerciseId);
+
+    List<ExerciseMarkVo> getAllByExerciseId(@Param("exerciseId") Integer exerciseId);
 }
 
 

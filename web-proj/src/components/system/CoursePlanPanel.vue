@@ -107,37 +107,24 @@
           <div class="row">
             <div class="col-4">
               <span class="me-2">课程</span>
-              <el-select
-                  v-model="inputData.courseId"
-                  filterable
-                  remote
-                  reserve-keyword
-                  placeholder="课程名"
-                  :remote-method="searchCourse"
-                  :loading="loading">
-                <el-option
-                    v-for="item in courseOptions"
-                    :key="item.courseId"
-                    :label="item.courseName"
-                    :value="item.courseId">
-                </el-option>
-              </el-select>
+                <el-select v-model="inputData.courseId" placeholder="请选择课程">
+                  <el-option
+                      v-for="item in courseList"
+                      :key="item.courseId"
+                      :label="item.courseName"
+                      :value="item.courseId">
+                  </el-option>
+                </el-select>
+
             </div>
             <div class="col-4">
 <!--              <el-form-item label="教师id">-->
 <!--                <el-input v-model="inputData.teacherId" class="w-75" placeholder="请输入教师id"></el-input>-->
 <!--              </el-form-item>-->
               <span class="me-2">教师</span>
-              <el-select
-                  v-model="inputData.teacherId"
-                  filterable
-                  remote
-                  reserve-keyword
-                  placeholder="教师名"
-                  :remote-method="searchTeacher"
-                  :loading="loading">
+              <el-select v-model="inputData.teacherId" placeholder="请选择教师">
                 <el-option
-                    v-for="item in teacherOptions"
+                    v-for="item in teacherList"
                     :key="item.teacherId"
                     :label="item.teacherName"
                     :value="item.teacherId">
@@ -219,8 +206,8 @@ export default {
       dialogFormVisible: false,
       dialogFormTitle: '',
       //下拉列表相关数据
-      courseOptions: [],
-      teacherOptions: [],
+      courseList: [],
+      teacherList: [],
       classOptions: [],
       courseValue: "",
       teacherValue: "",
@@ -230,6 +217,7 @@ export default {
   },
   mounted() {
     this.initTableData();
+
   },
   methods:{
     delClass(cl){
@@ -243,11 +231,13 @@ export default {
       getRequest("/admin/scourse/", {
         page: this.pageInfo.page,
         pageSize: this.pageInfo.pageSize,
-        ...this.conditions
+        conditions:this.conditions
       }).then(res => {
         this.tableData = res.records;
         this.pageInfo.total = res.total;
       })
+      this.searchCourse();
+      this.searchTeacher();
     },
     handleCurrentChange(val) {
       this.pageInfo.page = val;
@@ -328,35 +318,16 @@ export default {
 
       })
     },
-    searchCourse(query){
-      if (query !== '') {
-        this.loading = true;
-        getRequest("/admin/course/",{
-          page: 1,
-          pageSize: -1,
-          courseName: query
-        }).then(res => {
-          this.courseOptions = res.records;
-          this.loading = false;
-        })
-      } else {
-        this.courseOptions = [];
-      }
+    searchCourse(){
+      getRequest("/admin/course/list").then(res => {
+        this.courseList = res
+      })
+
     },
-    searchTeacher(query){
-      if (query !== '') {
-        this.loading = true;
-        getRequest("/admin/teacher/",{
-          page: 1,
-          pageSize: -1,
-          teacherName: query
-        }).then(res => {
-          this.teacherOptions = res.records;
-          this.loading = false;
-        })
-      } else {
-        this.teacherOptions = [];
-      }
+    searchTeacher(){
+      getRequest("/admin/teacher/list").then(res => {
+        this.teacherList = res
+      })
     },
     searchClass(query){
       if (query !== '') {

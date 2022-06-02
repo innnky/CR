@@ -56,6 +56,10 @@ public class TeacherCourseController {
         exercise.setAttachmentPath("http://" + serverAddress + ":" + serverPort + "/exercise/" +exercise.getAttachmentPath());
         return ResultUtil.returnResultByConditionLambda(()->courseService.addCourseExercise(exercise), "添加课程作业");
     }
+    @GetMapping("/{scid}")
+    public Result getCourse(@PathVariable("scid") Integer scid) {
+        return Result.ok(courseService.getCourseInfoByScid(scid));
+    }
 
 //    @PostMapping("/exercise/file")
 

@@ -32,4 +32,6 @@ public interface ClassInfoService extends IService<ClassInfo> {
     List<StudentVo> getStudentsByStudent(Integer studentId);
 
     Teacher getHeadMasterByStudent(Integer studentId);
+
+    Boolean addClass(ClassInfo classInfo);
 }

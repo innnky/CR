@@ -82,7 +82,22 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
 
     @Override
     public boolean addStudent(Student student) {
-        if (getBaseMapper().insertSelective(student)==1){
+        String classNumber = classInfoService.getById(student.getClassId()).getClassNumber();
+        //取最后两位
+        String maxStudentNumber = getBaseMapper().selectMaxStudentNumberByClassCode(classNumber);
+        String stuseq = "";
+        if (maxStudentNumber == null){
+            stuseq = "01";
+        }
+        else{
+            String maxseq = maxStudentNumber.substring(maxStudentNumber.length() - 2);
+            int seq = Integer.parseInt(maxseq) + 1;
+            stuseq = String.format("%02d", seq);
+        }
+        student.setStudentNumber(classNumber + stuseq);
+
+        if (getBaseMapper().insert(student)==1){
+
             if (classStudentRelationService.addStudent(student)){
                 return true;
             }

@@ -13,4 +13,6 @@ import xyz.innky.graduationproject.web.vo.DepartmentVo;
 public interface DepartmentService extends IService<Department> {
 
     Page<DepartmentVo> getAllDepartment(Integer page, Integer pageSize, Integer departmentId, String departmentName);
+
+    Boolean addDeptartment(Department department);
 }

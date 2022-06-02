@@ -82,7 +82,7 @@
         <div class="container">
           <div class="row">
             <div class="col-4">
-              <el-form-item label="班级名称">
+              <el-form-item label="部门名称">
                 <el-input v-model="inputData.departmentName" class="w-75"></el-input>
               </el-form-item>
             </div>

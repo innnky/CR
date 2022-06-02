@@ -25,11 +25,13 @@ public interface ExerciseService extends IService<Exercise> {
 
     boolean saveExercise(Exercise exercise);
 
-    List<ExerciseMarkVo> getMark(Integer teacherId, Integer scid);
+    List<ExerciseMarkVo> getMark(Integer teacherId, Integer exerciseId);
 
     boolean doMark(Integer id, Integer score);
 
     boolean submitExercise(StudentExerciseRelation content);
 
     StudentExerciseVo getByIdAndStudentId(Integer exerciseId, Integer studentId);
+
+    Boolean removeExercise(Integer id);
 }

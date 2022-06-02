@@ -1,7 +1,6 @@
 package xyz.innky.graduationproject.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.innky.graduationproject.common.utils.MailUtil;
+import xyz.innky.graduationproject.common.utils.MyMailUtil;
 import xyz.innky.graduationproject.web.pojo.*;
 //import xyz.innky.graduationproject.web.pojo.TeacherCourseClassRelation;
 import xyz.innky.graduationproject.web.service.*;
@@ -35,6 +34,8 @@ import java.util.stream.Stream;
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     implements CourseService{
 
+    @Autowired
+    MyMailUtil myMailUtil;
     @Autowired
     StudentService studentService;
     @Autowired
@@ -174,7 +175,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             Stream<StudentExerciseRelation> studentExerciseRelationStream = students.stream().map(student -> {
                 UserAccount account = userAccountService.getAccountByStudentId(student.getStudentId());
                 if (account != null) {
-                    MailUtil.sendMail(account.getAccount(), "您有一个新的练习题", "您有一个新的练习题，请登录系统查看");
+                    myMailUtil.sendMail(account.getAccount(), "您有一个新的练习题", "您有一个新的练习题，请登录系统查看");
                 }
                 StudentExerciseRelation studentExerciseRelation = new StudentExerciseRelation();
                 studentExerciseRelation.setExerciseId(exercise.getExerciseId());
@@ -185,6 +186,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Course getCourseInfoByScid(Integer scid) {
+        return getBaseMapper().getCourseInfoByScid(scid);
     }
 
 }

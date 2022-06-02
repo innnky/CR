@@ -16,7 +16,7 @@ public class DepartmentController {
 
     @PostMapping("/")
     Result addDepartment(@RequestBody Department department){
-        return ResultUtil.returnResultByConditionLambda(()->departmentService.save(department),"添加部门");
+        return ResultUtil.returnResultByConditionLambda(()->departmentService.addDeptartment(department),"添加部门");
     }
 
     @DeleteMapping("/{depId}")
@@ -32,6 +32,11 @@ public class DepartmentController {
     @GetMapping("/")
     Result getAllDepartment(Integer page, Integer pageSize, Integer departmentId, String departmentName){
         return Result.ok(departmentService.getAllDepartment(page,pageSize, departmentId, departmentName));
+    }
+
+    @GetMapping("/list")
+    Result getAllDepartment(){
+        return Result.ok(departmentService.list());
     }
 
 }
